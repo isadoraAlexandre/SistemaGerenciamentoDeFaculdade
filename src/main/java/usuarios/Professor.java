@@ -8,9 +8,9 @@ package usuarios;
  *
  * @author isinha
  */
-public class ProfessorNormal extends Funcionarios{
+public class Professor extends Funcionarios{
 
-    public ProfessorNormal() {
+    public Professor() {
         this.tipoUsuario = 1;
     }
     
