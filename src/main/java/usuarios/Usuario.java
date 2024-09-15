@@ -4,9 +4,9 @@
  */
 package usuarios;
 
+import auxiliares.DadosBancarios;
 import auxiliares.Endereco;
 import auxiliares.Data;
-import java.util.*;
 
 
 
@@ -17,18 +17,22 @@ import java.util.*;
 public class Usuario {
     protected String nome;
     protected String senha;
-    protected String usuario;  // Email no formato "email@ufjf.com"
+    protected String usuario;
     protected String cpf;
+    protected String rg;
     protected Data dataNascimento;
-    protected String matricula;
+    protected String etnia;
+    protected String estadoCivil;
+    protected String matricula; //gerar random
     protected Endereco endereco;
     protected String email;
-    protected String telefone;
+    protected String celular;
     protected String genero;
-    protected String departamento;
+    protected String departamento; //eh necessario?
     protected boolean portadorDeficiencia;
     protected Data dataIngresso;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
+    protected DadosBancarios dadosBancarios;
     //protected List<Disciplina> disciplinas;
 
     //Construtor, getters e setters
@@ -67,6 +71,14 @@ public class Usuario {
         this.cpf = cpf;
     }
 
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
     public Data getDataNascimento() {
         return dataNascimento;
     }
@@ -75,6 +87,21 @@ public class Usuario {
         this.dataNascimento = dataNascimento;
     }
 
+    public String getEtnia() {
+        return etnia;
+    }
+
+    public void setEtnia(String etnia) {
+        this.etnia = etnia;
+    }
+
+    public String getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
     
     public String getMatricula() {
         return matricula;
@@ -100,12 +127,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     public String getGenero() {

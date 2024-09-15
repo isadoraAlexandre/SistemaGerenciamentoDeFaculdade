@@ -1,12 +1,11 @@
+usuarios/Aluno.class
+faculdade/Curso.class
+com/mycompany/sistemagerenciamentodefaculdade/SistemaGerenciamentoDeFaculdade.class
+usuarios/Funcionarios.class
 auxiliares/Endereco.class
 auxiliares/Hora.class
 usuarios/Usuario.class
-usuarios/Aluno.class
-faculdade/Curso.class
 usuarios/ProfessorCoordenador.class
-com/mycompany/sistemagerenciamentodefaculdade/SistemaGerenciamentoDeFaculdade.class
 auxiliares/DadosBancarios.class
 auxiliares/Data.class
-usuarios/ProfessorNormal.class
-usuarios/Funcionarios.class
 faculdade/Disciplina.class
