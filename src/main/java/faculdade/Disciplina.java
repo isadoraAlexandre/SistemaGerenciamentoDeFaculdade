@@ -30,7 +30,7 @@ public class Disciplina {
     protected int qtdAulas;
     protected int qtdFaltas;
     protected String planoDeCurso;
-    protected List<Double> notas; // Notas podem ser armazenadas como uma lista de valores
+    protected List<Float> notas; // Notas podem ser armazenadas como uma lista de valores
     protected List<String> turmas; // Lista de turmas que estão cursando essa disciplina
     protected String semestreLetivo;
 
@@ -149,11 +149,11 @@ public class Disciplina {
         this.planoDeCurso = planoDeCurso;
     }
 
-    public List<Double> getNotas() {
+    public List<Float> getNotas() {
         return notas;
     }
 
-    public void setNotas(List<Double> notas) {
+    public void setNotas(List<Float> notas) {
         this.notas = notas;
     }
 

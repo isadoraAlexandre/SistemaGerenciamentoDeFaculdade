@@ -17,6 +17,7 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
      */
     public JFrameAlteracaoPerfil() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -44,30 +45,22 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
         textFieldBairro = new javax.swing.JTextField();
         labelNumero = new javax.swing.JLabel();
         textFieldNumero = new javax.swing.JTextField();
-        labelComplemento = new javax.swing.JLabel();
-        textFieldComplemento = new javax.swing.JTextField();
         labelCidade = new javax.swing.JLabel();
         textFieldCidade = new javax.swing.JTextField();
         label1Estado = new javax.swing.JLabel();
         textFieldEstao = new javax.swing.JTextField();
-        labelPais = new javax.swing.JLabel();
-        textFieldPais = new javax.swing.JTextField();
         labelCep = new javax.swing.JLabel();
         textFieldCep = new javax.swing.JTextField();
-        jButtonCadastrar = new javax.swing.JButton();
+        jButtonAlterar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jPanelDadosBancarios = new javax.swing.JPanel();
         labelDadosBancarios = new javax.swing.JLabel();
         jLabelNumeroConta = new javax.swing.JLabel();
         jLabelBanco = new javax.swing.JLabel();
         jLabelAgencia = new javax.swing.JLabel();
-        jLabelTipoConta = new javax.swing.JLabel();
         jTextFieldBanco = new javax.swing.JTextField();
         jTextFieldAgencia = new javax.swing.JTextField();
         jTextFieldNumeroConta = new javax.swing.JTextField();
-        jComboTipoConta = new javax.swing.JComboBox<>();
-        jLabelNomeTitular = new javax.swing.JLabel();
-        jTextFieldNomeTitular = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alteração de Perfil");
@@ -154,10 +147,6 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
         labelNumero.setForeground(new java.awt.Color(28, 39, 95));
         labelNumero.setText("Número");
 
-        labelComplemento.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
-        labelComplemento.setForeground(new java.awt.Color(28, 39, 95));
-        labelComplemento.setText("Complemento");
-
         labelCidade.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelCidade.setForeground(new java.awt.Color(28, 39, 95));
         labelCidade.setText("Cidade");
@@ -171,10 +160,6 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                 textFieldEstaoActionPerformed(evt);
             }
         });
-
-        labelPais.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
-        labelPais.setForeground(new java.awt.Color(28, 39, 95));
-        labelPais.setText("País");
 
         labelCep.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelCep.setForeground(new java.awt.Color(28, 39, 95));
@@ -197,7 +182,7 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelRua, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(textFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(textFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -205,11 +190,7 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(textFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(66, 66, 66)
-                                .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textFieldComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31))
+                                .addGap(217, 217, 217))
                             .addGroup(panelEnderecoLayout.createSequentialGroup()
                                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,15 +199,11 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(label1Estado)
                                     .addComponent(textFieldEstao, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(96, 96, 96)
-                                .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelPais)
-                                    .addComponent(textFieldPais, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(66, 66, 66)
                                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelCep)
                                     .addComponent(textFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(76, 76, 76))))))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         panelEnderecoLayout.setVerticalGroup(
             panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,38 +211,33 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelEndereco)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelRua)
-                        .addComponent(labelBairro)
-                        .addComponent(labelNumero)))
+                .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelRua)
+                    .addComponent(labelBairro)
+                    .addComponent(labelNumero))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1Estado)
                     .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelCidade)
-                        .addComponent(labelCep)
-                        .addComponent(labelPais)))
+                        .addComponent(labelCep)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldEstao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jButtonCadastrar.setText("Cadastrar");
-        jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAlterar.setText("Alterar");
+        jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCadastrarActionPerformed(evt);
+                jButtonAlterarActionPerformed(evt);
             }
         });
 
@@ -295,16 +267,6 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
         jLabelAgencia.setForeground(new java.awt.Color(28, 39, 95));
         jLabelAgencia.setText("Agência");
 
-        jLabelTipoConta.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
-        jLabelTipoConta.setForeground(new java.awt.Color(28, 39, 95));
-        jLabelTipoConta.setText("Tipo de Conta");
-
-        jComboTipoConta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Corrente", "Poupança" }));
-
-        jLabelNomeTitular.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
-        jLabelNomeTitular.setForeground(new java.awt.Color(28, 39, 95));
-        jLabelNomeTitular.setText("Nome do Titular");
-
         javax.swing.GroupLayout jPanelDadosBancariosLayout = new javax.swing.GroupLayout(jPanelDadosBancarios);
         jPanelDadosBancarios.setLayout(jPanelDadosBancariosLayout);
         jPanelDadosBancariosLayout.setHorizontalGroup(
@@ -316,25 +278,17 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                     .addGroup(jPanelDadosBancariosLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelDadosBancariosLayout.createSequentialGroup()
-                                .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelNumeroConta)
-                                    .addComponent(jTextFieldNumeroConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelNomeTitular))
-                                .addGap(66, 66, 66)
-                                .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelBanco)
-                                    .addComponent(jTextFieldBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(61, 61, 61)
-                                .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelAgencia)
-                                    .addComponent(jTextFieldAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(65, 65, 65)
-                                .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelTipoConta)
-                                    .addComponent(jComboTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jTextFieldNomeTitular, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelNumeroConta)
+                            .addComponent(jTextFieldNumeroConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(66, 66, 66)
+                        .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelBanco)
+                            .addComponent(jTextFieldBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelAgencia)
+                            .addComponent(jTextFieldAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(506, Short.MAX_VALUE))
         );
         jPanelDadosBancariosLayout.setVerticalGroup(
             jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,19 +299,13 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                 .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNumeroConta)
                     .addComponent(jLabelBanco)
-                    .addComponent(jLabelAgencia)
-                    .addComponent(jLabelTipoConta))
+                    .addComponent(jLabelAgencia))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelDadosBancariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldNumeroConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelNomeTitular)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldNomeTitular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jTextFieldNumeroConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelExternoLayout = new javax.swing.GroupLayout(panelExterno);
@@ -381,7 +329,7 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonCadastrar)
+                .addComponent(jButtonAlterar)
                 .addGap(24, 24, 24))
         );
         panelExternoLayout.setVerticalGroup(
@@ -395,10 +343,10 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
                 .addComponent(panelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelDadosBancarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(panelExternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
-                    .addComponent(jButtonCadastrar))
+                    .addComponent(jButtonAlterar))
                 .addGap(66, 66, 66))
         );
 
@@ -421,12 +369,12 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_textFieldEstaoActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCadastrarActionPerformed
+    private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
+        // TODO add your handling code
+    }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -471,18 +419,14 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCadastrar;
+    private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JComboBox<String> jComboTipoConta;
     private javax.swing.JLabel jLabelAgencia;
     private javax.swing.JLabel jLabelBanco;
-    private javax.swing.JLabel jLabelNomeTitular;
     private javax.swing.JLabel jLabelNumeroConta;
-    private javax.swing.JLabel jLabelTipoConta;
     private javax.swing.JPanel jPanelDadosBancarios;
     private javax.swing.JTextField jTextFieldAgencia;
     private javax.swing.JTextField jTextFieldBanco;
-    private javax.swing.JTextField jTextFieldNomeTitular;
     private javax.swing.JTextField jTextFieldNumeroConta;
     private javax.swing.JLabel label1Estado;
     private javax.swing.JLabel labelBairro;
@@ -490,13 +434,11 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel labelCelular;
     private javax.swing.JLabel labelCep;
     private javax.swing.JLabel labelCidade;
-    private javax.swing.JLabel labelComplemento;
     private javax.swing.JLabel labelContato;
     private javax.swing.JLabel labelDadosBancarios;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelEndereco;
     private javax.swing.JLabel labelNumero;
-    private javax.swing.JLabel labelPais;
     private javax.swing.JLabel labelRua;
     private javax.swing.JPanel panelContato;
     private javax.swing.JPanel panelEndereco;
@@ -505,11 +447,9 @@ public class JFrameAlteracaoPerfil extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldCelular;
     private javax.swing.JTextField textFieldCep;
     private javax.swing.JTextField textFieldCidade;
-    private javax.swing.JTextField textFieldComplemento;
     private javax.swing.JTextField textFieldEmail;
     private javax.swing.JTextField textFieldEstao;
     private javax.swing.JTextField textFieldNumero;
-    private javax.swing.JTextField textFieldPais;
     private javax.swing.JTextField textFieldRua;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,12 +8,6 @@ import auxiliares.DadosBancarios;
 import auxiliares.Endereco;
 import auxiliares.Data;
 
-
-
-/**
- *
- * @author isinha
- */
 public class Usuario {
     protected String nome;
     protected String senha;
@@ -21,8 +15,6 @@ public class Usuario {
     protected String cpf;
     protected String rg;
     protected Data dataNascimento;
-    protected String etnia;
-    protected String estadoCivil;
     protected String matricula; //gerar random
     protected Endereco endereco;
     protected String email;
@@ -85,22 +77,6 @@ public class Usuario {
 
     public void setDataNascimento(Data dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    public String getEtnia() {
-        return etnia;
-    }
-
-    public void setEtnia(String etnia) {
-        this.etnia = etnia;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
     }
     
     public String getMatricula() {

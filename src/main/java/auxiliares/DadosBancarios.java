@@ -12,8 +12,6 @@ public class DadosBancarios {
     private String numeroConta;
     private String agencia;
     private String banco;
-    private String nomeTitular;
-    private String tipoConta;
 
     public DadosBancarios() {
     }
@@ -40,22 +38,6 @@ public class DadosBancarios {
 
     public void setBanco(String banco) {
         this.banco = banco;
-    }
-
-    public String getNomeTitular() {
-        return nomeTitular;
-    }
-
-    public void setNomeTitular(String nomeTitular) {
-        this.nomeTitular = nomeTitular;
-    }
-
-    public String getTipoConta() {
-        return tipoConta;
-    }
-
-    public void setTipoConta(String tipoConta) {
-        this.tipoConta = tipoConta;
     }
     
     
