@@ -1,19 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package faculdade;
-import auxiliares.Hora;
-import usuarios.Funcionarios;
-import usuarios.ProfessorCoordenador;
-import usuarios.Aluno;
+
+import auxiliares.*;
+import usuarios.*;
 import java.util.*;
 
-
-/**
- *
- * @author isinha
- */
 public class Disciplina {
     protected String nome;
     protected int qtdVagas;
@@ -24,13 +14,13 @@ public class Disciplina {
     protected Hora horarioAula;
     protected List<Funcionarios> professores;
     protected ProfessorCoordenador coordenador;
-    protected Hora cargaHoraria; // em horas
+    protected float cargaHoraria; // em horas
     protected List<Aluno> alunos;
     
     protected int qtdAulas;
     protected int qtdFaltas;
     protected String planoDeCurso;
-    protected List<Double> notas; // Notas podem ser armazenadas como uma lista de valores
+    protected float nota; // Notas podem ser armazenadas como uma lista de valores
     protected List<String> turmas; // Lista de turmas que estão cursando essa disciplina
     protected String semestreLetivo;
 
@@ -109,11 +99,11 @@ public class Disciplina {
         this.coordenador = coordenador;
     }
 
-    public Hora getCargaHoraria() {
+    public float getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(Hora cargaHoraria) {
+    public void setCargaHoraria(float cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 
@@ -149,12 +139,12 @@ public class Disciplina {
         this.planoDeCurso = planoDeCurso;
     }
 
-    public List<Double> getNotas() {
-        return notas;
+    public float getNota() {
+        return nota;
     }
 
-    public void setNotas(List<Double> notas) {
-        this.notas = notas;
+    public void setNota(float nota) {
+        this.nota = nota;
     }
 
     public List<String> getTurmas() {

@@ -1,29 +1,31 @@
 package usuarios;
 
-import faculdade.Curso;
-import java.util.Scanner;
+import faculdade.*;
 
 public class Aluno extends Usuario {
     protected Curso curso;
-    
+    protected float ira;
     
     public Aluno() {
         this.tipoUsuario = 0;
     }
     
-
-    
-    
-    public String leitura(){
-        Scanner teclado = new Scanner(System.in);
-        String t = teclado.nextLine();
+    public float calculaIra(){
         
-        return t;
-    }
+        float somatorioHoras = 0;
+        float somatorioNota = 0;
+        
+        try{
+            for(Disciplina disciplina : this.disciplinas){
+                somatorioNota += disciplina.getNota() * disciplina.getCargaHoraria();
+                somatorioHoras += disciplina.getCargaHoraria();
+            }
 
-    public void modificaNome(){
-        System.out.println("digite novo nome: ");
-        String newName = leitura();
-        setNome(newName);
+            this.ira = somatorioNota / somatorioHoras;
+        }
+        catch(java.lang.NullPointerException e){
+            javax.swing.JOptionPane.showMessageDialog(null, "Erro inasperado");
+        }
+        return this.ira;
     }
 }

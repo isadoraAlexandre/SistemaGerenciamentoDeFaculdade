@@ -1,19 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package usuarios;
 
-import auxiliares.DadosBancarios;
-import auxiliares.Endereco;
-import auxiliares.Data;
+import auxiliares.*;
+import faculdade.*;
+import java.util.*;
 
-
-
-/**
- *
- * @author isinha
- */
 public class Usuario {
     protected String nome;
     protected String senha;
@@ -33,7 +23,7 @@ public class Usuario {
     protected Data dataIngresso;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
     protected DadosBancarios dadosBancarios;
-    //protected List<Disciplina> disciplinas;
+    protected List<Disciplina> disciplinas;
 
     //Construtor, getters e setters
     public Usuario() {
@@ -174,8 +164,21 @@ public class Usuario {
     public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
-    
-    
+
+    public DadosBancarios getDadosBancarios() {
+        return dadosBancarios;
+    }
+
+    public void setDadosBancarios(DadosBancarios dadosBancarios) {
+        this.dadosBancarios = dadosBancarios;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
     
 }
