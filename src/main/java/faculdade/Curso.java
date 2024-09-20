@@ -17,8 +17,46 @@ public class Curso {
     protected ProfessorCoordenador coordenador;
     protected List<Disciplina> grade;
     protected List<Funcionarios> professores;
+    private List<Aluno> alunos;
 
-    public Curso() {
+    public Curso(String nome) {
+        this.nome = nome;
+        this.alunos = new ArrayList<>();
+        this.professores = new ArrayList<>();
+        this.grade = new ArrayList<>();
+    }
+    public void adicionarAluno(Aluno aluno) {
+        this.alunos.add(aluno);
+    }
+
+    public void removerAluno(Aluno aluno) {
+        this.alunos.remove(aluno);
+    }
+
+    public Aluno buscarAluno(String nome) {
+        for (Aluno aluno : alunos) {
+            if (aluno.getNome().equalsIgnoreCase(nome)) {
+                return aluno;
+            }
+        }
+        return null; 
+    }
+
+    public void adicionarProfessor(Professor professor) {
+        this.professores.add(professor);
+    }
+
+    public void removerProfessor(Professor professor) {
+        this.professores.remove(professor);
+    }
+
+    public Funcionarios buscarProfessor(String nome) {
+        for (Funcionarios professor : professores) {
+            if (professor.getNome().equalsIgnoreCase(nome)) {
+                return professor;
+            }
+        }
+        return null;
     }
 
     public String getNome() {
@@ -60,4 +98,6 @@ public class Curso {
     public void setProfessores(List<Funcionarios> professores) {
         this.professores = professores;
     }
+    
+
 }

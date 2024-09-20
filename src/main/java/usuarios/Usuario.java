@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package usuarios;
 
+import java.util.regex.Pattern;
+
 import auxiliares.DadosBancarios;
-import auxiliares.Endereco;
 import auxiliares.Data;
+import auxiliares.Endereco;
 
-
-
-/**
- *
- * @author isinha
- */
 public class Usuario {
     protected String nome;
     protected String senha;
@@ -28,17 +20,16 @@ public class Usuario {
     protected String email;
     protected String celular;
     protected String genero;
-    protected String departamento; //eh necessario?
+    protected String departamento; 
     protected boolean portadorDeficiencia;
     protected Data dataIngresso;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
     protected DadosBancarios dadosBancarios;
     //protected List<Disciplina> disciplinas;
 
-    //Construtor, getters e setters
     public Usuario() {
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -68,7 +59,11 @@ public class Usuario {
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        if (isValidCPF(cpf)) {
+            this.cpf = cpf;
+        } else {
+            throw new IllegalArgumentException("CPF inválido");
+        }
     }
 
     public String getRg() {
@@ -102,7 +97,7 @@ public class Usuario {
     public void setEstadoCivil(String estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
-    
+
     public String getMatricula() {
         return matricula;
     }
@@ -124,7 +119,11 @@ public class Usuario {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (isValidEmail(email)) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Email inválido");
+        }
     }
 
     public String getCelular() {
@@ -132,7 +131,11 @@ public class Usuario {
     }
 
     public void setCelular(String celular) {
-        this.celular = celular;
+        if (isValidCelular(celular)) {
+            this.celular = celular;
+        } else {
+            throw new IllegalArgumentException("Celular inválido");
+        }
     }
 
     public String getGenero() {
@@ -174,8 +177,18 @@ public class Usuario {
     public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
-    
-    
-    
+
+    private boolean isValidCPF(String cpf) {
+        return cpf != null && cpf.matches("\\d{11}");
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pat = Pattern.compile(emailRegex);
+        return email != null && pat.matcher(email).matches();
+    }
+
+    private boolean isValidCelular(String celular) {
+        return celular != null && celular.matches("\\d{10,11}");
+    }
 }
