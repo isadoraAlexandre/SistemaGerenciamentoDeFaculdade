@@ -1,8 +1,6 @@
 package usuarios;
 
 import java.util.regex.Pattern;
-
-import auxiliares.DadosBancarios;
 import auxiliares.Data;
 import auxiliares.Endereco;
 
@@ -13,21 +11,13 @@ public class Usuario {
     protected String cpf;
     protected String rg;
     protected Data dataNascimento;
-    protected String etnia;
-    protected String estadoCivil;
     protected String matricula; //gerar random
     protected Endereco endereco;
     protected String email;
     protected String celular;
-    protected String genero;
-    protected String departamento; 
-    protected boolean portadorDeficiencia;
-    protected Data dataIngresso;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
-    protected DadosBancarios dadosBancarios;
-    //protected List<Disciplina> disciplinas;
 
-    public Usuario() {
+    public Usuario(){
     }
 
     public String getNome() {
@@ -81,23 +71,7 @@ public class Usuario {
     public void setDataNascimento(Data dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-
-    public String getEtnia() {
-        return etnia;
-    }
-
-    public void setEtnia(String etnia) {
-        this.etnia = etnia;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
+    
     public String getMatricula() {
         return matricula;
     }
@@ -136,38 +110,6 @@ public class Usuario {
         } else {
             throw new IllegalArgumentException("Celular inválido");
         }
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public boolean isPortadorDeficiencia() {
-        return portadorDeficiencia;
-    }
-
-    public void setPortadorDeficiencia(boolean portadorDeficiencia) {
-        this.portadorDeficiencia = portadorDeficiencia;
-    }
-
-    public Data getDataIngresso() {
-        return dataIngresso;
-    }
-
-    public void setDataIngresso(Data dataIngresso) {
-        this.dataIngresso = dataIngresso;
     }
 
     public int getTipoUsuario() {

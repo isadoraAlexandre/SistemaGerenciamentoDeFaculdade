@@ -7,30 +7,30 @@ import usuarios.Aluno;
 import usuarios.Funcionarios;
 import usuarios.ProfessorCoordenador;
 
-public class Disciplina {
+public class Disciplina{
     protected String nome;
     protected int qtdVagas;
     protected String codigo;
-    protected String tipo; // Eletiva ou Obrigatória
-    protected String departamento;
-    protected String sala;
-    protected Hora horarioAula;
-    protected List<Funcionarios> professores = new ArrayList<>();
-    protected ProfessorCoordenador coordenador;
-    protected Hora cargaHoraria; // em hrs
+    protected float horarioAula;
+    protected String professor; //usa pra escrever no banco
+    protected String coordenador;
+    protected float cargaHoraria;
     protected List<Aluno> alunos = new ArrayList<>();
     
-    protected int qtdAulas;
-    protected int qtdFaltas;
-    protected String planoDeCurso;
-    protected List<Double> notas = new ArrayList<>(); 
-    protected List<String> turmas = new ArrayList<>();
-    protected String semestreLetivo;
+    protected int qtdFaltas;//qm tem falta eh aluno
+    protected List<Double> notas = new ArrayList<>(); //qm tem nota eh aluno
 
-    public Disciplina() {
+    public Disciplina(String nome, int qtdVagas, String codigo, float horarioAula, String professor, String coordenador, float cargaHoraria) {
+        this.nome = nome;
+        this.qtdVagas = qtdVagas;
+        this.codigo = codigo;
+        this.horarioAula = horarioAula;
+        this.professor = professor;
+        this.coordenador = coordenador;
+        this.cargaHoraria = cargaHoraria;
     }
 
-    public void addProfessor(Funcionarios professor) {
+    /*public void addProfessor(Funcionarios professor) {
         professores.add(professor);
     }
 
@@ -40,7 +40,7 @@ public class Disciplina {
 
     public Funcionarios getProfessor(int index) {
         return professores.get(index);
-    }
+    }*/
 
     public void addAluno(Aluno aluno) {
         alunos.add(aluno);
@@ -65,8 +65,8 @@ public class Disciplina {
     public Double getNota(int index) {
         return notas.get(index);
     }
-
-    public void addTurma(String turma) {
+    
+    /*public void addTurma(String turma) {
         turmas.add(turma);
     }
 
@@ -76,7 +76,7 @@ public class Disciplina {
 
     public String getTurma(int index) {
         return turmas.get(index);
-    }
+    }*/
 
     
     public String getNome() {
@@ -94,4 +94,50 @@ public class Disciplina {
     public void setQtdVagas(int qtdVagas) {
         this.qtdVagas = qtdVagas;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public float getHorarioAula() {
+        return horarioAula;
+    }
+
+    public void setHorarioAula(float horarioAula) {
+        this.horarioAula = horarioAula;
+    }
+
+    public String getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(String professor) {
+        this.professor = professor;
+    }
+
+    public String getCoordenador() {
+        return coordenador;
+    }
+
+    public void setCoordenador(String coordenador) {
+        this.coordenador = coordenador;
+    }
+
+    public float getCargaHoraria() {
+        return cargaHoraria;
+    }
+
+    public void setCargaHoraria(float cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
+    }
+
+    @Override
+    public String toString() {
+        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + ", alunos=" + alunos + '}';
+    }
+
 }
