@@ -7,7 +7,7 @@ import auxiliares.Endereco;
 public class Usuario {
     protected String nome;
     protected String senha;
-    protected String usuario;
+    protected String usuario;//usar cpf
     protected String cpf;
     protected String rg;
     protected Data dataNascimento;

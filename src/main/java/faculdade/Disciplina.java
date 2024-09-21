@@ -12,24 +12,19 @@ public class Disciplina{
     protected int qtdVagas;
     protected String codigo;
     protected float horarioAula;
-    protected String professor; //usa pra escrever no banco
+    protected String professor;
     protected String coordenador;
     protected float cargaHoraria;
-    protected List<Aluno> alunos = new ArrayList<>();
     
-    protected int qtdFaltas;//qm tem falta eh aluno
-    protected List<Double> notas = new ArrayList<>(); //qm tem nota eh aluno
+    protected List<Aluno> alunos;
+    protected int qtdFaltas;
+    protected List<Double> notas;
 
-    public Disciplina(String nome, int qtdVagas, String codigo, float horarioAula, String professor, String coordenador, float cargaHoraria) {
-        this.nome = nome;
-        this.qtdVagas = qtdVagas;
-        this.codigo = codigo;
-        this.horarioAula = horarioAula;
-        this.professor = professor;
-        this.coordenador = coordenador;
-        this.cargaHoraria = cargaHoraria;
+    public Disciplina() {
+        this.alunos = new ArrayList<>();
+        this.notas = new ArrayList<>();
     }
-
+    
     /*public void addProfessor(Funcionarios professor) {
         professores.add(professor);
     }
@@ -135,9 +130,12 @@ public class Disciplina{
         this.cargaHoraria = cargaHoraria;
     }
 
-    @Override
-    public String toString() {
-        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + ", alunos=" + alunos + '}';
+    public int getQtdFaltas() {
+        return qtdFaltas;
     }
 
+    public void setQtdFaltas(int qtdFaltas) {
+        this.qtdFaltas = qtdFaltas;
+    }
+    
 }
