@@ -37,9 +37,9 @@ public class DisciplinasPersistence{
     }
     
     //retorna lista com todos as disciplinas no arquivo
-    public static HashMap<String, Disciplina> findAll() {
+    public static Map<String, Disciplina> findAll() {
         
-        HashMap<String, Disciplina> map = new HashMap<>();
+        Map<String, Disciplina> map = new HashMap<>();
     
         String csv = Arquivo.leitura(PATH);
         
@@ -115,7 +115,7 @@ public class DisciplinasPersistence{
     
     //recebe chave d adiciplina a ser removida
     public static void removeDisciplina(String codigo){
-        HashMap<String, Disciplina> map = findAll();
+        Map<String, Disciplina> map = findAll();
         
         try{    
             if(map.remove(codigo) == null){
@@ -131,7 +131,7 @@ public class DisciplinasPersistence{
     
     //rcebe disciplina ja modificada e muda no arquivo
     public static void modificaDisciplina(Disciplina modificada){
-        HashMap<String, Disciplina> map = findAll();
+        Map<String, Disciplina> map = findAll();
         
         try{
            map.replace(modificada.getCodigo(), modificada); 
