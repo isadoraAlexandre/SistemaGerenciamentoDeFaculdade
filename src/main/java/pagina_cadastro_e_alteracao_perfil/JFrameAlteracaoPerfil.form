@@ -305,16 +305,16 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="label1Estado" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelCidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelCep" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="labelCep" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCidade" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textFieldCidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textFieldEstao" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="textFieldCep" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="textFieldCidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="textFieldEstao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>

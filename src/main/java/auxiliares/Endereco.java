@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package auxiliares;
 
-/**
- *
- * @author isinha
- */
 public class Endereco {
     private String rua;
     private String bairro;
@@ -16,7 +8,13 @@ public class Endereco {
     private String cep;
     private String numero;
 
-    public Endereco() {
+    public Endereco(String rua, String bairro, String cidade, String estado, String cep, String numero) {
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+        this.numero = numero;
     }
 
     public String getRua() {

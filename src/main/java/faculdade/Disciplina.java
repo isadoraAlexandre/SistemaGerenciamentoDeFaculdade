@@ -1,42 +1,79 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package faculdade;
+
+import java.util.*;
 import auxiliares.Hora;
+import usuarios.Aluno;
 import usuarios.Funcionarios;
 import usuarios.ProfessorCoordenador;
-import usuarios.Aluno;
-import java.util.*;
 
-
-/**
- *
- * @author isinha
- */
-public class Disciplina {
+public class Disciplina{
+    
     protected String nome;
     protected int qtdVagas;
     protected String codigo;
-    protected String tipo; // Eletiva ou Obrigatória
-    protected String departamento;
-    protected String sala;
-    protected Hora horarioAula;
-    protected List<Funcionarios> professores;
-    protected ProfessorCoordenador coordenador;
-    protected Hora cargaHoraria; // em horas
-    protected List<Aluno> alunos;
+    protected float horarioAula;
+    protected String professor;
+    protected String coordenador;
+    protected float cargaHoraria;
     
-    protected int qtdAulas;
+    protected List<Aluno> alunos;
     protected int qtdFaltas;
-    protected String planoDeCurso;
-    protected List<Float> notas; // Notas podem ser armazenadas como uma lista de valores
-    protected List<String> turmas; // Lista de turmas que estão cursando essa disciplina
-    protected String semestreLetivo;
+    protected List<Double> notas;
 
     public Disciplina() {
+        this.alunos = new ArrayList<>();
+        this.notas = new ArrayList<>();
     }
 
+    /*public void addProfessor(Funcionarios professor) {
+        professores.add(professor);
+    }
+
+    public void removeProfessor(Funcionarios professor) {
+        professores.remove(professor);
+    }
+
+    public Funcionarios getProfessor(int index) {
+        return professores.get(index);
+    }*/
+
+    public void addAluno(Aluno aluno) {
+        alunos.add(aluno);
+    }
+
+    public void removeAluno(Aluno aluno) {
+        alunos.remove(aluno);
+    }
+
+    public Aluno getAluno(int index) {
+        return alunos.get(index);
+    }
+
+    public void addNota(Double nota) {
+        notas.add(nota);
+    }
+
+    public void removeNota(Double nota) {
+        notas.remove(nota);
+    }
+
+    public Double getNota(int index) {
+        return notas.get(index);
+    }
+    
+    /*public void addTurma(String turma) {
+        turmas.add(turma);
+    }
+
+    public void removeTurma(String turma) {
+        turmas.remove(turma);
+    }
+
+    public String getTurma(int index) {
+        return turmas.get(index);
+    }*/
+
+    
     public String getNome() {
         return nome;
     }
@@ -61,76 +98,36 @@ public class Disciplina {
         this.codigo = codigo;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public String getSala() {
-        return sala;
-    }
-
-    public void setSala(String sala) {
-        this.sala = sala;
-    }
-
-    public Hora getHorarioAula() {
+    public float getHorarioAula() {
         return horarioAula;
     }
 
-    public void setHorarioAula(Hora horarioAula) {
+    public void setHorarioAula(float horarioAula) {
         this.horarioAula = horarioAula;
     }
 
-    public List<Funcionarios> getProfessores() {
-        return professores;
+    public String getProfessor() {
+        return professor;
     }
 
-    public void setProfessores(List<Funcionarios> professores) {
-        this.professores = professores;
+    public void setProfessor(String professor) {
+        this.professor = professor;
     }
 
-    public ProfessorCoordenador getCoordenador() {
+    public String getCoordenador() {
         return coordenador;
     }
 
-    public void setCoordenador(ProfessorCoordenador coordenador) {
+    public void setCoordenador(String coordenador) {
         this.coordenador = coordenador;
     }
 
-    public Hora getCargaHoraria() {
+    public float getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(Hora cargaHoraria) {
+    public void setCargaHoraria(float cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
-    }
-
-    public List<Aluno> getAlunos() {
-        return alunos;
-    }
-
-    public void setAlunos(List<Aluno> alunos) {
-        this.alunos = alunos;
-    }
-
-    public int getQtdAulas() {
-        return qtdAulas;
-    }
-
-    public void setQtdAulas(int qtdAulas) {
-        this.qtdAulas = qtdAulas;
     }
 
     public int getQtdFaltas() {
@@ -141,35 +138,9 @@ public class Disciplina {
         this.qtdFaltas = qtdFaltas;
     }
 
-    public String getPlanoDeCurso() {
-        return planoDeCurso;
+    @Override
+    public String toString() {
+        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + '}';
     }
 
-    public void setPlanoDeCurso(String planoDeCurso) {
-        this.planoDeCurso = planoDeCurso;
-    }
-
-    public List<Float> getNotas() {
-        return notas;
-    }
-
-    public void setNotas(List<Float> notas) {
-        this.notas = notas;
-    }
-
-    public List<String> getTurmas() {
-        return turmas;
-    }
-
-    public void setTurmas(List<String> turmas) {
-        this.turmas = turmas;
-    }
-
-    public String getSemestreLetivo() {
-        return semestreLetivo;
-    }
-
-    public void setSemestreLetivo(String semestreLetivo) {
-        this.semestreLetivo = semestreLetivo;
-    }
 }

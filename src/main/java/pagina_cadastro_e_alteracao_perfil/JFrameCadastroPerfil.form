@@ -506,10 +506,8 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Component id="jTextFieldBanco" min="-2" pref="114" max="-2" attributes="0"/>
-                              <Component id="jLabelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jTextFieldBanco" min="-2" pref="114" max="-2" attributes="0"/>
+                          <Component id="jLabelBanco" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="labelDadosBancarios" min="-2" pref="181" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
