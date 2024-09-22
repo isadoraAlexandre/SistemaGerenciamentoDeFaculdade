@@ -24,7 +24,7 @@ public class Disciplina{
         this.alunos = new ArrayList<>();
         this.notas = new ArrayList<>();
     }
-    
+
     /*public void addProfessor(Funcionarios professor) {
         professores.add(professor);
     }
@@ -137,5 +137,9 @@ public class Disciplina{
     public void setQtdFaltas(int qtdFaltas) {
         this.qtdFaltas = qtdFaltas;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + '}';
+    }
 }

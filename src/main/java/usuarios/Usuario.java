@@ -4,15 +4,19 @@ import java.util.regex.Pattern;
 import auxiliares.Data;
 import auxiliares.Endereco;
 
-public class Usuario {
+public abstract class Usuario {
     protected String nome;
     protected String senha;
     protected String usuario;//usar cpf
     protected String cpf;
-    protected String rg;
     protected Data dataNascimento;
+    protected String dataStr; //gambiarra pra usar no banco, fazer funcao parser string->Data e data->string
     protected String matricula; //gerar random
     protected Endereco endereco;
+    protected String rua;//tbm gambiarra, fazer parser tbm
+    protected String bairro;
+    protected String cidade;
+    protected String numero;//termina aqui a gambiarra
     protected String email;
     protected String celular;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
@@ -55,15 +59,7 @@ public class Usuario {
             throw new IllegalArgumentException("CPF inválido");
         }
     }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
+    
     public Data getDataNascimento() {
         return dataNascimento;
     }
@@ -120,6 +116,46 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getDataStr() {
+        return dataStr;
+    }
+
+    public void setDataStr(String dataStr) {
+        this.dataStr = dataStr;
+    }
+    
     private boolean isValidCPF(String cpf) {
         return cpf != null && cpf.matches("\\d{11}");
     }
@@ -133,4 +169,10 @@ public class Usuario {
     private boolean isValidCelular(String celular) {
         return celular != null && celular.matches("\\d{10,11}");
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", senha=" + senha + ", usuario=" + usuario + ", cpf=" + cpf + ", matricula=" + matricula + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", email=" + email + ", celular=" + celular + ", tipoUsuario=" + tipoUsuario + '}';
+    }
+
 }
