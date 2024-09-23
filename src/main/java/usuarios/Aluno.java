@@ -1,6 +1,5 @@
 package usuarios;
 
-
 import faculdade.*;
 import java.util.ArrayList;
 import java.util.List;
