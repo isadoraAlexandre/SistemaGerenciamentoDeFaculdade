@@ -16,33 +16,33 @@ import exceptions.RuaException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import persistence.AlunoPersistence;
-import usuarios.Aluno;
+import persistence.UsuarioPersistence;
+import usuarios.Usuario;
 
 /**
  *
  * @author isinha
  */
-public class AlteracaoPerfilAluno extends javax.swing.JFrame {
-    private final Aluno aluno;
+public class AlteracaoPerfil extends javax.swing.JFrame {
+    private final Usuario usuario;
     
     /**
      * Creates new form NewJFrame
      */
-    public AlteracaoPerfilAluno() {
+    public AlteracaoPerfil() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.aluno = new Aluno();
+        this.usuario = new Usuario();
         peencheFields();
     }
     
     private void peencheFields(){
                 
-        textFieldEmail.setText(aluno.getEmail());
-        textFieldCelular.setText(aluno.getCelular());
-        textFieldBairro.setText(aluno.getBairro());
-        textFieldCidade.setText(aluno.getCidade());
-        textFieldNumero.setText(aluno.getNumero());
+        textFieldEmail.setText(usuario.getEmail());
+        textFieldCelular.setText(usuario.getCelular());
+        textFieldBairro.setText(usuario.getBairro());
+        textFieldCidade.setText(usuario.getCidade());
+        textFieldNumero.setText(usuario.getNumero());
     }
     
     /**
@@ -79,11 +79,11 @@ public class AlteracaoPerfilAluno extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Alteração de Dados");
-        setMaximumSize(new java.awt.Dimension(1000, 700));
+        setBackground(new java.awt.Color(242, 247, 251));
         setMinimumSize(new java.awt.Dimension(1000, 700));
-        setPreferredSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
+        panelExterno.setBackground(new java.awt.Color(242, 247, 251));
         panelExterno.setMaximumSize(new java.awt.Dimension(1000, 700));
         panelExterno.setMinimumSize(new java.awt.Dimension(1000, 700));
         panelExterno.setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -314,14 +314,14 @@ public class AlteracaoPerfilAluno extends javax.swing.JFrame {
         if(JOptionPane.showConfirmDialog(rootPane, "Alterar informações?", "Alterar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             
             try{
-                this.aluno.setEmail(textFieldEmail.getText());
-                this.aluno.setCelular(textFieldCelular.getText());
-                this.aluno.setBairro(textFieldBairro.getText());
-                this.aluno.setRua(textFieldRua.getText());
-                this.aluno.setCidade(textFieldCidade.getText());
-                this.aluno.setNumero(textFieldNumero.getText());
+                this.usuario.setEmail(textFieldEmail.getText());
+                this.usuario.setCelular(textFieldCelular.getText());
+                this.usuario.setBairro(textFieldBairro.getText());
+                this.usuario.setRua(textFieldRua.getText());
+                this.usuario.setCidade(textFieldCidade.getText());
+                this.usuario.setNumero(textFieldNumero.getText());
 
-                if(AlunoPersistence.modificaAluno(aluno)){
+                if(UsuarioPersistence.modificaUsuario(usuario)){
                     JOptionPane.showMessageDialog(rootPane, "Alteração realizada");
                     this.dispose();
                 }
@@ -331,7 +331,7 @@ public class AlteracaoPerfilAluno extends javax.swing.JFrame {
             } catch(EmailException | CelularException | RuaException | BairroException | CidadeException | NumeroException e){
                 JOptionPane.showMessageDialog(panelExterno, e.getMessage());
             } catch (CpfException | NomeException | DataException ex) {
-                Logger.getLogger(AlteracaoPerfilAluno.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AlteracaoPerfil.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
@@ -358,13 +358,13 @@ public class AlteracaoPerfilAluno extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlteracaoPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlteracaoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlteracaoPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlteracaoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlteracaoPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlteracaoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlteracaoPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlteracaoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -372,7 +372,7 @@ public class AlteracaoPerfilAluno extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlteracaoPerfilAluno().setVisible(true);
+                new AlteracaoPerfil().setVisible(true);
             }
         });
     }

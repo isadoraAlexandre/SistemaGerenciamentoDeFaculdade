@@ -5,7 +5,7 @@ import auxiliares.Data;
 import exceptions.*;
 
 
-public abstract class Usuario {
+public class Usuario {
 
     protected String nome;
     protected String senha;

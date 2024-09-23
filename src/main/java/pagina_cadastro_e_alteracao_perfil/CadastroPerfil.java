@@ -6,22 +6,22 @@ package pagina_cadastro_e_alteracao_perfil;
 
 import exceptions.*;
 import javax.swing.JOptionPane;
-import persistence.AlunoPersistence;
-import usuarios.Aluno;
+import persistence.UsuarioPersistence;
+import usuarios.Usuario;
 
 /**
  *
  * @author isinha
  */
-public class CadastroPerfilAluno extends javax.swing.JFrame {
-    private final Aluno aluno;
+public class CadastroPerfil extends javax.swing.JFrame {
+    private final Usuario user;
     /**
      * Creates new form NewJFrame1
      */
-    public CadastroPerfilAluno() {
+    public CadastroPerfil() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.aluno = new Aluno();
+        this.user = new Usuario();
     }
 
     /**
@@ -66,7 +66,6 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocation(new java.awt.Point(0, 0));
-        setMaximumSize(new java.awt.Dimension(1000, 700));
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setName("CadastroPerfil"); // NOI18N
         setResizable(false);
@@ -138,7 +137,7 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
         labelMatricula.setText("Matrícula:");
 
         showMatricula.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        showMatricula.setText("jLabel2");
+        showMatricula.setText("matricula");
         showMatricula.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 showMatriculaAncestorAdded(evt);
@@ -236,7 +235,7 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
 
         labelCadastroPerfil.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 24)); // NOI18N
         labelCadastroPerfil.setForeground(new java.awt.Color(28, 39, 95));
-        labelCadastroPerfil.setText("Cadastro do Aluno");
+        labelCadastroPerfil.setText("Cadastro do Usuario");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +252,7 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
         });
 
         labelUser.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
-        labelUser.setText("jLabel1");
+        labelUser.setText("user");
         labelUser.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 labelUserAncestorAdded(evt);
@@ -283,13 +282,11 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
             .addGroup(panelExternoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelExternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelExternoLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelExternoLayout.createSequentialGroup()
                         .addComponent(btnCancelar)
-                        .addGap(49, 49, 49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCadastrar))
-                    .addGroup(panelExternoLayout.createSequentialGroup()
-                        .addComponent(labelCadastroPerfil)
-                        .addGap(751, 751, 751)))
+                    .addComponent(labelCadastroPerfil, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelExternoLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
@@ -342,17 +339,17 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
         if(JOptionPane.showConfirmDialog(rootPane, "Cadastrar informações?", "Cadastrar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             
             try{
-                this.aluno.setNome(textFieldNome.getText());
-                this.aluno.setEmail(textFieldEmail.getText());
-                this.aluno.setCpf(jTextFieldCpf.getText());
-                this.aluno.setCelular(textFieldCelular.getText());
-                this.aluno.setDataStr(textFieldDataNascimento.getText());
-                this.aluno.setBairro(textFieldBairro.getText());
-                this.aluno.setRua(textFieldRua.getText());
-                this.aluno.setCidade(textFieldCidade.getText());
-                this.aluno.setNumero(textFieldNumero.getText());
+                this.user.setNome(textFieldNome.getText());
+                this.user.setEmail(textFieldEmail.getText());
+                this.user.setCpf(jTextFieldCpf.getText());
+                this.user.setCelular(textFieldCelular.getText());
+                this.user.setDataStr(textFieldDataNascimento.getText());
+                this.user.setBairro(textFieldBairro.getText());
+                this.user.setRua(textFieldRua.getText());
+                this.user.setCidade(textFieldCidade.getText());
+                this.user.setNumero(textFieldNumero.getText());
 
-                if(AlunoPersistence.insereAluno(this.aluno)){
+                if(UsuarioPersistence.insereUsuario(this.user)){
                     JOptionPane.showMessageDialog(rootPane, "Cadastro realizado");
                     this.dispose();
                 }
@@ -385,11 +382,11 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_labelUserComponentShown
 
     private void labelUserAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_labelUserAncestorAdded
-        labelUser.setText(aluno.getUsuario());
+        labelUser.setText(user.getUsuario());
     }//GEN-LAST:event_labelUserAncestorAdded
 
     private void showMatriculaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_showMatriculaAncestorAdded
-        showMatricula.setText(aluno.getMatricula());
+        showMatricula.setText(user.getMatricula());
     }//GEN-LAST:event_showMatriculaAncestorAdded
 
     /**
@@ -409,14 +406,62 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroPerfilAluno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -437,7 +482,7 @@ public class CadastroPerfilAluno extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroPerfilAluno().setVisible(true);
+                new CadastroPerfil().setVisible(true);
             }
         });
     }
