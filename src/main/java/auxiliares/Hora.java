@@ -1,23 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package auxiliares;
 
-/**
- *
- * @author isinha
- */
-public class Hora {
-    private int hh;
-    private int mm;
+import java.util.concurrent.ExecutionException;
 
-    public Hora(int hh, int mm) {
-        this.hh = hh;
-        this.mm = mm;
+public class Hora {
+    private int dia; //1=seg, 2=ter, ..., 5=sex, nao tem aula no sabado e domingo
+    private int hora;
+    private int min;
+    
+
+    public Hora(int dia, int hora, int min) {
+        this.dia = dia;
+        this.hora = hora;
+        this.min = min;
     }
     
-    public void imprime(){
-        System.out.println(this.hh + ":" + this.mm);
+    //recebe string ou inteiros, o formato q for mais facil qnd ler no textfield da interface
+    /*public boolean validaHorario(String inicio, String fim){
+        if()
+    }*/
+    
+    public boolean validaDia(int dia){
+        if(dia <= 0 || dia > 5)
+            return false;
+        return true;
     }
+    
+    //recebe string ou inteiros, o formato q for mais facil qnd ler no textfield da interface
+    /*public float calculaHoras(String inicio, String fim) throws Exception{
+        
+    }*/
 }

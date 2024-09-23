@@ -1,34 +1,30 @@
 package usuarios;
 
-import auxiliares.*;
-import faculdade.*;
-import java.util.*;
+import java.util.regex.Pattern;
+import auxiliares.Data;
+import auxiliares.Endereco;
 
 public class Usuario {
+
     protected String nome;
     protected String senha;
-    protected String usuario;
+    protected String usuario;//usar cpf
     protected String cpf;
-    protected String rg;
     protected Data dataNascimento;
-    protected String etnia;
-    protected String estadoCivil;
+    protected String dataStr; //gambiarra pra usar no banco, fazer funcao parser string->Data e data->string
     protected String matricula; //gerar random
     protected Endereco endereco;
+    protected String rua;//tbm gambiarra, fazer parser tbm
+    protected String bairro;
+    protected String cidade;
+    protected String numero;//termina aqui a gambiarra
     protected String email;
     protected String celular;
-    protected String genero;
-    protected String departamento; //eh necessario?
-    protected boolean portadorDeficiencia;
-    protected Data dataIngresso;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
-    protected DadosBancarios dadosBancarios;
-    protected List<Disciplina> disciplinas;
 
-    //Construtor, getters e setters
-    public Usuario() {
+    public Usuario(){
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -58,39 +54,19 @@ public class Usuario {
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        if (isValidCPF(cpf)) {
+            this.cpf = cpf;
+        } else {
+            throw new IllegalArgumentException("CPF inválido");
+        }
     }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
+    
     public Data getDataNascimento() {
         return dataNascimento;
     }
 
     public void setDataNascimento(Data dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    public String getEtnia() {
-        return etnia;
-    }
-
-    public void setEtnia(String etnia) {
-        this.etnia = etnia;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
     }
     
     public String getMatricula() {
@@ -114,7 +90,11 @@ public class Usuario {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (isValidEmail(email)) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Email inválido");
+        }
     }
 
     public String getCelular() {
@@ -122,39 +102,11 @@ public class Usuario {
     }
 
     public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public boolean isPortadorDeficiencia() {
-        return portadorDeficiencia;
-    }
-
-    public void setPortadorDeficiencia(boolean portadorDeficiencia) {
-        this.portadorDeficiencia = portadorDeficiencia;
-    }
-
-    public Data getDataIngresso() {
-        return dataIngresso;
-    }
-
-    public void setDataIngresso(Data dataIngresso) {
-        this.dataIngresso = dataIngresso;
+        if (isValidCelular(celular)) {
+            this.celular = celular;
+        } else {
+            throw new IllegalArgumentException("Celular inválido");
+        }
     }
 
     public int getTipoUsuario() {
@@ -165,20 +117,63 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public DadosBancarios getDadosBancarios() {
-        return dadosBancarios;
+    public String getRua() {
+        return rua;
     }
 
-    public void setDadosBancarios(DadosBancarios dadosBancarios) {
-        this.dadosBancarios = dadosBancarios;
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
-    public List<Disciplina> getDisciplinas() {
-        return disciplinas;
+    public String getBairro() {
+        return bairro;
     }
 
-    public void setDisciplinas(List<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getDataStr() {
+        return dataStr;
+    }
+
+    public void setDataStr(String dataStr) {
+        this.dataStr = dataStr;
     }
     
+    private boolean isValidCPF(String cpf) {
+        return cpf != null && cpf.matches("\\d{11}");
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pat = Pattern.compile(emailRegex);
+        return email != null && pat.matcher(email).matches();
+    }
+
+    private boolean isValidCelular(String celular) {
+        return celular != null && celular.matches("\\d{10,11}");
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", senha=" + senha + ", usuario=" + usuario + ", cpf=" + cpf + ", matricula=" + matricula + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", email=" + email + ", celular=" + celular + ", tipoUsuario=" + tipoUsuario + '}';
+    }
+
 }
