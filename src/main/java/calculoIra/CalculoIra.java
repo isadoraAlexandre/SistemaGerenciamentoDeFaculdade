@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package calculoIra;
+import exceptions.HoraException;
+import exceptions.NomeException;
 import javax.swing.JOptionPane;
 import usuarios.*;
 
@@ -17,6 +19,7 @@ public class CalculoIra extends javax.swing.JFrame {
      */
     public CalculoIra() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -51,11 +54,6 @@ public class CalculoIra extends javax.swing.JFrame {
         jLabel1.setText("Calcula IRA");
 
         btnCalculaIra.setText("Calcular");
-        btnCalculaIra.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCalculaIraMouseClicked(evt);
-            }
-        });
         btnCalculaIra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalculaIraActionPerformed(evt);
@@ -135,16 +133,16 @@ public class CalculoIra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCalculaIraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalculaIraMouseClicked
-        Aluno a = new Aluno();
-        float ira = a.calculaIra();
-        
-        JOptionPane.showMessageDialog(rootPane, ira);
-    }//GEN-LAST:event_btnCalculaIraMouseClicked
-
     private void btnCalculaIraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculaIraActionPerformed
         Aluno a = new Aluno();
-        float ira = a.calculaIra();
+        float ira = 0;
+        try {
+            ira = a.calculaIra();
+        } catch (HoraException ex) {
+            //Logger.getLogger(CalculoIra.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NomeException ex) {
+            //Logger.getLogger(CalculoIra.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         JOptionPane.showMessageDialog(rootPane, "IRA calculado: " + ira);
     }//GEN-LAST:event_btnCalculaIraActionPerformed

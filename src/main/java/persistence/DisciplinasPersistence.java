@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.*;
 import faculdade.Disciplina;
 import java.io.*;
 import java.util.*;
@@ -37,7 +38,7 @@ public class DisciplinasPersistence{
     }
     
     //retorna lista com todos as disciplinas no arquivo
-    public static Map<String, Disciplina> findAll() {
+    public static Map<String, Disciplina> findAll() throws HoraException, NomeException {
         
         Map<String, Disciplina> map = new HashMap<>();
     
@@ -63,7 +64,7 @@ public class DisciplinasPersistence{
                         disciplina.setCodigo(codigo);
                         disciplina.setNome(nome);
                         disciplina.setProfessor(professor);
-                        disciplina.setHorarioAula(parser(horario));
+                        disciplina.setHorarioAula(horario);
                         disciplina.setCargaHoraria(parser(cargaH));
                         disciplina.setCoordenador(coordenador);
                         disciplina.setQtdVagas(parser2(vagas));
@@ -74,8 +75,10 @@ public class DisciplinasPersistence{
             } else{
                 System.out.println("ainda nao ha registros");
             }
-        } catch(NullPointerException en){
-            System.out.println("Erro: " + en.getMessage());
+        } catch(NullPointerException e){
+            System.out.println("Erro: " + e.getMessage());
+        } catch (CodigoException | HoraException | NomeException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Erro findAll: " + e.getMessage());
         }
         
         return map;
@@ -114,7 +117,7 @@ public class DisciplinasPersistence{
     }
     
     //recebe chave d adiciplina a ser removida
-    public static void removeDisciplina(String codigo){
+    public static void removeDisciplina(String codigo) throws HoraException, NomeException{
         Map<String, Disciplina> map = findAll();
         
         try{    
@@ -130,7 +133,7 @@ public class DisciplinasPersistence{
     }
     
     //rcebe disciplina ja modificada e muda no arquivo
-    public static void modificaDisciplina(Disciplina modificada){
+    public static void modificaDisciplina(Disciplina modificada) throws HoraException, NomeException{
         Map<String, Disciplina> map = findAll();
         
         try{
