@@ -136,10 +136,10 @@ public class CalculoIra extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCalculaIraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalculaIraMouseClicked
-        /*Aluno a = new Aluno();
+        Aluno a = new Aluno();
         float ira = a.calculaIra();
         
-        JOptionPane.showMessageDialog(rootPane, ira);*/
+        JOptionPane.showMessageDialog(rootPane, ira);
     }//GEN-LAST:event_btnCalculaIraMouseClicked
 
     private void btnCalculaIraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculaIraActionPerformed
