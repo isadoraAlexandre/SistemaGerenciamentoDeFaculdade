@@ -128,7 +128,7 @@ public class visualizacaoPerfil extends JFrame {
         textField.setOpaque(false);
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
         textField.setForeground(Color.BLACK);
-        textField.setPreferredSize(new Dimension(350, 30)); // Aumenta a largura dos campos
+        textField.setPreferredSize(new Dimension(350, 40)); // Aumenta a largura dos campos
 
         // Criando um painel para aplicar o sombreado
         JTextField shadowPanel = new JTextField(); // Alterado para JPanel
