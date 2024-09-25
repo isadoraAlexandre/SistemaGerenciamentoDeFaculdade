@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import auxiliares.Data;
 import auxiliares.Endereco;
+import exceptions.NomeException;
+
+import java.util.Scanner;
 
 public class Aluno extends Usuario {
     protected Curso curso;
@@ -22,6 +25,11 @@ public class Aluno extends Usuario {
     protected String horasComputadas;
     protected String semestreIngresso;
     protected String turnoCurso;
+    protected List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+    protected String rg;
+    protected String genero;
+    protected String departamento;
+    protected Endereco endereco;
 
 
     public Aluno(String nome, String senha, String usuario, String cpf, String rg, Data dataNascimento, String etnia, String estadoCivil, Endereco endereco, String email, String celular, String genero, String departamento,boolean portadorDeficiencia, Data dataIngresso, Curso curso, String dadosBancarios, String historico, String horasComputadas, String semestreIngresso, String turnoCurso) {
@@ -48,13 +56,14 @@ public class Aluno extends Usuario {
     
     
     public String leitura(){
-        Scanner teclado = new Scanner(System.in);
+        Scanner teclado;
+        teclado = new Scanner(System.in);
         String t = teclado.nextLine();
         
         return t;
     }
 
-    public void modificaNome(){
+    public void modificaNome() throws NomeException{
         System.out.println("digite novo nome: ");
         String newName = leitura();
         setNome(newName);
