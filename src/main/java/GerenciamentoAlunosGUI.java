@@ -1,5 +1,11 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import exceptions.CpfException;
+import exceptions.DataException;
+import exceptions.NomeException;
+import usuarios.Aluno;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener; 
 import java.awt.*;
@@ -46,10 +52,18 @@ public class GerenciamentoAlunosGUI {
         JPanel panel = new JPanel(new BorderLayout());
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
-        String[] columnNames = {"Usuário", "Nome", "CPF", "Data de Nascimento", "Matrícula", "Endereço", "Email", "Celular", "Gênero", "Portador de deficiência", "Tipo de usuário", "Dados bancários", "Disciplinas", "CRUD informações pessoais", "Valida informações de criação", "Histórico", "Horas Computadas", "Curso", "Semestre de Ingresso", "Turno do curso"};
+        String[] columnNames = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:"};
         Object[][] data = {};
 
-        tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new DefaultTableModel(data, columnNames){
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+        };
+
         table = new JTable(tableModel);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -142,7 +156,7 @@ public class GerenciamentoAlunosGUI {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        String[] labels = {"Usuário:", "Nome:", "CPF:", "Data de Nascimento:", "Matrícula:", "Endereço:", "Email:", "Celular:", "Gênero:", "Portador de deficiência:", "Tipo de usuário:", "Dados bancários:", "Disciplinas:", "CRUD informações pessoais:", "Valida informações de criação:", "Histórico:", "Horas Computadas:", "Curso:", "Semestre de Ingresso:", "Turno do curso:"};
+        String[] labels = { "Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:" };
         JTextField[] fields = new JTextField[labels.length];
 
         for (int i = 0; i < labels.length; i++) {
@@ -169,19 +183,42 @@ public class GerenciamentoAlunosGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (rowIndex == null) {
-                    String[] novoAluno = new String[labels.length];
-                    for (int i = 0; i < fields.length; i++) {
-                        novoAluno[i] = fields[i].getText();
-                    }
-                    tableModel.addRow(novoAluno);
-                } else {
-                    for (int i = 0; i < labels.length; i++) {
-                        String valorNovo = fields[i].getText();
-                        String valorAntigo = (String) tableModel.getValueAt(rowIndex, i);
+                    try{
+                        Aluno novoAluno = new Aluno();
+                        novoAluno.setMatricula(fields[0].getText());
+                        novoAluno.setNome(fields[1].getText());
+                        novoAluno.setCpf(fields[2].getText());
+                        novoAluno.setDataStr(fields[3].getText());
+                        novoAluno.setCurso(fields[4].getText());
                         
-                        if (!valorNovo.equals(valorAntigo)) {
-                            tableModel.setValueAt(valorNovo, rowIndex, i);
+                        String [] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCurso()};
+                        tableModel.addRow(aluno);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(frame, ex.getMessage());
+                    }
+                } else {
+                    String valorNovo[] = new String[labels.length];
+                    String valorAntigo[] = new String[labels.length];
+                    for (int i = 0; i < labels.length; i++) {
+                        valorNovo[i] = fields[i].getText();
+                        valorAntigo[i] = (String) tableModel.getValueAt(rowIndex, i);
+                        
+                        if (!valorNovo[i].equals(valorAntigo[i])) {
+                            valorAntigo[i] = valorNovo[i];
                         }
+                    }
+                    try{
+                        Aluno aluno = new Aluno();
+                        aluno.setMatricula(valorAntigo[0]);
+                        aluno.setNome(valorAntigo[1]);
+                        aluno.setCpf(valorAntigo[2]);
+                        aluno.setDataStr(valorAntigo[3]);
+                        aluno.setCurso(valorAntigo[4]);
+                        for(int i=0; i<labels.length; i++){
+                            tableModel.setValueAt(valorNovo[i], rowIndex, i);
+                        } 
+                    } catch (CpfException | NomeException | DataException ex) {
+                        JOptionPane.showMessageDialog(frame, ex.getMessage());
                     }
                 }
                 salvarDadosNoCSV(); 
