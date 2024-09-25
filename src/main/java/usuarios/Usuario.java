@@ -1,49 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package usuarios;
 
-import auxiliares.DadosBancarios;
-import auxiliares.Endereco;
+import java.util.regex.Pattern;
 import auxiliares.Data;
+import exceptions.*;
 
 
-
-/**
- *
- * @author isinha
- */
 public class Usuario {
+
     protected String nome;
     protected String senha;
-    protected String usuario;
+    protected String usuario;//usar cpf
     protected String cpf;
-    protected String rg;
     protected Data dataNascimento;
-    protected String etnia;
-    protected String estadoCivil;
-    protected String matricula; //gerar random
-    protected Endereco endereco;
+    protected String dataStr; //gambiarra pra usar no banco
+    protected String matricula; //formato 2024XXX
+    protected String rua;//tbm gambiarra
+    protected String bairro;
+    protected String cidade;
+    protected String numero;//termina aqui a gambiarra
     protected String email;
     protected String celular;
-    protected String genero;
-    protected String departamento; //eh necessario?
-    protected boolean portadorDeficiencia;
-    protected Data dataIngresso;
     protected int tipoUsuario; // 0 - aluno, 1 - professor, 2 - prof coord
-    protected DadosBancarios dadosBancarios;
-    //protected List<Disciplina> disciplinas;
-
-    //Construtor, getters e setters
-    public Usuario() {
+    protected static int cont = 2024000;
+    
+    public Usuario(){
+        geraMatricula();
     }
     
+    private void geraMatricula() {
+        cont++;
+        
+        String matricula;
+        switch (this.tipoUsuario) {
+            case 0:
+                matricula = cont + "A"; //aluno
+                break;
+            case 1:
+                matricula = cont + "P"; //professor
+                break;
+            case 2:
+                matricula = cont + "C"; //coordenador
+                break;
+            default:
+                throw new AssertionError();
+        }
+        
+        this.matricula = matricula;
+    }
+
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws NomeException{
+        nome = nome.trim();
+        
+        if(!isValidNome(nome))
+            throw new NomeException();
+        
         this.nome = nome;
     }
 
@@ -67,18 +81,16 @@ public class Usuario {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpf(String cpf) throws CpfException{
+        cpf = cpf.trim();
+        
+        if (isValidCPF(cpf)) {
+            this.cpf = cpf;
+        } else {
+            throw new CpfException();
+        }
     }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
+    
     public Data getDataNascimento() {
         return dataNascimento;
     }
@@ -86,85 +98,41 @@ public class Usuario {
     public void setDataNascimento(Data dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-
-    public String getEtnia() {
-        return etnia;
-    }
-
-    public void setEtnia(String etnia) {
-        this.etnia = etnia;
-    }
-
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
     
     public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
+    public void setMatricula(String matricula){
         this.matricula = matricula;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) throws EmailException{
+        email = email.trim();
+        
+        if (isValidEmail(email)) {
+            this.email = email;
+        } else {
+            throw new EmailException();
+        }
     }
 
     public String getCelular() {
         return celular;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public boolean isPortadorDeficiencia() {
-        return portadorDeficiencia;
-    }
-
-    public void setPortadorDeficiencia(boolean portadorDeficiencia) {
-        this.portadorDeficiencia = portadorDeficiencia;
-    }
-
-    public Data getDataIngresso() {
-        return dataIngresso;
-    }
-
-    public void setDataIngresso(Data dataIngresso) {
-        this.dataIngresso = dataIngresso;
+    public void setCelular(String celular) throws CelularException{
+        celular = celular.trim();
+        
+        if (isValidCelular(celular)) {
+            this.celular = celular;
+        } else {
+            throw new CelularException();
+        }
     }
 
     public int getTipoUsuario() {
@@ -174,8 +142,145 @@ public class Usuario {
     public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) throws RuaException{
+        rua = rua.trim();
+        
+        if(!isValidNome(rua))
+            throw new RuaException();
+        
+        this.rua = rua;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) throws BairroException{
+        bairro = bairro.trim();
+        
+        if(!isValidNomeGererico(bairro))
+            throw new BairroException();
+        
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) throws CidadeException{
+        cidade = cidade.trim();
+        
+        if(!isValidNomeGererico(cidade))
+            throw new CidadeException();
+        
+        this.cidade = cidade;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) throws NumeroException{
+        numero = numero.trim();
+        
+        if(!isValidNumero(numero))
+            throw new NumeroException();
+        
+        this.numero = numero;
+    }
+
+    public String getDataStr() {
+        return dataStr;
+    }
+
+    public void setDataStr(String dataStr) throws DataException{
+        dataStr = dataStr.replaceAll("\s", "");
+        
+        if(!isValidDataNascimento(dataStr))
+            throw new DataException();
+        
+        String[] s = dataStr.split("\\/");
+        int dd = Integer.parseInt(s[0]);
+        int mm = Integer.parseInt(s[1]);
+        int aa = Integer.parseInt(s[2]);
+        
+        if(aa >= 1900 && aa <= 2010){
+            if(mm > 0 && mm <= 12){
+                if(dd >= 0 && dd <= 31){  
+                    switch (mm) {
+                        case 4, 6, 9, 11:
+                            if(dd == 31)
+                                throw new DataException();
+                            break;
+                        case 2:
+                            if(dd > 29 || (dd == 29 && aa % 4 != 0))
+                                throw new DataException();
+                            break;
+                        case 1, 3, 5, 7, 8, 10, 12:
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+                } else
+                    throw new DataException();
+            } else
+                throw new DataException();
+        } else
+            throw new DataException();
+        
+        Data data =  new Data(dd, mm, aa);
+        
+        this.dataNascimento = data;
+        this.dataStr = dataStr;
+    }
     
+    private boolean isValidNome(String nome){
+        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$";
+        Pattern compPattern = Pattern.compile(nomePattern);
+        return (nome != null && compPattern.matcher(nome).matches());
+    }
     
+    private boolean isValidCPF(String cpf) {
+        return cpf != null && cpf.matches("\\d{11}");
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pat = Pattern.compile(emailRegex);
+        return email != null && pat.matcher(email).matches();
+    }
+
+    private boolean isValidCelular(String celular) {
+        return celular != null && celular.matches("\\d{10,11}");
+    }
     
+    private boolean isValidDataNascimento(String data){
+        String dataPattern = "\\d{2}\\/\\d{2}\\/\\d{4}";
+        Pattern compPattern = Pattern.compile(dataPattern);
+        return (data != null && compPattern.matcher(data).matches());
+    }
     
+    private boolean isValidNomeGererico(String nome){
+        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s\\-\\.]+$";
+        Pattern compPattern = Pattern.compile(nomePattern);
+        return (nome != null && compPattern.matcher(nome).matches());
+    }
+    
+    private boolean isValidNumero(String numero){
+        String numPattern = "\\d{1,6}";
+        Pattern compPattern = Pattern.compile(numPattern);
+        return (numero != null && compPattern.matcher(numero).matches());
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", senha=" + senha + ", usuario=" + usuario + ", cpf=" + cpf + ", matricula=" + matricula + ", rua=" + rua + ", bairro=" + bairro + ", cidade=" + cidade + ", numero=" + numero + ", email=" + email + ", celular=" + celular + ", tipoUsuario=" + tipoUsuario + '}';
+    }
+
 }
