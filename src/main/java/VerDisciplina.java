@@ -15,13 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VerDisciplina extends JFrame {
-    
-    private List<Disciplina> getDisciplinas() {
-        Map<String, Disciplina> disciplinasMap = DisciplinasPersistence.findAll();
-        return new ArrayList<>(disciplinasMap.values());
+
+    // obtém todas as disciplinas
+    private List<Disciplina> buscarDisciplinas() {
+        Map<String, Disciplina> mapaDisciplinas = DisciplinasPersistence.findAll();
+        return new ArrayList<>(mapaDisciplinas.values());
     }
 
-    private List<Disciplina> getDisciplinasDisponiveisParaAluno(Aluno aluno) {
+    // busca disciplinas disponíveis para o aluno
+    private List<Disciplina> buscarDisciplinasDisponiveisParaAluno(Aluno aluno) {
         Map<String, Disciplina> todasDisciplinas = DisciplinasPersistence.findAll();
         List<Disciplina> disciplinasDisponiveis = new ArrayList<>();
 
@@ -34,73 +36,72 @@ public class VerDisciplina extends JFrame {
     }
 
     public VerDisciplina(Aluno aluno) {
-        // Configurações da janela
         setTitle("Disciplinas Disponíveis para Matrícula");
         setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Painel principal
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.decode("#F2F7FB"));  // Definindo a cor de fundo
+        // painel principal
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BorderLayout());
+        painelPrincipal.setBackground(Color.decode("#F2F7FB"));
 
-        // Título
-        JLabel titleLabel = new JLabel("Disciplinas Disponíveis para Matrícula", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        titleLabel.setBackground(Color.decode("#F2F7FB")); // Definindo a cor de fundo
-        titleLabel.setOpaque(true);  // Para que a cor de fundo seja visível
-        panel.add(titleLabel, BorderLayout.NORTH);
+        // título
+        JLabel tituloLabel = new JLabel("Disciplinas Disponíveis para Matrícula", JLabel.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        tituloLabel.setBackground(Color.decode("#F2F7FB"));
+        tituloLabel.setOpaque(true);
+        painelPrincipal.add(tituloLabel, BorderLayout.NORTH);
 
-        // Dados das disciplinas obtidas dinamicamente
+        // dados das disciplinas
         String[] colunas = {"Código", "Disciplina", "Carga Horária", "Ação"};
-        List<Disciplina> disciplinas = getDisciplinasDisponiveisParaAluno(aluno);
+        List<Disciplina> disciplinas = buscarDisciplinasDisponiveisParaAluno(aluno);
         Object[][] dados = new Object[disciplinas.size()][4];
 
         for (int i = 0; i < disciplinas.size(); i++) {
-            Disciplina d = disciplinas.get(i);
-            dados[i][0] = d.getCodigo();
-            dados[i][1] = d.getNome();
-            dados[i][2] = d.getCargaHoraria();
-            dados[i][3] = "Matricular-se";  // Botão de matrícula
+            Disciplina disciplina = disciplinas.get(i);
+            dados[i][0] = disciplina.getCodigo();
+            dados[i][1] = disciplina.getNome();
+            dados[i][2] = disciplina.getCargaHoraria();
+            dados[i][3] = "Matricular-se";
         }
 
-        // Modelo da tabela
-        DefaultTableModel model = new DefaultTableModel(dados, colunas) {
+        // modelo da tabela
+        DefaultTableModel modeloTabela = new DefaultTableModel(dados, colunas) {
             public boolean isCellEditable(int row, int column) {
-                return column == 3;
+                return column == 3;  // somente a coluna "Ação" é editável
             }
         };
 
-        // Tabela
-        JTable tabela = new JTable(model);
-        tabela.setBackground(Color.decode("#F2F7FB")); // Definindo a cor de fundo da tabela
+        // tabela
+        JTable tabela = new JTable(modeloTabela);
+        tabela.setBackground(Color.decode("#F2F7FB"));
 
-        // Renderizar botões na coluna "Ação"
         tabela.getColumn("Ação").setCellRenderer((table, value, isSelected, hasFocus, row, column) -> {
-            JButton button = new JButton("Matricular-se");
-            button.addActionListener(new ActionListener() {
+            JButton botaoMatricula = new JButton("Matricular-se");
+            botaoMatricula.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String codigo = table.getValueAt(row, 0).toString();
-                    String disciplina = table.getValueAt(row, 1).toString();
-                    matricularAlunoNaDisciplina(aluno, codigo);
+                    String codigoDisciplina = table.getValueAt(row, 0).toString();
+                    String nomeDisciplina = table.getValueAt(row, 1).toString();
+                    matricularAlunoEmDisciplina(aluno, codigoDisciplina);
                     JOptionPane.showMessageDialog(null,
-                            "Você se matriculou na disciplina: " + disciplina + " (Código: " + codigo + ")");
+                            "Você se matriculou na disciplina: " + nomeDisciplina + " (Código: " + codigoDisciplina + ")");
                 }
             });
-            return button;
+            return botaoMatricula;
         });
 
-        JScrollPane scrollPane = new JScrollPane(tabela);
-        scrollPane.getViewport().setBackground(Color.decode("#F2F7FB"));  // Definindo a cor de fundo do scroll pane
-        panel.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane painelScroll = new JScrollPane(tabela);
+        painelScroll.getViewport().setBackground(Color.decode("#F2F7FB"));
+        painelPrincipal.add(painelScroll, BorderLayout.CENTER);
 
-        // Adicionar painel ao frame
-        add(panel);
+        // adiciona painel ao frame
+        add(painelPrincipal);
     }
 
-    private void matricularAlunoNaDisciplina(Aluno aluno, String codigoDisciplina) {
+    // matricula aluno na disciplina
+    private void matricularAlunoEmDisciplina(Aluno aluno, String codigoDisciplina) {
         Map<String, Disciplina> todasDisciplinas = DisciplinasPersistence.findAll();
         Disciplina disciplina = todasDisciplinas.get(codigoDisciplina);
 

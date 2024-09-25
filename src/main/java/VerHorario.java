@@ -1,81 +1,87 @@
-import usuarios.Aluno;
-import faculdade.Disciplina;
-import faculdade.Curso;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+
+import faculdade.Curso;
+import faculdade.Disciplina;
+import usuarios.Aluno;
+
 public class VerHorario extends JFrame {
 
     public VerHorario(Aluno aluno) {
-        // configurações da janela
         setTitle("Horário das Aulas - " + aluno.getNome());
         setSize(800, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        
-        // painel principal
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.decode("#F2F7FB"));  // cor de fundo
 
-        // título
-        JLabel titleLabel = new JLabel("Horário das Aulas", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        titleLabel.setOpaque(true);  // permite que a cor de fundo seja aplicada
-        panel.add(titleLabel, BorderLayout.NORTH);
-        
-        // cria os dados da tabela com as disciplinas do aluno
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.setLayout(new BorderLayout());
+        painelPrincipal.setBackground(Color.decode("#F2F7FB"));
+
+        JLabel tituloLabel = new JLabel("Horário das Aulas", JLabel.CENTER);
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        tituloLabel.setBackground(Color.decode("#F2F7FB"));
+        tituloLabel.setOpaque(true);
+        painelPrincipal.add(tituloLabel, BorderLayout.NORTH);
+
         String[] colunas = {"Código", "Disciplina", "Horário", "Professor"};
-        List<Disciplina> disciplinasAluno = getDisciplinasMatriculadas(aluno);
-        Object[][] dados = new Object[disciplinasAluno.size()][4];
+        List<Disciplina> disciplinas = buscarDisciplinasMatriculadas(aluno);
+        Object[][] dados = new Object[disciplinas.size()][4];
 
-        for (int i = 0; i < disciplinasAluno.size(); i++) {
-            Disciplina disciplina = disciplinasAluno.get(i);
+        for (int i = 0; i < disciplinas.size(); i++) {
+            Disciplina disciplina = disciplinas.get(i);
             dados[i][0] = disciplina.getCodigo();
             dados[i][1] = disciplina.getNome();
             dados[i][2] = disciplina.getHorarioAula();
             dados[i][3] = disciplina.getProfessor();
         }
 
-        // modelo da tabela
-        DefaultTableModel model = new DefaultTableModel(dados, colunas) {
-            public boolean isCellEditable(int row, int column) {
-                return false;  // impede a edição da tabela
+        DefaultTableModel modeloTabela = new DefaultTableModel(dados, colunas) {
+            public boolean editavel(int row, int column) {
+                return false;
             }
         };
 
-        // cria a tabela e ajusta as cores
-        JTable tabela = new JTable(model);
+        JTable tabela = new JTable(modeloTabela);
         tabela.setBackground(Color.decode("#F2F7FB"));
-        JScrollPane scrollPane = new JScrollPane(tabela);
-        scrollPane.getViewport().setBackground(Color.decode("#F2F7FB"));
+        JScrollPane painelScroll = new JScrollPane(tabela);
+        painelScroll.getViewport().setBackground(Color.decode("#F2F7FB"));
 
-        panel.add(scrollPane, BorderLayout.CENTER);
+        painelPrincipal.add(painelScroll, BorderLayout.CENTER);
 
-        // botão de imprimir
-        JButton btnImprimir = new JButton("Imprimir Horário");
-        btnImprimir.addActionListener(new ActionListener() {
+        JButton botaoImprimir = new JButton("Imprimir Horário");
+        botaoImprimir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                imprimirHorario(aluno, disciplinasAluno);
+                imprimirHorario(aluno, disciplinas);
             }
         });
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.decode("#F2F7FB"));
-        buttonPanel.add(btnImprimir);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // adiciona o painel à janela
-        add(panel);
+        JPanel painelBotao = new JPanel();
+        painelBotao.setBackground(Color.decode("#F2F7FB"));
+        painelBotao.add(botaoImprimir);
+        painelPrincipal.add(painelBotao, BorderLayout.SOUTH);
+
+        add(painelPrincipal);
     }
 
-    // busca as disciplinas em que o aluno está matriculado
-    private List<Disciplina> getDisciplinasMatriculadas(Aluno aluno) {
-        Curso curso = aluno.getCurso();  // supondo que o aluno tenha um curso associado
-        return curso.getGrade();  // retorna a lista de disciplinas do curso
+    // busca disciplinas que o aluno está matriculado
+    private List<Disciplina> buscarDisciplinasMatriculadas(Aluno aluno) {
+        Curso curso = aluno.getCurso();
+        return curso.getGrade();
     }
 
     // simula a impressão do horário
@@ -90,10 +96,8 @@ public class VerHorario extends JFrame {
               .append(", Professor: ").append(disciplina.getProfessor()).append("\n");
         }
 
-        // exibe o horário em uma caixa de diálogo
-        JTextArea textArea = new JTextArea(sb.toString());
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        JOptionPane.showMessageDialog(null, new JScrollPane(textArea), 
-                                      "Horário de Aulas", JOptionPane.INFORMATION_MESSAGE);
+        JTextArea areaTexto = new JTextArea(sb.toString());
+        areaTexto.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        JOptionPane.showMessageDialog(null, new JScrollPane(areaTexto),"Horário de Aulas", JOptionPane.INFORMATION_MESSAGE);
     }
 }
