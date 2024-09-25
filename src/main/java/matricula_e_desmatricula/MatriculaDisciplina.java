@@ -244,7 +244,7 @@ public class MatriculaDisciplina <T> extends javax.swing.JFrame{
 
             if (confirma == JOptionPane.YES_OPTION) {
                 try{
-                modelMatriculadas.removeRow(linhaSelecao);
+                    modelMatriculadas.removeRow(linhaSelecao);
                 } catch(java.lang.Exception e){
                     JOptionPane.showMessageDialog(this, "nao foi possivel remover", "Erro",JOptionPane.ERROR_MESSAGE);
                 }

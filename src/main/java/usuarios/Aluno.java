@@ -1,29 +1,26 @@
 package usuarios;
 
 import faculdade.Curso;
-import java.util.Scanner;
+import faculdade.Disciplina;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Aluno extends Usuario {
     protected Curso curso;
-    
-    
-    public Aluno() {
-        this.tipoUsuario = 0;
-    }
-    
+    protected List<Disciplina> disciplinas;
 
-    
-    
-    public String leitura(){
-        Scanner teclado = new Scanner(System.in);
-        String t = teclado.nextLine();
         
-        return t;
+    public Aluno() {
+        super();
+        this.tipoUsuario = 0;
+        this.disciplinas = new ArrayList<>();
     }
 
-    public void modificaNome(){
-        System.out.println("digite novo nome: ");
-        String newName = leitura();
-        setNome(newName);
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
     }
 }
