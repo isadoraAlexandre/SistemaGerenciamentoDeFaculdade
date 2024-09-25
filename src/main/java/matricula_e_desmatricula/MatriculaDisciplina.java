@@ -9,6 +9,7 @@ public class MatriculaDisciplina <T> extends javax.swing.JFrame{
      */
     public MatriculaDisciplina() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
