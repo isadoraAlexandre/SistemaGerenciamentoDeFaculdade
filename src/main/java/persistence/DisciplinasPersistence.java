@@ -63,8 +63,8 @@ public class DisciplinasPersistence{
                         disciplina.setCodigo(codigo);
                         disciplina.setNome(nome);
                         disciplina.setProfessor(professor);
-                        disciplina.setHorarioAula(parser(horario));
-                        disciplina.setCargaHoraria(parser(cargaH));
+                        disciplina.setHorarioAula(horario);
+                        disciplina.setCargaHoraria(cargaH);
                         disciplina.setCoordenador(coordenador);
                         disciplina.setQtdVagas(parser2(vagas));
 
@@ -91,7 +91,7 @@ public class DisciplinasPersistence{
     
     //todas insercoes/modificaoes/remocoes no seguem essa estrutura, so mudar o nome do objeto
     //insere uma disciplina
-    public static void insereDisciplina(Disciplina nova){
+    public static boolean insereDisciplina(Disciplina nova){
         try {
             
             File diretorio = PATH.getParentFile();
@@ -107,34 +107,38 @@ public class DisciplinasPersistence{
                         + nova.getHorarioAula() + "," + nova.getCargaHoraria() + "," + nova.getQtdVagas();
                 buffer.write(novaLinha);
                 buffer.newLine();
+                return true;
             }
         } catch (IOException e) {
             System.out.println("ERRO: " + e.getMessage());
         }
+        return false;
     }
     
     //recebe chave d adiciplina a ser removida
-    public static void removeDisciplina(String codigo){
+    public static boolean removeDisciplina(String codigo){
         Map<String, Disciplina> map = findAll();
         
         try{    
             if(map.remove(codigo) == null){
                 System.out.println("nao ha disciplina");
-                return;
+                return true;
             }
         } catch (UnsupportedOperationException e){
             System.out.println("nao eh possivel remover");
         }
         
         save(map);
+        return false;
     }
     
     //rcebe disciplina ja modificada e muda no arquivo
-    public static void modificaDisciplina(Disciplina modificada){
+    public static boolean modificaDisciplina(Disciplina modificada){
         Map<String, Disciplina> map = findAll();
         
         try{
-           map.replace(modificada.getCodigo(), modificada); 
+           map.replace(modificada.getCodigo(), modificada);
+           return true;
         } catch (UnsupportedOperationException e){
             System.out.println("nao eh possivel modificar");
         }catch(NullPointerException e){
@@ -146,5 +150,6 @@ public class DisciplinasPersistence{
         }
         
         save(map);
+        return false;
     }
 }

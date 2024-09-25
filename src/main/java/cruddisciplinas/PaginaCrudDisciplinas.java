@@ -4,6 +4,10 @@
  */
 package cruddisciplinas;
 
+import faculdade.Disciplina;
+import javax.swing.JOptionPane;
+import persistence.DisciplinasPersistence;
+
 /**
  *
  * @author isinha
@@ -30,7 +34,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableDisciplinas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         fieldCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -53,7 +57,6 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1000, 700));
         setMinimumSize(new java.awt.Dimension(1000, 700));
-        setPreferredSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1000, 700));
@@ -63,8 +66,10 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel1.setText("Gestão de disciplinas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -82,15 +87,20 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
+        tableDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDisciplinasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableDisciplinas);
+        if (tableDisciplinas.getColumnModel().getColumnCount() > 0) {
+            tableDisciplinas.getColumnModel().getColumn(0).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(1).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(2).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(3).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(4).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(5).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -119,8 +129,18 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         btnEditar.setText("Editar");
 
         btnRemove.setText("Remover");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
         btnAdd.setText("Adicionar");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,6 +243,54 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tableDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDisciplinasMouseClicked
+        /*int linhaSelecao = tableDisciplinas.getSelectedRow();
+    
+        if (linhaSelecao != -1) {
+
+            javax.swing.table.DefaultTableModel modelDisponiveis = (javax.swing.table.DefaultTableModel) tableDisciplinas.getModel();
+
+            Object[] linhaTabela = new Object[modelDisponiveis.getColumnCount()];
+            for (int i = 0; i < modelDisponiveis.getColumnCount(); i++) {
+                linhaTabela[i] = modelDisponiveis.getValueAt(linhaSelecao, i);
+            }
+
+            int confirma = JOptionPane.showConfirmDialog(this, "Matricular na disciplina: " + linhaTabela[0] + "?", "Confirmar matrícula", JOptionPane.YES_NO_OPTION);
+
+            if (confirma == JOptionPane.YES_OPTION) {
+                tableDisciplinas.addRow(linhaTabela);
+
+                modelDisponiveis.removeRow(linhaSelecao);
+            }
+        }*/
+    }//GEN-LAST:event_tableDisciplinasMouseClicked
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        Disciplina d = new Disciplina();
+        
+        if(JOptionPane.showConfirmDialog(rootPane, "Cadastrar informações?", "Cadastrar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            
+            
+                d.setNome(fieldNome.getText());
+                d.setCodigo(fieldCodigo.getText());
+                d.setProfessor(fieldProfessor.getText());
+                d.setCoordenador(fiedCoord.getText());
+                d.setHorarioAula(fieldHorario.getText());
+                d.setCargaHoraria(fieldCargaH.getText());
+                d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
+
+                if(DisciplinasPersistence.insereDisciplina(d)){
+                    JOptionPane.showMessageDialog(rootPane, "Cadastro realizado");
+                    this.dispose();
+                }
+                
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,6 +348,6 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tableDisciplinas;
     // End of variables declaration//GEN-END:variables
 }
