@@ -1,11 +1,9 @@
 package faculdade;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import auxiliares.Hora;
 import usuarios.Aluno;
-import usuarios.Funcionarios;
-import usuarios.ProfessorCoordenador;
 
 public class Disciplina{
     protected String nome;
@@ -132,6 +130,14 @@ public class Disciplina{
 
     public int getQtdFaltas() {
         return qtdFaltas;
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 
     public void setQtdFaltas(int qtdFaltas) {

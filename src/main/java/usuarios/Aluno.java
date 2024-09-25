@@ -1,9 +1,10 @@
 package usuarios;
 
-import faculdade.Curso;
-import faculdade.Disciplina;
 import java.util.ArrayList;
 import java.util.List;
+
+import faculdade.Curso;
+import faculdade.Disciplina;
 
 public class Aluno extends Usuario {
     protected Curso curso;
@@ -21,5 +22,13 @@ public class Aluno extends Usuario {
 
     public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public Curso setCurso() {
+        return curso;
     }
 }
