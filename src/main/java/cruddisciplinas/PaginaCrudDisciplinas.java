@@ -4,8 +4,18 @@
  */
 package cruddisciplinas;
 
+import exceptions.CargaHException;
+import exceptions.CodigoException;
+import exceptions.HoraException;
+import exceptions.NomeException;
 import faculdade.Disciplina;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import persistence.DisciplinasPersistence;
 
 /**
@@ -13,6 +23,7 @@ import persistence.DisciplinasPersistence;
  * @author isinha
  */
 public class PaginaCrudDisciplinas extends javax.swing.JFrame {
+    private Map<String, Disciplina> map;
 
     /**
      * Creates new form PaginaCrudDisciplinas
@@ -20,6 +31,37 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     public PaginaCrudDisciplinas() {
         initComponents();
         this.setLocationRelativeTo(null);
+        carregaDisciplinas();
+    }
+    
+    public final void carregaDisciplinas(){
+        map = DisciplinasPersistence.findAll();
+        DefaultTableModel modelDisciplinas = (DefaultTableModel) tableDisciplinas.getModel();
+        modelDisciplinas.setRowCount(0);
+        
+        for (Disciplina d : map.values()){
+            Object[] rowData = {
+                d.getCodigo(),
+                d.getNome(),
+                d.getHorarioAula(),
+                d.getProfessor(),
+                d.getQtdVagas(),
+                d.getCargaHoraria(),
+                d.getCoordenador(),
+            };
+
+            modelDisciplinas.addRow(rowData);
+        }
+    }
+    
+    private final void limpaCampos(){
+        fieldCodigo.setText("");
+        fieldNome.setText("");
+        fieldHorario.setText("");
+        fieldProfessor.setText("");
+        fieldVagas.setText("");
+        fieldCargaH.setText("");
+        fieldCoord.setText("");
     }
 
     /**
@@ -31,7 +73,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        externo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDisciplinas = new javax.swing.JTable();
@@ -46,42 +88,45 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         fieldNome = new javax.swing.JTextField();
         fieldProfessor = new javax.swing.JTextField();
-        fiedCoord = new javax.swing.JTextField();
+        fieldCoord = new javax.swing.JTextField();
         fieldVagas = new javax.swing.JTextField();
         fieldCargaH = new javax.swing.JTextField();
-        btnCancelar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestão de Disciplinas");
         setMaximumSize(new java.awt.Dimension(1000, 700));
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 700));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1000, 700));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 700));
+        externo.setMaximumSize(new java.awt.Dimension(1000, 700));
+        externo.setMinimumSize(new java.awt.Dimension(1000, 700));
+        externo.setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel1.setText("Gestão de disciplinas");
 
         tableDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Código", "Nome", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -124,9 +169,19 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel8.setText("Coordenador");
 
-        btnCancelar.setText("Cancelar");
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnRemove.setText("Remover");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -142,22 +197,22 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout externoLayout = new javax.swing.GroupLayout(externo);
+        externo.setLayout(externoLayout);
+        externoLayout.setHorizontalGroup(
+            externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(externoLayout.createSequentialGroup()
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(externoLayout.createSequentialGroup()
                         .addGap(348, 348, 348)
                         .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(externoLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, externoLayout.createSequentialGroup()
+                                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(externoLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(btnAdd)
                                         .addGap(18, 18, 18)
@@ -165,9 +220,9 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(btnEditar)
                                         .addGap(45, 45, 45)
-                                        .addComponent(btnCancelar))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnLimpar))
+                                    .addGroup(externoLayout.createSequentialGroup()
+                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel2)
                                             .addComponent(jLabel3)
                                             .addComponent(jLabel4)
@@ -175,57 +230,57 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                                             .addComponent(fieldHorario)
                                             .addComponent(fieldCargaH))
                                         .addGap(238, 238, 238)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
                                             .addComponent(jLabel6)
                                             .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldVagas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(fieldVagas, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jLabel7)
                                             .addComponent(jLabel8)
                                             .addComponent(fieldProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                                            .addComponent(fiedCoord))))
+                                            .addComponent(fieldCoord))))
                                 .addGap(10, 10, 10)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        externoLayout.setVerticalGroup(
+            externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(externoLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fiedCoord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCoord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldVagas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldCargaH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnRemove)
                     .addComponent(btnEditar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnLimpar))
                 .addGap(59, 59, 59))
         );
 
@@ -233,63 +288,92 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(externo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(externo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tableDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDisciplinasMouseClicked
-        /*int linhaSelecao = tableDisciplinas.getSelectedRow();
-    
+        int linhaSelecao = tableDisciplinas.getSelectedRow();
+        
+        
         if (linhaSelecao != -1) {
 
             javax.swing.table.DefaultTableModel modelDisponiveis = (javax.swing.table.DefaultTableModel) tableDisciplinas.getModel();
 
-            Object[] linhaTabela = new Object[modelDisponiveis.getColumnCount()];
+            String[] linhaTabela = new String[modelDisponiveis.getColumnCount()];
             for (int i = 0; i < modelDisponiveis.getColumnCount(); i++) {
-                linhaTabela[i] = modelDisponiveis.getValueAt(linhaSelecao, i);
+                linhaTabela[i] = modelDisponiveis.getValueAt(linhaSelecao, i).toString();
             }
-
-            int confirma = JOptionPane.showConfirmDialog(this, "Matricular na disciplina: " + linhaTabela[0] + "?", "Confirmar matrícula", JOptionPane.YES_NO_OPTION);
-
-            if (confirma == JOptionPane.YES_OPTION) {
-                tableDisciplinas.addRow(linhaTabela);
-
-                modelDisponiveis.removeRow(linhaSelecao);
-            }
-        }*/
+            
+            fieldCodigo.setText(linhaTabela[0]);
+            fieldNome.setText(linhaTabela[1]);
+            fieldHorario.setText(linhaTabela[2]);
+            fieldProfessor.setText(linhaTabela[3]);
+            fieldVagas.setText(linhaTabela[4]);
+            fieldCargaH.setText(linhaTabela[5]);
+            fieldCoord.setText(linhaTabela[6]);
+        }
     }//GEN-LAST:event_tableDisciplinasMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         Disciplina d = new Disciplina();
         
-        if(JOptionPane.showConfirmDialog(rootPane, "Cadastrar informações?", "Cadastrar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+        if(JOptionPane.showConfirmDialog(rootPane, "Cadastrar disciplina?", "Cadastrar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             
-            
+            try {
                 d.setNome(fieldNome.getText());
                 d.setCodigo(fieldCodigo.getText());
                 d.setProfessor(fieldProfessor.getText());
-                d.setCoordenador(fiedCoord.getText());
+                d.setCoordenador(fieldCoord.getText());
                 d.setHorarioAula(fieldHorario.getText());
                 d.setCargaHoraria(fieldCargaH.getText());
                 d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
-
-                if(DisciplinasPersistence.insereDisciplina(d)){
-                    JOptionPane.showMessageDialog(rootPane, "Cadastro realizado");
-                    this.dispose();
-                }
                 
+                DisciplinasPersistence.insereDisciplina(d);
+                carregaDisciplinas();
+                limpaCampos();
+            } catch (CodigoException | CargaHException | NomeException | HoraException ex) {
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+            }
+            
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        // TODO add your handling code here:
+        try {
+            DisciplinasPersistence.removeDisciplina(fieldCodigo.getText());
+            map.remove(fieldCodigo.getText());
+            JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
+        } catch (CodigoException | HoraException | NomeException | CargaHException ex) {
+            JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
+        }
+        carregaDisciplinas();
     }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limpaCampos();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        try {
+            map = DisciplinasPersistence.modificaDisciplina(map.get(fieldCodigo.getText()));
+            carregaDisciplinas();
+        } catch (CodigoException | NomeException | HoraException | CargaHException | NullPointerException ex) {
+            JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -328,12 +412,13 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnRemove;
-    private javax.swing.JTextField fiedCoord;
+    private javax.swing.JPanel externo;
     private javax.swing.JTextField fieldCargaH;
     private javax.swing.JTextField fieldCodigo;
+    private javax.swing.JTextField fieldCoord;
     private javax.swing.JTextField fieldHorario;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldProfessor;
@@ -346,7 +431,6 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableDisciplinas;
     // End of variables declaration//GEN-END:variables

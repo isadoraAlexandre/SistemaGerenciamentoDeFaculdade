@@ -14,13 +14,13 @@ import usuarios.Funcionarios;
 import usuarios.ProfessorCoordenador;
 
 public class Disciplina{
-    protected String nome;
-    protected int qtdVagas;
     protected String codigo;
+    protected String nome;
     protected String horarioAula;
     protected String professor;
-    protected String coordenador;
+    protected int qtdVagas;
     protected int cargaHoraria;
+    protected String coordenador;
     
     protected List<Aluno> alunos;
     protected int qtdFaltas;
@@ -29,6 +29,16 @@ public class Disciplina{
     public Disciplina() {
         this.alunos = new ArrayList<>();
         this.notas = new ArrayList<>();
+    }
+
+    public Disciplina(String codigo, String nome, String horarioAula, String professor, int qtdVagas, String coordenador, int cargaHoraria) {
+        this.nome = nome;
+        this.qtdVagas = qtdVagas;
+        this.codigo = codigo;
+        this.horarioAula = horarioAula;
+        this.professor = professor;
+        this.coordenador = coordenador;
+        this.cargaHoraria = cargaHoraria;
     }
 
     /*public void addProfessor(Funcionarios professor) {
@@ -103,8 +113,8 @@ public class Disciplina{
     public void setCodigo(String codigo) throws CodigoException{
         codigo = codigo.trim();
         
-        if(!isValidCodigo(codigo))
-            throw new CodigoException();
+        //if(!isValidCodigo(codigo))
+          //  throw new CodigoException();
         
         
         this.codigo = codigo;
@@ -117,10 +127,10 @@ public class Disciplina{
     public void setHorarioAula(String horarioAula) throws HoraException{
         horarioAula = horarioAula.replaceAll("\\s", "");
         
-        if(!isValidHorario(horarioAula))
-            throw new HoraException();
+        //if(!isValidHorario(horarioAula))
+           // throw new HoraException();
         
-        String[] s = horarioAula.split(",");
+        //String[] s = horarioAula.split(",");
         
         
         this.horarioAula = horarioAula;
@@ -164,7 +174,7 @@ public class Disciplina{
                 
         int c = Integer.parseInt(cargaHoraria);
         
-        if(c <= 0 || c >= 1000)
+        if(c <= 0 || c >= 120)
             throw new CargaHException();
         
         this.cargaHoraria = c;
@@ -187,7 +197,7 @@ public class Disciplina{
     }
     
     private boolean isValidCodigo(String cod){
-        String codPattern = "\\[A-Z]{3}\\d{3}";
+        String codPattern = "^[A-Z]{3}\\\\d{3}$";
         Pattern compPattern = Pattern.compile(codPattern);
         return (cod != null && compPattern.matcher(cod).matches());
     }
@@ -211,7 +221,7 @@ public class Disciplina{
     }
     
     private boolean isValidCargaH(String cargaHoraria){
-        String horarioPattern = "\\d{3}";
+        String horarioPattern = "\\d{2}";
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
     }

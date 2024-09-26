@@ -1,6 +1,7 @@
 package persistence;
 
 import faculdade.Disciplina;
+import exceptions.*;
 import java.io.*;
 import java.util.*;
 
@@ -37,7 +38,7 @@ public class DisciplinasPersistence{
     }
     
     //retorna lista com todos as disciplinas no arquivo
-    public static Map<String, Disciplina> findAll() {
+    public static Map<String, Disciplina> findAll(){
         
         Map<String, Disciplina> map = new HashMap<>();
     
@@ -59,14 +60,8 @@ public class DisciplinasPersistence{
                         String cargaH = campos[5].trim();
                         String vagas = campos[6].trim();
 
-                        Disciplina disciplina = new Disciplina();
-                        disciplina.setCodigo(codigo);
-                        disciplina.setNome(nome);
-                        disciplina.setProfessor(professor);
-                        disciplina.setHorarioAula(horario);
-                        disciplina.setCargaHoraria(cargaH);
-                        disciplina.setCoordenador(coordenador);
-                        disciplina.setQtdVagas(parser2(vagas));
+                        Disciplina disciplina = new Disciplina(codigo, nome, horario, professor, parser2(vagas), coordenador, parser2(cargaH));
+                        
 
                         map.put(disciplina.getCodigo(), disciplina);
                     }
@@ -116,14 +111,14 @@ public class DisciplinasPersistence{
     }
     
     //recebe chave d adiciplina a ser removida
-    public static boolean removeDisciplina(String codigo){
+    public static boolean removeDisciplina(String codigo) throws CodigoException, HoraException, NomeException, CargaHException{
         Map<String, Disciplina> map = findAll();
         
         try{    
             if(map.remove(codigo) == null){
                 System.out.println("nao ha disciplina");
-                return true;
             }
+            return true;
         } catch (UnsupportedOperationException e){
             System.out.println("nao eh possivel remover");
         }
@@ -133,12 +128,21 @@ public class DisciplinasPersistence{
     }
     
     //rcebe disciplina ja modificada e muda no arquivo
-    public static boolean modificaDisciplina(Disciplina modificada){
+    public static Map<String, Disciplina> modificaDisciplina(Disciplina modificada) throws CodigoException, NomeException, HoraException, CargaHException{
         Map<String, Disciplina> map = findAll();
         
+        if (modificada == null || modificada.getCodigo() == null || modificada.getCodigo().isEmpty())
+            throw new IllegalArgumentException("Código da disciplina não pode ser nulo ou vazio.");
+
         try{
-           map.replace(modificada.getCodigo(), modificada);
-           return true;
+            if (!map.containsKey(modificada.getCodigo())){
+                throw new NullPointerException("Disciplina não encontrada no sistema.");
+            }
+            
+            map.put(modificada.getCodigo(), modificada);
+            save(map);
+            return map;
+            
         } catch (UnsupportedOperationException e){
             System.out.println("nao eh possivel modificar");
         }catch(NullPointerException e){
@@ -149,7 +153,7 @@ public class DisciplinasPersistence{
             System.out.println("tipo do novo valor nao pode ser armazenado");
         }
         
-        save(map);
-        return false;
+        
+        return null;
     }
 }
