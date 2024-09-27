@@ -11,7 +11,7 @@ package exceptions;
 public class BairroException extends Exception{
 
     public BairroException() {
-        super("bairro invalido");
+        super("Bairro inválido, apenas letras");
     }
     
 }

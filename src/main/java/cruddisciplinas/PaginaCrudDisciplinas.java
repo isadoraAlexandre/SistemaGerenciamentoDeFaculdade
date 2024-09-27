@@ -4,16 +4,9 @@
  */
 package cruddisciplinas;
 
-import exceptions.CargaHException;
-import exceptions.CodigoException;
-import exceptions.HoraException;
-import exceptions.NomeException;
+import exceptions.*;
 import faculdade.Disciplina;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistence.DisciplinasPersistence;
@@ -54,7 +47,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         }
     }
     
-    private final void limpaCampos(){
+    private void limpaCampos(){
         fieldCodigo.setText("");
         fieldNome.setText("");
         fieldHorario.setText("");
@@ -353,13 +346,15 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         try {
-            DisciplinasPersistence.removeDisciplina(fieldCodigo.getText());
-            map.remove(fieldCodigo.getText());
-            JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
+            if(DisciplinasPersistence.removeDisciplina(fieldCodigo.getText()) && fieldCodigo.getText() != null){
+                map.remove(fieldCodigo.getText());
+                JOptionPane.showMessageDialog(rootPane, "ramoção feita");
+                carregaDisciplinas();
+                limpaCampos();
+            }
         } catch (CodigoException | HoraException | NomeException | CargaHException ex) {
             JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
         }
-        carregaDisciplinas();
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -368,10 +363,24 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         try {
-            map = DisciplinasPersistence.modificaDisciplina(map.get(fieldCodigo.getText()));
-            carregaDisciplinas();
+            Disciplina d = new Disciplina();
+            d.setCodigo(fieldCodigo.getText());
+            d.setNome(fieldNome.getText());
+            d.setProfessor(fieldProfessor.getText());
+            d.setCoordenador(fieldCoord.getText());
+            d.setHorarioAula(fieldHorario.getText());
+            d.setCargaHoraria(fieldCargaH.getText());
+            d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
+            
+            if(DisciplinasPersistence.modificaDisciplina(d)){
+                map.replace(fieldCodigo.getText(), d);
+                carregaDisciplinas();
+                limpaCampos();
+            }
+            
+            
         } catch (CodigoException | NomeException | HoraException | CargaHException | NullPointerException ex) {
-            JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
+            JOptionPane.showMessageDialog(rootPane, "nao foi possivel editar");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 

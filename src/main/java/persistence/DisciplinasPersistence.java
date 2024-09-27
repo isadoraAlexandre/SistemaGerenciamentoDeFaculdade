@@ -4,6 +4,7 @@ import faculdade.Disciplina;
 import exceptions.*;
 import java.io.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class DisciplinasPersistence{
     //caminho inteiro onde o arquivo vai ser criado ou acessado
@@ -67,10 +68,10 @@ public class DisciplinasPersistence{
                     }
                 }
             } else{
-                System.out.println("ainda nao ha registros");
+                JOptionPane.showMessageDialog(null,"ainda nao ha registros");
             }
-        } catch(NullPointerException en){
-            System.out.println("Erro: " + en.getMessage());
+        } catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
         }
         
         return map;
@@ -105,7 +106,7 @@ public class DisciplinasPersistence{
                 return true;
             }
         } catch (IOException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
         }
         return false;
     }
@@ -116,22 +117,22 @@ public class DisciplinasPersistence{
         
         try{    
             if(map.remove(codigo) == null){
-                System.out.println("nao ha disciplina");
+                //System.out.println("nao ha disciplina");
+                return false;
             }
+            save(map);
             return true;
         } catch (UnsupportedOperationException e){
-            System.out.println("nao eh possivel remover");
+            JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
         }
-        
-        save(map);
         return false;
     }
     
     //rcebe disciplina ja modificada e muda no arquivo
-    public static Map<String, Disciplina> modificaDisciplina(Disciplina modificada) throws CodigoException, NomeException, HoraException, CargaHException{
-        Map<String, Disciplina> map = findAll();
+    public static boolean modificaDisciplina(Disciplina modificada) throws CodigoException, NomeException, HoraException, CargaHException{
+        //Map<String, Disciplina> map = findAll();
         
-        if (modificada == null || modificada.getCodigo() == null || modificada.getCodigo().isEmpty())
+        /*if (modificada == null || modificada.getCodigo() == null || modificada.getCodigo().isEmpty())
             throw new IllegalArgumentException("Código da disciplina não pode ser nulo ou vazio.");
 
         try{
@@ -151,9 +152,24 @@ public class DisciplinasPersistence{
             System.out.println("nao foi posivel modificar");
         }catch(ClassCastException e){
             System.out.println("tipo do novo valor nao pode ser armazenado");
+        }*/
+        
+        Map<String, Disciplina> map = findAll();
+        
+        try{
+           map.replace(modificada.getCodigo(), modificada);
+           save(map);
+           return true;
+        } catch (UnsupportedOperationException e){
+            System.out.println("nao eh possivel modificar");
+        }catch(NullPointerException e){
+            System.out.println("chave ou disciplina nulos");
+        }catch(IllegalArgumentException e){
+            System.out.println("nao foi posivel mod446456ificar");
+        }catch(ClassCastException e){
+            System.out.println("tipo do novo valor nao pode ser armazenado");
         }
         
-        
-        return null;
+        return false;
     }
 }

@@ -2,16 +2,9 @@ package faculdade;
 
 import java.util.*;
 
-import auxiliares.Hora;
-import exceptions.CargaHException;
-import exceptions.CodigoException;
-import exceptions.DataException;
-import exceptions.HoraException;
-import exceptions.NomeException;
+import exceptions.*;
 import java.util.regex.Pattern;
 import usuarios.Aluno;
-import usuarios.Funcionarios;
-import usuarios.ProfessorCoordenador;
 
 public class Disciplina{
     protected String codigo;
@@ -94,7 +87,10 @@ public class Disciplina{
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws NomeException{
+        nome = nome.trim();
+        if(!isValidNome(nome))
+            throw new NomeException();
         this.nome = nome;
     }
 
@@ -113,8 +109,8 @@ public class Disciplina{
     public void setCodigo(String codigo) throws CodigoException{
         codigo = codigo.trim();
         
-        //if(!isValidCodigo(codigo))
-          //  throw new CodigoException();
+        if(!isValidCodigo(codigo))
+            throw new CodigoException();
         
         
         this.codigo = codigo;
@@ -128,7 +124,7 @@ public class Disciplina{
         horarioAula = horarioAula.replaceAll("\\s", "");
         
         //if(!isValidHorario(horarioAula))
-           // throw new HoraException();
+        //    throw new HoraException();
         
         //String[] s = horarioAula.split(",");
         
@@ -174,7 +170,7 @@ public class Disciplina{
                 
         int c = Integer.parseInt(cargaHoraria);
         
-        if(c <= 0 || c >= 120)
+        if(c <= 0 || c >= 200)
             throw new CargaHException();
         
         this.cargaHoraria = c;
@@ -197,31 +193,25 @@ public class Disciplina{
     }
     
     private boolean isValidCodigo(String cod){
-        String codPattern = "^[A-Z]{3}\\\\d{3}$";
+        String codPattern = "^[A-Z]{3}\\d{3}$";
         Pattern compPattern = Pattern.compile(codPattern);
         return (cod != null && compPattern.matcher(cod).matches());
     }
     
     private boolean isValidNome(String nome){
-        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$";
+        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ0-9\\s-]{3,100}$";
         Pattern compPattern = Pattern.compile(nomePattern);
         return (nome != null && compPattern.matcher(nome).matches());
     }
     
-    private boolean isValidNomeGererico(String nome){
-        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s\\-\\.]+$";
-        Pattern compPattern = Pattern.compile(nomePattern);
-        return (nome != null && compPattern.matcher(nome).matches());
-    }
-    
-    private boolean isValidHorario(String horario){
+    /*private boolean isValidHorario(String horario){
         String horarioPattern = "\\[a-z]{3}\\,\\d{1,2}\\:\\d{1,2}";
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (horario != null && compPattern.matcher(horario).matches());
-    }
+    }*/
     
     private boolean isValidCargaH(String cargaHoraria){
-        String horarioPattern = "\\d{2}";
+        String horarioPattern = "\\d{2,3}";
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
     }
