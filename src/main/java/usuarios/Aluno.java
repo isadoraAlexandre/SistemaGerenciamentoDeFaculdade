@@ -3,11 +3,8 @@ package usuarios;
 import exceptions.HoraException;
 import exceptions.NomeException;
 import faculdade.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import persistence.DisciplinasPersistence;
 
 public class Aluno extends Usuario {
     protected Curso curso;
