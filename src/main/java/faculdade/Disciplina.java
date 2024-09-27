@@ -132,6 +132,14 @@ public class Disciplina{
         return qtdFaltas;
     }
 
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
     public void setQtdFaltas(int qtdFaltas) {
         this.qtdFaltas = qtdFaltas;
     }
