@@ -99,7 +99,7 @@
                   <Component id="panelContato" min="-2" pref="173" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="panelEndereco" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="146" max="32767" attributes="0"/>
+                  <EmptySpace pref="140" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -260,31 +260,22 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="labelRua" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
-                                          <Component id="textFieldRua" alignment="0" min="-2" pref="344" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace pref="76" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="labelBairro" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
-                                          <Component id="textFieldBairro" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="labelNumero" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
-                                          <Component id="textFieldNumero" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="217" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="labelCidade" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="textFieldCidade" alignment="0" min="-2" pref="133" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="labelRua" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
+                                  <Component id="textFieldRua" alignment="0" min="-2" pref="344" max="-2" attributes="0"/>
+                                  <Component id="labelNumero" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
+                                  <Component id="textFieldNumero" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace pref="126" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelBairro" min="-2" pref="89" max="-2" attributes="0"/>
+                                  <Component id="textFieldBairro" min="-2" pref="143" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelCidade" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="textFieldCidade" min="-2" pref="133" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -299,19 +290,19 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelRua" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelBairro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="textFieldRua" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="textFieldBairro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textFieldNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textFieldCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="labelCidade" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelNumero" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textFieldCidade" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <Component id="textFieldNumero" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="20" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

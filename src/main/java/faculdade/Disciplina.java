@@ -98,7 +98,9 @@ public class Disciplina{
         return qtdVagas;
     }
 
-    public void setQtdVagas(int qtdVagas) {
+    public void setQtdVagas(int qtdVagas) throws VagasException{
+        if(qtdVagas <= 0)
+            throw new VagasException();
         this.qtdVagas = qtdVagas;
     }
 

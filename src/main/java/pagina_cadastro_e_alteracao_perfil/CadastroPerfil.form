@@ -261,6 +261,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textFieldDataNascimento">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textFieldDataNascimentoKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelEmail">
               <Properties>

@@ -9,10 +9,15 @@ import javax.swing.JOptionPane;
 
 public class DisciplinasPersistence{
     //caminho inteiro onde o arquivo vai ser criado ou acessado
-    private static final File PATH = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/DisciplinasgGeral.csv");
+    private File PATH;/* = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Caralho.csv");*/
+    //private String PATH;
+
+    public DisciplinasPersistence(File PATH) {
+        this.PATH = new File(System.getProperty("user.dir") + PATH);
+    }
     
     //salva no arquivo um map de disciplinas, se o aruivo nao existir cria um novo
-    public static void save(Map<String, Disciplina> itens) {
+    public void save(Map<String, Disciplina> itens) {
         
         File diretorio = PATH.getParentFile();
         if(!diretorio.exists())
@@ -40,7 +45,7 @@ public class DisciplinasPersistence{
     }
     
     //retorna lista com todos as disciplinas no arquivo
-    public static Map<String, Disciplina> findAll(){
+    public Map<String, Disciplina> findAll(){
         
         Map<String, Disciplina> map = new HashMap<>();
     
@@ -87,7 +92,7 @@ public class DisciplinasPersistence{
     
     //todas insercoes/modificaoes/remocoes no seguem essa estrutura, so mudar o nome do objeto
     //insere uma disciplina
-    public static boolean insereDisciplina(Disciplina nova){
+    public boolean insereDisciplina(Disciplina nova){
         try {
             
             File diretorio = PATH.getParentFile();
@@ -112,7 +117,7 @@ public class DisciplinasPersistence{
     }
     
     //recebe chave d adiciplina a ser removida
-    public static boolean removeDisciplina(String codigo) throws CodigoException, HoraException, NomeException, CargaHException{
+    public boolean removeDisciplina(String codigo) throws CodigoException, HoraException, NomeException, CargaHException{
         Map<String, Disciplina> map = findAll();
         
         try{    
@@ -129,7 +134,7 @@ public class DisciplinasPersistence{
     }
     
     //rcebe disciplina ja modificada e muda no arquivo
-    public static boolean modificaDisciplina(Disciplina modificada) throws CodigoException, NomeException, HoraException, CargaHException{
+    public boolean modificaDisciplina(Disciplina modificada) throws CodigoException, NomeException, HoraException, CargaHException{
         //Map<String, Disciplina> map = findAll();
         
         /*if (modificada == null || modificada.getCodigo() == null || modificada.getCodigo().isEmpty())

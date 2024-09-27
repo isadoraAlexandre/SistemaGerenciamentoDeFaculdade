@@ -9,7 +9,7 @@ import faculdade.Disciplina;
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import persistence.DisciplinasPersistence;
+import persistence.*;
 
 /**
  *
@@ -17,6 +17,7 @@ import persistence.DisciplinasPersistence;
  */
 public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private Map<String, Disciplina> map;
+    private DisciplinaGeral dados  = new DisciplinaGeral();
 
     /**
      * Creates new form PaginaCrudDisciplinas
@@ -28,7 +29,8 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     }
     
     public final void carregaDisciplinas(){
-        map = DisciplinasPersistence.findAll();
+        map = dados.findAll();
+        //map = DisciplinasPersistence.findAll();
         DefaultTableModel modelDisciplinas = (DefaultTableModel) tableDisciplinas.getModel();
         modelDisciplinas.setRowCount(0);
         
@@ -91,9 +93,11 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Disciplinas");
+        setBackground(new java.awt.Color(242, 247, 251));
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
+        externo.setBackground(new java.awt.Color(242, 247, 251));
         externo.setMaximumSize(new java.awt.Dimension(1000, 700));
         externo.setMinimumSize(new java.awt.Dimension(1000, 700));
         externo.setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -280,17 +284,11 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(externo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(externo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(externo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(externo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -333,10 +331,11 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 d.setCargaHoraria(fieldCargaH.getText());
                 d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
                 
-                DisciplinasPersistence.insereDisciplina(d);
+                dados.insereDisciplina(d);
+                //DisciplinasPersistence.insereDisciplina(d);
                 carregaDisciplinas();
                 limpaCampos();
-            } catch (CodigoException | CargaHException | NomeException | HoraException ex) {
+            } catch (CodigoException | CargaHException | NomeException | HoraException | VagasException | NumberFormatException ex) {
                 JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }
             
@@ -345,7 +344,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         try {
-            if(DisciplinasPersistence.removeDisciplina(fieldCodigo.getText()) && fieldCodigo.getText() != null){
+            if(dados.removeDisciplina(fieldCodigo.getText())/*DisciplinasPersistence.removeDisciplina(fieldCodigo.getText())*/ && fieldCodigo.getText() != null){
                 map.remove(fieldCodigo.getText());
                 JOptionPane.showMessageDialog(rootPane, "ramoção feita");
                 carregaDisciplinas();
@@ -371,14 +370,14 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             d.setCargaHoraria(fieldCargaH.getText());
             d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
             
-            if(DisciplinasPersistence.modificaDisciplina(d)){
+            if(dados.modificaDisciplina(d)/*DisciplinasPersistence.modificaDisciplina(d)*/){
                 map.replace(fieldCodigo.getText(), d);
                 carregaDisciplinas();
                 limpaCampos();
             }
             
             
-        } catch (CodigoException | NomeException | HoraException | CargaHException | NullPointerException ex) {
+        } catch (CodigoException | NomeException | HoraException | CargaHException | NullPointerException | VagasException ex) {
             JOptionPane.showMessageDialog(rootPane, "nao foi possivel editar");
         }
     }//GEN-LAST:event_btnEditarActionPerformed

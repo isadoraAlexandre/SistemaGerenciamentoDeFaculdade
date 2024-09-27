@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package persistence;
 
 import exceptions.*;
@@ -10,10 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import usuarios.Usuario;
 
-/**
- *
- * @author isinha
- */
 public class Separador {
     private static final File PATH_A = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Alunos.csv");
     private static final File PATH_P = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Professores.csv");

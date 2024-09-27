@@ -82,25 +82,20 @@ public class CadastroPerfil extends javax.swing.JFrame {
         labelDataNascimento.setForeground(new java.awt.Color(28, 39, 95));
         labelDataNascimento.setText("Data de nascimento (com barras)");
 
-        textFieldNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldNomeActionPerformed(evt);
-            }
-        });
 
         labelNome.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelNome.setForeground(new java.awt.Color(28, 39, 95));
         labelNome.setText("Nome");
 
+        textFieldDataNascimento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textFieldDataNascimentoKeyReleased(evt);
+            }
+        });
+
         labelEmail.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(28, 39, 95));
         labelEmail.setText("Email");
-
-        textFieldEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldEmailActionPerformed(evt);
-            }
-        });
 
         labelCelular.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelCelular.setForeground(new java.awt.Color(28, 39, 95));
@@ -125,12 +120,6 @@ public class CadastroPerfil extends javax.swing.JFrame {
         labelNumero.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelNumero.setForeground(new java.awt.Color(28, 39, 95));
         labelNumero.setText("Número");
-
-        textFieldNumero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldNumeroActionPerformed(evt);
-            }
-        });
 
         labelMatricula.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
         labelMatricula.setForeground(new java.awt.Color(28, 39, 95));
@@ -262,11 +251,6 @@ public class CadastroPerfil extends javax.swing.JFrame {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        labelUser.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                labelUserComponentShown(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 16)); // NOI18N
         jLabel1.setText("Usuario:");
@@ -361,25 +345,7 @@ public class CadastroPerfil extends javax.swing.JFrame {
             }
             
         }
-        //*********************************************************************646444545465465456
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void textFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldNomeActionPerformed
-
-    private void textFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldEmailActionPerformed
-
-    private void textFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNumeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldNumeroActionPerformed
-
-    private void labelUserComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelUserComponentShown
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_labelUserComponentShown
 
     private void labelUserAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_labelUserAncestorAdded
         labelUser.setText(user.getUsuario());
@@ -388,6 +354,19 @@ public class CadastroPerfil extends javax.swing.JFrame {
     private void showMatriculaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_showMatriculaAncestorAdded
         showMatricula.setText(user.getMatricula());
     }//GEN-LAST:event_showMatriculaAncestorAdded
+
+    private void textFieldDataNascimentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldDataNascimentoKeyReleased
+        String texto = textFieldDataNascimento.getText().replaceAll("[^\\d]", "");
+
+                if (texto.length() > 2){
+                    texto = texto.substring(0, 2) + "/" + texto.substring(2);
+                }
+                if (texto.length() > 5){
+                    texto = texto.substring(0, 5) + "/" + texto.substring(5);
+                }
+
+                textFieldDataNascimento.setText(texto);
+    }//GEN-LAST:event_textFieldDataNascimentoKeyReleased
 
     /**
      * @param args the command line arguments
