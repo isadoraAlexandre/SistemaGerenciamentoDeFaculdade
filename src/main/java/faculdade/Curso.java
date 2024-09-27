@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package faculdade;
 
 import usuarios.*;
 import java.util.*;
 
-/**
- *
- * @author isinha
- */
 public class Curso {
     protected String nome;
     protected String departamento;

@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.*;
 import faculdade.Disciplina;
 import exceptions.*;
 import java.io.*;
@@ -62,7 +63,6 @@ public class DisciplinasPersistence{
                         String vagas = campos[6].trim();
 
                         Disciplina disciplina = new Disciplina(codigo, nome, horario, professor, parser2(vagas), coordenador, parser2(cargaH));
-                        
 
                         map.put(disciplina.getCodigo(), disciplina);
                     }

@@ -215,5 +215,4 @@ public class Disciplina{
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
     }
-
 }
