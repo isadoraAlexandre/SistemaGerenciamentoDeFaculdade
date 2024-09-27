@@ -1,11 +1,9 @@
 package faculdade;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import auxiliares.Hora;
 import usuarios.Aluno;
-import usuarios.Funcionarios;
-import usuarios.ProfessorCoordenador;
 
 public class Disciplina{
     protected String nome;
@@ -141,5 +139,9 @@ public class Disciplina{
     @Override
     public String toString() {
         return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + '}';
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 }
