@@ -83,7 +83,7 @@ public class UsuarioPersistence{
                         Usuario Usuario = new Usuario();
                         
                         Usuario.setCpf(cpf);
-                        Usuario.setTipoUsuario(Integer.parseInt(type));
+                        Usuario.setTipoUsuario(Integer.parseInt(type));//arrumar, joga excessao
                         Usuario.setNome(nome);
                         Usuario.setDataStr(data);
                         Usuario.setEmail(email);

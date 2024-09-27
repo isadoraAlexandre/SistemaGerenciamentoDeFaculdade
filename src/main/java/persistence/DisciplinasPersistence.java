@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class DisciplinasPersistence{
     //caminho inteiro onde o arquivo vai ser criado ou acessado
-    private static final File PATH = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Disciplinas.csv");
+    private static final File PATH = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/DisciplinasgGeral.csv");
     
     //salva no arquivo um map de disciplinas, se o aruivo nao existir cria um novo
     public static void save(Map<String, Disciplina> itens) {
@@ -68,7 +68,7 @@ public class DisciplinasPersistence{
                     }
                 }
             } else{
-                JOptionPane.showMessageDialog(null,"ainda nao ha registros");
+                //JOptionPane.showMessageDialog(null,"ainda nao ha registros");
             }
         } catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());

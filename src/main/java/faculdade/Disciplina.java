@@ -1,12 +1,12 @@
 package faculdade;
 
 import java.util.*;
-
 import exceptions.*;
 import java.util.regex.Pattern;
 import usuarios.Aluno;
 
 public class Disciplina{
+
     protected String codigo;
     protected String nome;
     protected String horarioAula;
@@ -215,4 +215,5 @@ public class Disciplina{
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
     }
+
 }

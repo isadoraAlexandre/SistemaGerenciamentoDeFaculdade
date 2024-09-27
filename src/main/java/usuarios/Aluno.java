@@ -11,6 +11,7 @@ public class Aluno extends Usuario {
 
         
     public Aluno() {
+        super();
         this.tipoUsuario = 0;
         this.disciplinas = new ArrayList<>();
     }
