@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -83,7 +84,7 @@ public class VerHorario extends JFrame {
     // busca disciplinas que o aluno está matriculado
     private List<Disciplina> buscarDisciplinasMatriculadas(Aluno aluno) {
         Curso curso = aluno.getCurso();
-        return curso.getGrade();
+        return new ArrayList<>(curso.getGrade().values());
     }
 
     // simula a impressão do horário

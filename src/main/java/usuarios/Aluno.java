@@ -1,11 +1,12 @@
 package usuarios;
 
+import java.util.Map;
+
 import exceptions.HoraException;
 import exceptions.NomeException;
-import faculdade.*;
-import java.util.Map;
-import persistence.DisciplinaAluno;
 import faculdade.Curso;
+import faculdade.Disciplina;
+import persistence.DisciplinaAluno;
 
 public class Aluno extends Usuario {
 
@@ -89,7 +90,7 @@ public class Aluno extends Usuario {
         return curso;
     }
 
-    public Curso setCurso() {
-        return curso;
+    public void setCurso(Curso curso) {
+        this.curso = curso; // Agora está correto
     }
 }
