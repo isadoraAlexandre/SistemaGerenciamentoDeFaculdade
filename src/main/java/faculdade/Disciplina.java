@@ -34,6 +34,14 @@ public class Disciplina {
         return qtdFaltas;
     }
 
+    public List<Double> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Double> notas) {
+        this.notas = notas;
+    }
+
     public void setFaltas(List<Integer> faltas) {
         this.qtdFaltas = faltas;
     }

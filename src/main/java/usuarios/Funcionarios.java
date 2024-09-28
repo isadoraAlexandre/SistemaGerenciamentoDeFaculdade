@@ -13,6 +13,15 @@ public abstract class Funcionarios extends Usuario {
     protected float cargaHoraria;
     protected String nivelFormacao;
     protected int tempoServico;
+    protected List<Disciplina> disciplinas;
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Disciplina> disciplinas) {
+        this.disciplinas = disciplinas;
+    }
 
     public double getSalario() {
         return salario;
@@ -57,29 +66,43 @@ public abstract class Funcionarios extends Usuario {
         });
     }
 
+    public void lancarNota(Aluno aluno, Disciplina disciplina, double nota) {
+        disciplina.getAlunos().forEach(a -> {
+            if (a.equals(aluno)) {
+                int indice = disciplina.getAlunos().indexOf(a);
+                List<Double> notas = disciplina.getNotas();
+                notas.set(indice, nota);
+                disciplina.setNotas(notas);
+            }
+        });
+    }
+
     public class LancaFaltaFuncionarioUI extends JFrame {
 
         private JComboBox<Disciplina> disciplinaComboBox;
         private JComboBox<Aluno> alunoComboBox;
         private JTextField faltasField;
+        private JTextField notasField; // Campo para as notas
         private JButton lancarButton;
 
-        public LancaFaltaFuncionarioUI(List<Disciplina> disciplinas) {
-            setTitle("Lançar Faltas");
+        public LancaFaltaFuncionarioUI() {
+            setTitle("Lançar Faltas e Notas");
             setSize(1000, 800);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setLayout(new GridLayout(4, 2));
+            setLayout(new GridLayout(5, 2)); // Atualizado para 5 linhas
 
             JLabel disciplinaLabel = new JLabel("Disciplina:");
             JLabel alunoLabel = new JLabel("Aluno:");
             JLabel faltasLabel = new JLabel("Número de Faltas:");
+            JLabel notasLabel = new JLabel("Nota:"); // Rótulo para as notas
 
             disciplinaComboBox = new JComboBox<>(disciplinas.toArray(new Disciplina[0]));
             alunoComboBox = new JComboBox<>();
             alunoComboBox.setEnabled(false);
 
             faltasField = new JTextField(5);
-            lancarButton = new JButton("Lançar Falta");
+            notasField = new JTextField(5); // Campo de texto para inserir a nota
+            lancarButton = new JButton("Lançar Falta e Nota");
             lancarButton.setEnabled(false);
 
             add(disciplinaLabel);
@@ -88,6 +111,8 @@ public abstract class Funcionarios extends Usuario {
             add(alunoComboBox);
             add(faltasLabel);
             add(faltasField);
+            add(notasLabel);
+            add(notasField);
             add(new JLabel());
             add(lancarButton);
 
@@ -114,15 +139,17 @@ public abstract class Funcionarios extends Usuario {
                         Aluno alunoSelecionado = (Aluno) alunoComboBox.getSelectedItem();
                         Disciplina disciplinaSelecionada = (Disciplina) disciplinaComboBox.getSelectedItem();
                         int nfaltas = Integer.parseInt(faltasField.getText());
+                        double nota = Double.parseDouble(notasField.getText()); // Conversão da nota
 
                         if (alunoSelecionado != null && disciplinaSelecionada != null) {
                             lancarFalta(alunoSelecionado, disciplinaSelecionada, nfaltas);
-                            JOptionPane.showMessageDialog(null, "Falta lançada com sucesso!");
+                            lancarNota(alunoSelecionado, disciplinaSelecionada, nota); // Lançar a nota
+                            JOptionPane.showMessageDialog(null, "Falta e nota lançadas com sucesso!");
                         } else {
                             JOptionPane.showMessageDialog(null, "Selecione um aluno e uma disciplina.");
                         }
                     } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null, "Por favor, insira um número válido de faltas.");
+                        JOptionPane.showMessageDialog(null, "Por favor, insira um número válido para faltas e notas.");
                     }
                 }
             });
