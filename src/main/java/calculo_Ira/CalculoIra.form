@@ -70,7 +70,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="calcularIRA" min="-2" max="-2" attributes="0"/>
+                              <Component id="calcularIra" min="-2" max="-2" attributes="0"/>
                               <Component id="paneTexto" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -87,8 +87,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="paneTexto" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="calcularIRA" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="499" max="32767" attributes="0"/>
+                  <Component id="calcularIra" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="489" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -165,12 +165,12 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="calcularIRA">
+        <Component class="javax.swing.JButton" name="calcularIra">
           <Properties>
             <Property name="text" type="java.lang.String" value="Calcular"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calcularIRAActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calcularIraActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

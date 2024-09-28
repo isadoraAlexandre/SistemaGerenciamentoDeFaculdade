@@ -18,13 +18,16 @@ public class Disciplina{
     protected List<Aluno> alunos;
     protected int qtdFaltas;
     protected List<Double> notas;
+    protected Double nota;
+    protected String status;
 
     public Disciplina() {
         this.alunos = new ArrayList<>();
         this.notas = new ArrayList<>();
     }
 
-    public Disciplina(String codigo, String nome, String horarioAula, String professor, int qtdVagas, String coordenador, int cargaHoraria) {
+    public Disciplina(String codigo, String nome, String horarioAula, String professor, 
+            int qtdVagas, String coordenador, int cargaHoraria, String status) {
         this.nome = nome;
         this.qtdVagas = qtdVagas;
         this.codigo = codigo;
@@ -32,6 +35,9 @@ public class Disciplina{
         this.professor = professor;
         this.coordenador = coordenador;
         this.cargaHoraria = cargaHoraria;
+        this.status = status;
+        this.alunos = new ArrayList<>();
+        this.notas = new ArrayList<>();
     }
 
     /*public void addProfessor(Funcionarios professor) {
@@ -192,6 +198,22 @@ public class Disciplina{
 
     public void setNotas(List<Double> notas) {
         this.notas = notas;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getNota() {
+        return nota;
+    }
+
+    public void setNota(Double nota) {
+        this.nota = nota;
     }
     
     private boolean isValidCodigo(String cod){

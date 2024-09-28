@@ -2,15 +2,13 @@ package persistence;
 
 import exceptions.*;
 import faculdade.Disciplina;
-import exceptions.*;
 import java.io.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 
 public class DisciplinasPersistence{
     //caminho inteiro onde o arquivo vai ser criado ou acessado
-    private File PATH;/* = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Caralho.csv");*/
-    //private String PATH;
+    private final File PATH;
 
     public DisciplinasPersistence(File PATH) {
         this.PATH = new File(System.getProperty("user.dir") + PATH);
@@ -39,6 +37,8 @@ public class DisciplinasPersistence{
                     .append(disciplina.getCargaHoraria())
                     .append(",")
                     .append(disciplina.getQtdVagas())
+                    .append(",")
+                    .append(disciplina.getStatus())
                     .append(System.lineSeparator());
         }
         Arquivo.escreve(PATH, csvBuilder.toString());
@@ -58,7 +58,7 @@ public class DisciplinasPersistence{
                 for(String linha : linhas){
                     String[] campos = linha.split("\\,");
 
-                    if(campos.length >= 7){
+                    if(campos.length >= 8){
                         String codigo = campos[0].trim();
                         String nome = campos[1].trim();
                         String professor = campos[2].trim();
@@ -66,16 +66,16 @@ public class DisciplinasPersistence{
                         String horario = campos[4].trim();
                         String cargaH = campos[5].trim();
                         String vagas = campos[6].trim();
+                        String status = campos[7].trim();
 
-                        Disciplina disciplina = new Disciplina(codigo, nome, horario, professor, parser2(vagas), coordenador, parser2(cargaH));
+                        Disciplina disciplina = new Disciplina(codigo, nome, horario, professor, parser2(vagas), coordenador, parser2(cargaH), status);
 
                         map.put(disciplina.getCodigo(), disciplina);
                     }
                 }
-            } else{
-                //JOptionPane.showMessageDialog(null,"ainda nao ha registros");
             }
-        } catch(NullPointerException e){
+            
+        } catch(NullPointerException | ArrayIndexOutOfBoundsException e){
             JOptionPane.showMessageDialog(null, "ERRO: " + e.getMessage());
         }
         
@@ -105,7 +105,7 @@ public class DisciplinasPersistence{
             }    
             try (BufferedWriter buffer = new BufferedWriter(new FileWriter(PATH, true))){
                 String novaLinha = nova.getCodigo() + "," + nova.getNome()+ "," + nova.getProfessor()+ "," + nova.getCoordenador() + "," 
-                        + nova.getHorarioAula() + "," + nova.getCargaHoraria() + "," + nova.getQtdVagas();
+                        + nova.getHorarioAula() + "," + nova.getCargaHoraria() + "," + nova.getQtdVagas() + "," + nova.getStatus();
                 buffer.write(novaLinha);
                 buffer.newLine();
                 return true;
@@ -135,30 +135,6 @@ public class DisciplinasPersistence{
     
     //rcebe disciplina ja modificada e muda no arquivo
     public boolean modificaDisciplina(Disciplina modificada) throws CodigoException, NomeException, HoraException, CargaHException{
-        //Map<String, Disciplina> map = findAll();
-        
-        /*if (modificada == null || modificada.getCodigo() == null || modificada.getCodigo().isEmpty())
-            throw new IllegalArgumentException("Código da disciplina não pode ser nulo ou vazio.");
-
-        try{
-            if (!map.containsKey(modificada.getCodigo())){
-                throw new NullPointerException("Disciplina não encontrada no sistema.");
-            }
-            
-            map.put(modificada.getCodigo(), modificada);
-            save(map);
-            return map;
-            
-        } catch (UnsupportedOperationException e){
-            System.out.println("nao eh possivel modificar");
-        }catch(NullPointerException e){
-            System.out.println("chave ou disciplina nulos");
-        }catch(IllegalArgumentException e){
-            System.out.println("nao foi posivel modificar");
-        }catch(ClassCastException e){
-            System.out.println("tipo do novo valor nao pode ser armazenado");
-        }*/
-        
         Map<String, Disciplina> map = findAll();
         
         try{

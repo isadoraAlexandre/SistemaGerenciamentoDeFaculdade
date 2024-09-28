@@ -1,23 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package matricula_e_desmatricula;
 
+import exceptions.*;
+import faculdade.Disciplina;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import persistence.DisciplinaAluno;
+import usuarios.Aluno;
 
-/**
- *
- * @author isinha
- */
 public class TrancaDisciplina extends javax.swing.JFrame {
-
-    /**
-     * Creates new form jfgojofjoi
-     */
-    public TrancaDisciplina() {
+    private Map<String, Disciplina> mapMatriculadas;
+    private final DisciplinaAluno matriculadas;
+    
+    public TrancaDisciplina(Aluno user) {
         initComponents();
         this.setLocationRelativeTo(null);
+        matriculadas = new DisciplinaAluno(user.getUsuario());
+        mapMatriculadas = user.getDisciplinas();
+        carregaDisciplinas();
+    }
+    
+    public final void carregaDisciplinas(){
+        mapMatriculadas = matriculadas.findAll();
+        DefaultTableModel modelDisciplinas = (DefaultTableModel) tableDisciplinas.getModel();
+        modelDisciplinas.setRowCount(0);
+        
+        for (Disciplina d : mapMatriculadas.values()){
+            Object[] rowData = {
+                d.getCodigo(),
+                d.getNome(),
+                d.getHorarioAula(),
+                d.getProfessor(),
+                d.getCargaHoraria(),
+                d.getStatus()
+            };
+
+            modelDisciplinas.addRow(rowData);
+        }
     }
 
     /**
@@ -35,23 +54,28 @@ public class TrancaDisciplina extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Trancamento de disciplina");
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
 
         tableDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Código", "Nome", "Horário", "Turma", "Professor", "Estado"
+                "Código", "Nome", "Horário", "Professor", "Carga Hor.", "Estado"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -63,6 +87,14 @@ public class TrancaDisciplina extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tableDisciplinas);
+        if (tableDisciplinas.getColumnModel().getColumnCount() > 0) {
+            tableDisciplinas.getColumnModel().getColumn(0).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(1).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(2).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(3).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(4).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
         jLabel1.setText("Disciplinas matriculadas");
@@ -78,17 +110,15 @@ public class TrancaDisciplina extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -96,11 +126,11 @@ public class TrancaDisciplina extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(btnSair)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addGap(70, 70, 70))
         );
 
         pack();
@@ -112,13 +142,27 @@ public class TrancaDisciplina extends javax.swing.JFrame {
         if (linhaSelecao != -1) {
 
             javax.swing.table.DefaultTableModel modelMatriculadas = (javax.swing.table.DefaultTableModel) tableDisciplinas.getModel();
-            int confirma = JOptionPane.showConfirmDialog(this, "Trancar a disciplina: " + linhaSelecao + "?", "Confirmar trancamento", JOptionPane.YES_NO_OPTION);
+            String[] linhaTabela = new String[modelMatriculadas.getColumnCount()];
+            
+            for(int i = 0; i < modelMatriculadas.getColumnCount(); i++){
+                linhaTabela[i] = modelMatriculadas.getValueAt(linhaSelecao, i).toString();
+            }
+            
+            int confirma = JOptionPane.showConfirmDialog(this, "Trancar a disciplina: " + linhaTabela[1] + "?", "Confirmar trancamento", JOptionPane.YES_NO_OPTION);
 
             if (confirma == JOptionPane.YES_OPTION) {
-                try{
-                    modelMatriculadas.removeRow(linhaSelecao);
-                } catch(java.lang.Exception e){
-                    JOptionPane.showMessageDialog(this, "nao foi possivel trancar", "Erro",JOptionPane.ERROR_MESSAGE);
+                if(!mapMatriculadas.get(linhaTabela[0]).getStatus().equals("trancado")){
+                    
+                    mapMatriculadas.get(linhaTabela[0]).setStatus("trancado");
+                    
+                    try {
+                        matriculadas.modificaDisciplina(mapMatriculadas.get(linhaTabela[0]));
+                    } catch (CodigoException | NomeException | HoraException | CargaHException e) {
+                        JOptionPane.showMessageDialog(this, e.getMessage(), "Erro",JOptionPane.ERROR_MESSAGE);
+                    }
+                    carregaDisciplinas();
+                } else{
+                    JOptionPane.showMessageDialog(rootPane, "Disciplina já foi tranacada");
                 }
             }
         }
@@ -159,7 +203,7 @@ public class TrancaDisciplina extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrancaDisciplina().setVisible(true);
+                //new TrancaDisciplina().setVisible(true);
             }
         });
     }

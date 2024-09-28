@@ -1,25 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package calculo_Ira;
+
 import exceptions.HoraException;
 import exceptions.NomeException;
 import javax.swing.JOptionPane;
 import usuarios.*;
 
-/**
- *
- * @author isinha
- */
 public class CalculoIra extends javax.swing.JFrame {
-
-    /**
-     * Creates new form CalculoIra
-     */
-    public CalculoIra() {
+    private final Aluno aluno;
+    
+    public CalculoIra(/*Aluno a*/) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.aluno = new Aluno("g");
     }
 
     /**
@@ -36,7 +28,7 @@ public class CalculoIra extends javax.swing.JFrame {
         paneTexto = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        calcularIRA = new javax.swing.JButton();
+        calcularIra = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calular IRA");
@@ -80,10 +72,10 @@ public class CalculoIra extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        calcularIRA.setText("Calcular");
-        calcularIRA.addActionListener(new java.awt.event.ActionListener() {
+        calcularIra.setText("Calcular");
+        calcularIra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                calcularIRAActionPerformed(evt);
+                calcularIraActionPerformed(evt);
             }
         });
 
@@ -98,7 +90,7 @@ public class CalculoIra extends javax.swing.JFrame {
                     .addGroup(paneCalulaIraLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(paneCalulaIraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(calcularIRA)
+                            .addComponent(calcularIra)
                             .addComponent(paneTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -110,8 +102,8 @@ public class CalculoIra extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(calcularIRA)
-                .addContainerGap(499, Short.MAX_VALUE))
+                .addComponent(calcularIra)
+                .addContainerGap(489, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,19 +124,16 @@ public class CalculoIra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void calcularIRAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularIRAActionPerformed
-        Aluno a = new Aluno();
+    private void calcularIraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularIraActionPerformed
         float ira = 0;
         try {
-            ira = a.calculaIra();
-        } catch (HoraException ex) {
-            //Logger.getLogger(CalculoIra.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NomeException ex) {
-            //Logger.getLogger(CalculoIra.class.getName()).log(Level.SEVERE, null, ex);
+            ira = aluno.calculaIra();
+        } catch (HoraException | NomeException ex) {
+            
         }
         
         JOptionPane.showMessageDialog(rootPane, "IRA calculado: " + ira);
-    }//GEN-LAST:event_calcularIRAActionPerformed
+    }//GEN-LAST:event_calcularIraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,7 +171,7 @@ public class CalculoIra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton calcularIRA;
+    private javax.swing.JButton calcularIra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

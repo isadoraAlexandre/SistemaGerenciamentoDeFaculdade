@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pagina_cadastro_e_alteracao_perfil;
 
 import exceptions.*;
@@ -9,15 +5,9 @@ import javax.swing.JOptionPane;
 import persistence.UsuarioPersistence;
 import usuarios.Usuario;
 
-/**
- *
- * @author isinha
- */
 public class CadastroPerfil extends javax.swing.JFrame {
     private final Usuario user;
-    /**
-     * Creates new form NewJFrame1
-     */
+    
     public CadastroPerfil() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -335,7 +325,6 @@ public class CadastroPerfil extends javax.swing.JFrame {
 
                 if(UsuarioPersistence.insereUsuario(this.user)){
                     JOptionPane.showMessageDialog(rootPane, "Cadastro realizado");
-                    this.dispose();
                 }
 
             } catch(java.lang.NullPointerException e){
@@ -343,7 +332,6 @@ public class CadastroPerfil extends javax.swing.JFrame {
             } catch(DataException | NomeException | EmailException | CpfException | CelularException | RuaException | BairroException | CidadeException | NumeroException e){
                 JOptionPane.showMessageDialog(panelExterno, e.getMessage());
             }
-            
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -358,19 +346,15 @@ public class CadastroPerfil extends javax.swing.JFrame {
     private void textFieldDataNascimentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldDataNascimentoKeyReleased
         String texto = textFieldDataNascimento.getText().replaceAll("[^\\d]", "");
 
-                if (texto.length() > 2){
-                    texto = texto.substring(0, 2) + "/" + texto.substring(2);
-                }
-                if (texto.length() > 5){
-                    texto = texto.substring(0, 5) + "/" + texto.substring(5);
-                }
-
-                textFieldDataNascimento.setText(texto);
+        if (texto.length() > 2){
+            texto = texto.substring(0, 2) + "/" + texto.substring(2);
+        }
+        if (texto.length() > 5){
+            texto = texto.substring(0, 5) + "/" + texto.substring(5);
+        }
+        textFieldDataNascimento.setText(texto);
     }//GEN-LAST:event_textFieldDataNascimentoKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -393,68 +377,6 @@ public class CadastroPerfil extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CadastroPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

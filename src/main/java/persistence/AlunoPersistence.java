@@ -77,7 +77,7 @@ public class AlunoPersistence{
                         String senha = campos[10].trim();
                         String matricula = campos[11].trim();
 
-                        Aluno aluno = new Aluno();
+                        Aluno aluno = new Aluno(user);
                         
                         aluno.setCpf(cpf);
                         aluno.setNome(nome);

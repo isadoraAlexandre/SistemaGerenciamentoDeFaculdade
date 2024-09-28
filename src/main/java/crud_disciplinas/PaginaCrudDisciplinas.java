@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package crud_disciplinas;
 
 import exceptions.*;
@@ -11,13 +7,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistence.*;
 
-/**
- *
- * @author isinha
- */
 public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private Map<String, Disciplina> map;
-    private DisciplinaGeral dados  = new DisciplinaGeral();
+    private final DisciplinaGeral dados  = new DisciplinaGeral();
 
     /**
      * Creates new form PaginaCrudDisciplinas
@@ -30,7 +22,6 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     
     public final void carregaDisciplinas(){
         map = dados.findAll();
-        //map = DisciplinasPersistence.findAll();
         DefaultTableModel modelDisciplinas = (DefaultTableModel) tableDisciplinas.getModel();
         modelDisciplinas.setRowCount(0);
         
@@ -297,14 +288,13 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private void tableDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDisciplinasMouseClicked
         int linhaSelecao = tableDisciplinas.getSelectedRow();
         
-        
         if (linhaSelecao != -1) {
+            
+            javax.swing.table.DefaultTableModel modelDisciplinas = (javax.swing.table.DefaultTableModel) tableDisciplinas.getModel();
 
-            javax.swing.table.DefaultTableModel modelDisponiveis = (javax.swing.table.DefaultTableModel) tableDisciplinas.getModel();
-
-            String[] linhaTabela = new String[modelDisponiveis.getColumnCount()];
-            for (int i = 0; i < modelDisponiveis.getColumnCount(); i++) {
-                linhaTabela[i] = modelDisponiveis.getValueAt(linhaSelecao, i).toString();
+            String[] linhaTabela = new String[modelDisciplinas.getColumnCount()];
+            for (int i = 0; i < modelDisciplinas.getColumnCount(); i++) {
+                linhaTabela[i] = modelDisciplinas.getValueAt(linhaSelecao, i).toString();
             }
             
             fieldCodigo.setText(linhaTabela[0]);
@@ -330,10 +320,14 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 d.setHorarioAula(fieldHorario.getText());
                 d.setCargaHoraria(fieldCargaH.getText());
                 d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
+                d.setStatus("0");
                 
-                dados.insereDisciplina(d);
-                //DisciplinasPersistence.insereDisciplina(d);
-                carregaDisciplinas();
+                if(!map.containsKey(d.getCodigo())){
+                    dados.insereDisciplina(d);
+                    carregaDisciplinas();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Displina já cadastrada");
+                }
                 limpaCampos();
             } catch (CodigoException | CargaHException | NomeException | HoraException | VagasException | NumberFormatException ex) {
                 JOptionPane.showMessageDialog(rootPane, ex.getMessage());
@@ -344,14 +338,16 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         try {
-            if(dados.removeDisciplina(fieldCodigo.getText())/*DisciplinasPersistence.removeDisciplina(fieldCodigo.getText())*/ && fieldCodigo.getText() != null){
+            if(dados.removeDisciplina(fieldCodigo.getText()) && fieldCodigo.getText() != null){
                 map.remove(fieldCodigo.getText());
                 JOptionPane.showMessageDialog(rootPane, "ramoção feita");
                 carregaDisciplinas();
                 limpaCampos();
+            } else{
+                JOptionPane.showMessageDialog(rootPane, "Não foi possível remover");
             }
         } catch (CodigoException | HoraException | NomeException | CargaHException ex) {
-            JOptionPane.showMessageDialog(rootPane, "nao foi possivel remover");
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
@@ -370,15 +366,16 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             d.setCargaHoraria(fieldCargaH.getText());
             d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
             
-            if(dados.modificaDisciplina(d)/*DisciplinasPersistence.modificaDisciplina(d)*/){
+            if(dados.modificaDisciplina(d)){
                 map.replace(fieldCodigo.getText(), d);
                 carregaDisciplinas();
                 limpaCampos();
+            } else{
+                JOptionPane.showMessageDialog(rootPane, "Não foi possível remover");
             }
             
-            
         } catch (CodigoException | NomeException | HoraException | CargaHException | NullPointerException | VagasException ex) {
-            JOptionPane.showMessageDialog(rootPane, "nao foi possivel editar");
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 

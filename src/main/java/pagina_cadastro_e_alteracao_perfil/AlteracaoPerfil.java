@@ -8,17 +8,20 @@ import usuarios.Usuario;
 public class AlteracaoPerfil extends javax.swing.JFrame {
     private final Usuario usuario;
     
-    public AlteracaoPerfil() {
+    public AlteracaoPerfil(/*Usuario user*/) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.usuario = new Usuario();
+        this.usuario = new Usuario();//user;
+        this.usuario.setTipoUsuario(0);
         peencheFields();
+        this.setVisible(true);
     }
     
     private void peencheFields(){
                 
         textFieldEmail.setText(usuario.getEmail());
         textFieldCelular.setText(usuario.getCelular());
+        textFieldRua.setText(usuario.getRua());
         textFieldBairro.setText(usuario.getBairro());
         textFieldCidade.setText(usuario.getCidade());
         textFieldNumero.setText(usuario.getNumero());
