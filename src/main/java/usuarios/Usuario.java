@@ -1,8 +1,17 @@
 package usuarios;
 
 import java.util.regex.Pattern;
+
 import auxiliares.Data;
-import exceptions.*;
+import exceptions.BairroException;
+import exceptions.CelularException;
+import exceptions.CidadeException;
+import exceptions.CpfException;
+import exceptions.DataException;
+import exceptions.EmailException;
+import exceptions.NomeException;
+import exceptions.NumeroException;
+import exceptions.RuaException;
 
 
 public class Usuario {
@@ -27,6 +36,32 @@ public class Usuario {
         geraMatricula();
     }
     
+    public Usuario(int matricula2, String nome2, String usuario2, String senha2, int tipoUsuario2, String cpf2,
+        String dataNascimento2, String rua2, String bairro2, String cidade2, String numero2, String email2,
+        String celular2) {
+
+    this.matricula = String.valueOf(matricula2);  
+    this.nome = nome2;
+    this.usuario = usuario2;
+    this.senha = senha2;
+    this.tipoUsuario = tipoUsuario2;
+    this.cpf = cpf2;
+    this.dataStr = dataNascimento2;  
+    this.rua = rua2;
+    this.bairro = bairro2;
+    this.cidade = cidade2;
+    this.numero = numero2;
+    this.email = email2;
+    this.celular = celular2;
+    
+    try {
+        setDataStr(dataNascimento2);
+    } catch (DataException e) {
+        System.out.println("Erro ao setar data: " + e.getMessage());
+    }
+}
+
+
     private void geraMatricula() {
         cont++;
         

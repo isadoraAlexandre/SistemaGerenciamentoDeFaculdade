@@ -1,33 +1,30 @@
 package com.mycompany.sistemagerenciamentodefaculdade;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import auxiliares.BancoDeDados;
-import java.sql.SQLException;
+import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import persistence.UsuarioPersistence;
+import usuarios.Usuario;
 
 public class Login extends JFrame {
     private JTextField campoUsuario;
     private JPasswordField campoSenha;
     private final JButton botaoLogin;
     private final JButton botaoCancelar;
-    private BancoDeDados banco;
 
     public Login() {
-        banco = new BancoDeDados();
-        
-        try {
-            banco.conectar();
-            banco.criarTabelaUsuarios(); 
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-
         setTitle("Login");
         setSize(1200, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
         setLayout(null);
 
         JLabel rotuloUsuario = new JLabel("Usuário (CPF):");
@@ -58,27 +55,22 @@ public class Login extends JFrame {
         botaoCancelar.setFont(new Font("Arial", Font.BOLD, 16));
         add(botaoCancelar);
 
-        // Ação do botão de login
         botaoLogin.addActionListener((ActionEvent e) -> {
             String usuario = campoUsuario.getText();
             String senha = new String(campoSenha.getPassword());
-            
-            try {
-                int tipoUsuario = banco.autenticarUsuario(usuario, senha);
-                
-                if (tipoUsuario != -1) {
-                    JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + tipoUsuario);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao autenticar o usuário.", "Erro", JOptionPane.ERROR_MESSAGE);
+
+            Map<String, Usuario> usuarios = UsuarioPersistence.findAll();
+            Usuario user = usuarios.get(usuario);
+
+            if (user != null && user.getSenha().equals(senha)) {
+                JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + user.getTipoUsuario());
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         botaoCancelar.addActionListener((ActionEvent e) -> {
             dispose();
         });
-
     }
 }
