@@ -3,6 +3,8 @@ package faculdade;
 import java.util.*;
 import exceptions.*;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 import usuarios.Aluno;
 
 public class Disciplina {
@@ -189,6 +191,10 @@ public class Disciplina {
         return qtdFaltas;
     }
 
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
     public void setQtdFaltas(int qtdFaltas) {
         this.qtdFaltas = qtdFaltas;
     }
@@ -239,5 +245,9 @@ public class Disciplina {
         String horarioPattern = "\\d{2,3}";
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 }
