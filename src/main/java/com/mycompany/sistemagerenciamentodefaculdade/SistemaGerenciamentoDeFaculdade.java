@@ -27,15 +27,15 @@ public class SistemaGerenciamentoDeFaculdade {
         //matricula_e_desmatricula.MatriculaDisciplina m = new MatriculaDisciplina(a);
         //m.setVisible(true);
         
-        //matricula_e_desmatricula.MatriculaDisciplina m = new MatriculaDisciplina(b);
-        //m.setVisible(true);
+        matricula_e_desmatricula.MatriculaDisciplina m = new MatriculaDisciplina(b);
+        m.setVisible(true);
         
         System.out.println("-----------");
         for(Disciplina d : b.getDisciplinas().values())
             System.out.println(d.getCodigo());
         
-        TrancaDisciplina t = new TrancaDisciplina(b);
-        t.setVisible(true);
+        //TrancaDisciplina t = new TrancaDisciplina(b);
+        //t.setVisible(true);
         
         /*calculo_Ira.CalculoIra c = new CalculoIra(b);
         c.setVisible(true);*/

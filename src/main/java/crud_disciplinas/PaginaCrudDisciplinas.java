@@ -8,8 +8,9 @@ import javax.swing.table.DefaultTableModel;
 import persistence.*;
 
 public class PaginaCrudDisciplinas extends javax.swing.JFrame {
+
     private Map<String, Disciplina> map;
-    private final DisciplinaGeral dados  = new DisciplinaGeral();
+    private final DisciplinaGeral dados = new DisciplinaGeral();
 
     /**
      * Creates new form PaginaCrudDisciplinas
@@ -19,13 +20,13 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         carregaDisciplinas();
     }
-    
-    public final void carregaDisciplinas(){
+
+    public final void carregaDisciplinas() {
         map = dados.findAll();
         DefaultTableModel modelDisciplinas = (DefaultTableModel) tableDisciplinas.getModel();
         modelDisciplinas.setRowCount(0);
-        
-        for (Disciplina d : map.values()){
+
+        for (Disciplina d : map.values()) {
             Object[] rowData = {
                 d.getCodigo(),
                 d.getNome(),
@@ -33,14 +34,13 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 d.getProfessor(),
                 d.getQtdVagas(),
                 d.getCargaHoraria(),
-                d.getCoordenador(),
-            };
+                d.getCoordenador(),};
 
             modelDisciplinas.addRow(rowData);
         }
     }
-    
-    private void limpaCampos(){
+
+    private void limpaCampos() {
         fieldCodigo.setText("");
         fieldNome.setText("");
         fieldHorario.setText("");
@@ -141,6 +141,12 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel3.setText("Horario");
 
+        fieldHorario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldHorarioKeyReleased(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel4.setText("Carga Hor.");
 
@@ -209,14 +215,15 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                                         .addGap(45, 45, 45)
                                         .addComponent(btnLimpar))
                                     .addGroup(externoLayout.createSequentialGroup()
-                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(fieldCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                            .addComponent(fieldHorario)
-                                            .addComponent(fieldCargaH))
-                                        .addGap(238, 238, 238)
+                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jLabel2)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel4)
+                                                .addComponent(fieldCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                                .addComponent(fieldCargaH))
+                                            .addComponent(fieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(123, 123, 123)
                                         .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
                                             .addComponent(jLabel6)
@@ -287,16 +294,16 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     private void tableDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDisciplinasMouseClicked
         int linhaSelecao = tableDisciplinas.getSelectedRow();
-        
+
         if (linhaSelecao != -1) {
-            
+
             javax.swing.table.DefaultTableModel modelDisciplinas = (javax.swing.table.DefaultTableModel) tableDisciplinas.getModel();
 
             String[] linhaTabela = new String[modelDisciplinas.getColumnCount()];
             for (int i = 0; i < modelDisciplinas.getColumnCount(); i++) {
                 linhaTabela[i] = modelDisciplinas.getValueAt(linhaSelecao, i).toString();
             }
-            
+
             fieldCodigo.setText(linhaTabela[0]);
             fieldNome.setText(linhaTabela[1]);
             fieldHorario.setText(linhaTabela[2]);
@@ -309,9 +316,9 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         Disciplina d = new Disciplina();
-        
-        if(JOptionPane.showConfirmDialog(rootPane, "Cadastrar disciplina?", "Cadastrar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            
+
+        if (JOptionPane.showConfirmDialog(rootPane, "Cadastrar disciplina?", "Cadastrar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
             try {
                 d.setNome(fieldNome.getText());
                 d.setCodigo(fieldCodigo.getText());
@@ -321,8 +328,8 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 d.setCargaHoraria(fieldCargaH.getText());
                 d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
                 d.setStatus("0");
-                
-                if(!map.containsKey(d.getCodigo())){
+
+                if (!map.containsKey(d.getCodigo())) {
                     dados.insereDisciplina(d);
                     carregaDisciplinas();
                 } else {
@@ -332,18 +339,18 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             } catch (CodigoException | CargaHException | NomeException | HoraException | VagasException | NumberFormatException ex) {
                 JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }
-            
+
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         try {
-            if(dados.removeDisciplina(fieldCodigo.getText()) && fieldCodigo.getText() != null){
+            if (dados.removeDisciplina(fieldCodigo.getText()) && fieldCodigo.getText() != null) {
                 map.remove(fieldCodigo.getText());
                 JOptionPane.showMessageDialog(rootPane, "ramoção feita");
                 carregaDisciplinas();
                 limpaCampos();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Não foi possível remover");
             }
         } catch (CodigoException | HoraException | NomeException | CargaHException ex) {
@@ -365,19 +372,48 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             d.setHorarioAula(fieldHorario.getText());
             d.setCargaHoraria(fieldCargaH.getText());
             d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
-            
-            if(dados.modificaDisciplina(d)){
+
+            if (dados.modificaDisciplina(d)) {
                 map.replace(fieldCodigo.getText(), d);
                 carregaDisciplinas();
                 limpaCampos();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Não foi possível remover");
             }
-            
+
         } catch (CodigoException | NomeException | HoraException | CargaHException | NullPointerException | VagasException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void fieldHorarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldHorarioKeyReleased
+        String text = fieldHorario.getText();
+        text = text.replaceAll("[^a-zA-Z0-9]", "");
+
+        if (text.length() > 3) {
+            text = text.substring(0, 3).toUpperCase() + "(" + text.substring(3);
+        }
+        if (text.length() > 6) {
+            text = text.substring(0, 6) + ":" + text.substring(6);
+        }
+        if (text.length() > 8) {
+            text = text.substring(0, 9) + ")" + text.substring(9);
+        }
+        if (text.length() > 10) {
+            text = text.substring(0, 10) + "/" + text.substring(10);
+        }
+        if (text.length() > 14) {
+            text = text.substring(0, 14).toUpperCase() + "(" + text.substring(14);
+        }
+        if (text.length() > 17) {
+            text = text.substring(0, 17) + ":" + text.substring(17);
+        }
+        if (text.length() > 19) {
+            text = text.substring(0, 20) + ")";
+        }
+
+        fieldHorario.setText(text);
+    }//GEN-LAST:event_fieldHorarioKeyReleased
 
     /**
      * @param args the command line arguments

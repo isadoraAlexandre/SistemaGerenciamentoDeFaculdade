@@ -5,7 +5,7 @@ import exceptions.*;
 import java.util.regex.Pattern;
 import usuarios.Aluno;
 
-public class Disciplina{
+public class Disciplina {
 
     protected String codigo;
     protected String nome;
@@ -14,7 +14,7 @@ public class Disciplina{
     protected int qtdVagas;
     protected int cargaHoraria;
     protected String coordenador;
-    
+
     protected List<Aluno> alunos;
     protected int qtdFaltas;
     protected List<Double> notas;
@@ -26,7 +26,7 @@ public class Disciplina{
         this.notas = new ArrayList<>();
     }
 
-    public Disciplina(String codigo, String nome, String horarioAula, String professor, 
+    public Disciplina(String codigo, String nome, String horarioAula, String professor,
             int qtdVagas, String coordenador, int cargaHoraria, String status) {
         this.nome = nome;
         this.qtdVagas = qtdVagas;
@@ -51,7 +51,6 @@ public class Disciplina{
     public Funcionarios getProfessor(int index) {
         return professores.get(index);
     }*/
-
     public void addAluno(Aluno aluno) {
         alunos.add(aluno);
     }
@@ -75,7 +74,7 @@ public class Disciplina{
     public Double getNota(int index) {
         return notas.get(index);
     }
-    
+
     /*public void addTurma(String turma) {
         turmas.add(turma);
     }
@@ -87,16 +86,15 @@ public class Disciplina{
     public String getTurma(int index) {
         return turmas.get(index);
     }*/
-
-    
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) throws NomeException{
+    public void setNome(String nome) throws NomeException {
         nome = nome.trim();
-        if(!isValidNome(nome))
+        if (!isValidNome(nome)) {
             throw new NomeException();
+        }
         this.nome = nome;
     }
 
@@ -104,9 +102,10 @@ public class Disciplina{
         return qtdVagas;
     }
 
-    public void setQtdVagas(int qtdVagas) throws VagasException{
-        if(qtdVagas <= 0)
+    public void setQtdVagas(int qtdVagas) throws VagasException {
+        if (qtdVagas <= 0) {
             throw new VagasException();
+        }
         this.qtdVagas = qtdVagas;
     }
 
@@ -114,13 +113,13 @@ public class Disciplina{
         return codigo;
     }
 
-    public void setCodigo(String codigo) throws CodigoException{
+    public void setCodigo(String codigo) throws CodigoException {
         codigo = codigo.trim();
-        
-        if(!isValidCodigo(codigo))
+
+        if (!isValidCodigo(codigo)) {
             throw new CodigoException();
-        
-        
+        }
+
         this.codigo = codigo;
     }
 
@@ -128,15 +127,13 @@ public class Disciplina{
         return horarioAula;
     }
 
-    public void setHorarioAula(String horarioAula) throws HoraException{
+    public void setHorarioAula(String horarioAula) throws HoraException {
         horarioAula = horarioAula.replaceAll("\\s", "");
-        
-        //if(!isValidHorario(horarioAula))
-        //    throw new HoraException();
-        
-        //String[] s = horarioAula.split(",");
-        
-        
+
+        if (!isValidHorario(horarioAula)) {
+            throw new HoraException();
+        }
+
         this.horarioAula = horarioAula;
     }
 
@@ -144,12 +141,13 @@ public class Disciplina{
         return professor;
     }
 
-    public void setProfessor(String professor) throws NomeException{
+    public void setProfessor(String professor) throws NomeException {
         professor = professor.trim();
-        
-        if(!isValidNome(professor))
+
+        if (!isValidNome(professor)) {
             throw new NomeException();
-        
+        }
+
         this.professor = professor;
     }
 
@@ -157,12 +155,13 @@ public class Disciplina{
         return coordenador;
     }
 
-    public void setCoordenador(String coordenador) throws NomeException{
+    public void setCoordenador(String coordenador) throws NomeException {
         coordenador = coordenador.trim();
-        
-        if(!isValidNome(coordenador))
+
+        if (!isValidNome(coordenador)) {
             throw new NomeException();
-        
+        }
+
         this.coordenador = coordenador;
     }
 
@@ -170,17 +169,19 @@ public class Disciplina{
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(String cargaHoraria) throws CargaHException{
+    public void setCargaHoraria(String cargaHoraria) throws CargaHException {
         cargaHoraria = cargaHoraria.replaceAll("\\s", "");
-        
-        if(!isValidCargaH(cargaHoraria))
+
+        if (!isValidCargaH(cargaHoraria)) {
             throw new CargaHException();
-                
+        }
+
         int c = Integer.parseInt(cargaHoraria);
-        
-        if(c <= 0 || c >= 200)
+
+        if (c <= 0 || c >= 200) {
             throw new CargaHException();
-        
+        }
+
         this.cargaHoraria = c;
     }
 
@@ -215,26 +216,26 @@ public class Disciplina{
     public void setNota(Double nota) {
         this.nota = nota;
     }
-    
-    private boolean isValidCodigo(String cod){
+
+    private boolean isValidCodigo(String cod) {
         String codPattern = "^[A-Z]{3}\\d{3}$";
         Pattern compPattern = Pattern.compile(codPattern);
         return (cod != null && compPattern.matcher(cod).matches());
     }
-    
-    private boolean isValidNome(String nome){
+
+    private boolean isValidNome(String nome) {
         String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ0-9\\s-]{3,100}$";
         Pattern compPattern = Pattern.compile(nomePattern);
         return (nome != null && compPattern.matcher(nome).matches());
     }
-    
-    /*private boolean isValidHorario(String horario){
-        String horarioPattern = "\\[a-z]{3}\\,\\d{1,2}\\:\\d{1,2}";
+
+    private boolean isValidHorario(String horario) {
+        String horarioPattern = "(?i)([a-z]{3})\\(\\d{2}:\\d{2}\\)(/[a-z]{3}\\(\\d{2}:\\d{2}\\))*";
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (horario != null && compPattern.matcher(horario).matches());
-    }*/
-    
-    private boolean isValidCargaH(String cargaHoraria){
+    }
+
+    private boolean isValidCargaH(String cargaHoraria) {
         String horarioPattern = "\\d{2,3}";
         Pattern compPattern = Pattern.compile(horarioPattern);
         return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
