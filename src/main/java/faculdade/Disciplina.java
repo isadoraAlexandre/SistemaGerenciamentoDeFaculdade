@@ -7,7 +7,7 @@ import usuarios.Aluno;
 import usuarios.Funcionarios;
 import usuarios.ProfessorCoordenador;
 
-public class Disciplina{
+public class Disciplina {
     protected String nome;
     protected int qtdVagas;
     protected String codigo;
@@ -15,27 +15,42 @@ public class Disciplina{
     protected String professor;
     protected String coordenador;
     protected float cargaHoraria;
-    
+
     protected List<Aluno> alunos;
-    protected int qtdFaltas;
+    protected List<Integer> qtdFaltas;
     protected List<Double> notas;
 
     public Disciplina() {
         this.alunos = new ArrayList<>();
         this.notas = new ArrayList<>();
+        this.qtdFaltas = new ArrayList<>();
     }
 
-    /*public void addProfessor(Funcionarios professor) {
-        professores.add(professor);
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 
-    public void removeProfessor(Funcionarios professor) {
-        professores.remove(professor);
+    public List<Integer> getFaltas() {
+        return qtdFaltas;
     }
 
-    public Funcionarios getProfessor(int index) {
-        return professores.get(index);
-    }*/
+    public void setFaltas(List<Integer> faltas) {
+        this.qtdFaltas = faltas;
+    }
+
+    /*
+     * public void addProfessor(Funcionarios professor) {
+     * professores.add(professor);
+     * }
+     * 
+     * public void removeProfessor(Funcionarios professor) {
+     * professores.remove(professor);
+     * }
+     * 
+     * public Funcionarios getProfessor(int index) {
+     * return professores.get(index);
+     * }
+     */
 
     public void addAluno(Aluno aluno) {
         alunos.add(aluno);
@@ -60,20 +75,21 @@ public class Disciplina{
     public Double getNota(int index) {
         return notas.get(index);
     }
-    
-    /*public void addTurma(String turma) {
-        turmas.add(turma);
-    }
 
-    public void removeTurma(String turma) {
-        turmas.remove(turma);
-    }
+    /*
+     * public void addTurma(String turma) {
+     * turmas.add(turma);
+     * }
+     * 
+     * public void removeTurma(String turma) {
+     * turmas.remove(turma);
+     * }
+     * 
+     * public String getTurma(int index) {
+     * return turmas.get(index);
+     * }
+     */
 
-    public String getTurma(int index) {
-        return turmas.get(index);
-    }*/
-
-    
     public String getNome() {
         return nome;
     }
@@ -130,16 +146,10 @@ public class Disciplina{
         this.cargaHoraria = cargaHoraria;
     }
 
-    public int getQtdFaltas() {
-        return qtdFaltas;
-    }
-
-    public void setQtdFaltas(int qtdFaltas) {
-        this.qtdFaltas = qtdFaltas;
-    }
-
     @Override
     public String toString() {
-        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + '}';
+        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula="
+                + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria="
+                + cargaHoraria + '}';
     }
 }

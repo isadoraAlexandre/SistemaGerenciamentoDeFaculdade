@@ -9,7 +9,6 @@ public class Aluno extends Usuario {
     protected Curso curso;
     protected List<Disciplina> disciplinas;
 
-        
     public Aluno() {
         this.tipoUsuario = 0;
         this.disciplinas = new ArrayList<>();
@@ -21,5 +20,9 @@ public class Aluno extends Usuario {
 
     public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
+    }
+
+    public Disciplina getDisciplina(int index) {
+        return disciplinas.get(index);
     }
 }

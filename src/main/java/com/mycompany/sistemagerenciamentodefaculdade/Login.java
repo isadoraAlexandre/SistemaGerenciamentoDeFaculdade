@@ -19,6 +19,7 @@ public class Login extends JFrame {
     private JPasswordField campoSenha;
     private final JButton botaoLogin;
     private final JButton botaoCancelar;
+    private String sessionString;
 
     public Login() {
         setTitle("Login");
@@ -64,6 +65,8 @@ public class Login extends JFrame {
 
             if (user != null && user.getSenha().equals(senha)) {
                 JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + user.getTipoUsuario());
+                sessionString = "Usuário: " + user.getNome() + " - Tipo: " + user.getTipoUsuario();
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -73,4 +76,9 @@ public class Login extends JFrame {
             dispose();
         });
     }
+
+    public String getSessionString() {
+        return sessionString;
+    }
+
 }
