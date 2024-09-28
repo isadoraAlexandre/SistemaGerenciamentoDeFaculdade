@@ -1,4 +1,4 @@
-package gabhriel;
+package Gabhriel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,18 +14,24 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import persistence.DisciplinaAluno;
 
 public class VerDisciplina extends JFrame {
 
     // obtém todas as disciplinas
     private List<Disciplina> buscarDisciplinas() {
-        Map<String, Disciplina> mapaDisciplinas = DisciplinasPersistence.findAll();
+        
+        DisciplinasPersistence per = new DisciplinaAluno("teste");//cria persistence p user teste
+        Map<String, Disciplina> mapaDisciplinas = per.findAll();
         return new ArrayList<>(mapaDisciplinas.values());
     }
 
     // busca disciplinas disponíveis para o aluno
     private List<Disciplina> buscarDisciplinasDisponiveisParaAluno(Aluno aluno) {
-        Map<String, Disciplina> todasDisciplinas = DisciplinasPersistence.findAll();
+        DisciplinasPersistence per = new DisciplinaAluno("teste");//cria persistence p user teste
+        Map<String, Disciplina> todasDisciplinas = per.findAll();
+        //Map<String, Disciplina> todasDisciplinas = DisciplinasPersistence.findAll();
+        
         List<Disciplina> disciplinasDisponiveis = new ArrayList<>();
 
         for (Disciplina disciplina : todasDisciplinas.values()) {
@@ -85,7 +91,7 @@ public class VerDisciplina extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     String codigoDisciplina = table.getValueAt(row, 0).toString();
                     String nomeDisciplina = table.getValueAt(row, 1).toString();
-                    matricularAlunoEmDisciplina(aluno, codigoDisciplina);
+                    //matricularAlunoEmDisciplina(aluno, codigoDisciplina);
                     JOptionPane.showMessageDialog(null,
                             "Você se matriculou na disciplina: " + nomeDisciplina + " (Código: " + codigoDisciplina + ")");
                 }
@@ -100,18 +106,5 @@ public class VerDisciplina extends JFrame {
         // adiciona painel ao frame
         add(painelPrincipal);
     }
-
-    // matricula aluno na disciplina
-    private void matricularAlunoEmDisciplina(Aluno aluno, String codigoDisciplina) {
-        Map<String, Disciplina> todasDisciplinas = DisciplinasPersistence.findAll();
-        Disciplina disciplina = todasDisciplinas.get(codigoDisciplina);
-
-        if (disciplina != null && disciplina.getQtdVagas() > 0) {
-            disciplina.addAluno(aluno);
-            disciplina.setQtdVagas(disciplina.getQtdVagas() - 1);
-            DisciplinasPersistence.modificaDisciplina(disciplina);
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível matricular na disciplina.");
-        }
-    }
+    
 }
