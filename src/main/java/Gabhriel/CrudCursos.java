@@ -142,7 +142,6 @@ public class CrudCursos extends JFrame {
             }
         }
 
-        // Botão "Salvar"
         JButton btnSalvar = new JButton("Salvar");
         btnSalvar.setBackground(AZUL_ESCURO);
         btnSalvar.setForeground(Color.WHITE);
@@ -183,7 +182,7 @@ public class CrudCursos extends JFrame {
         Curso curso = listaCursos.get(rowIndex);
         curso.setNome(fields[0].getText());
         curso.setDepartamento(fields[1].getText());
-        curso.setCoordenador(new ProfessorCoordenador(fields[2].getText())); // Atualiza o coordenador
+        curso.setCoordenador(new ProfessorCoordenador(fields[2].getText()));
 
         atualizarTabela();
         salvarDadosNoCSV();
@@ -207,7 +206,7 @@ public class CrudCursos extends JFrame {
     }
 
     private void atualizarTabela() {
-        modeloTabela.setRowCount(0);  // Limpa a tabela
+        modeloTabela.setRowCount(0);
 
         for (Curso curso : listaCursos) {
             Object[] dadosLinha = {curso.getNome(), curso.getDepartamento(), curso.getCoordenador().getNome()};
@@ -222,8 +221,8 @@ public class CrudCursos extends JFrame {
                 String[] dados = linha.split(",");
                 Curso curso = new Curso(dados[0]);
                 curso.setDepartamento(dados[1]);
-                curso.setCoordenador(new ProfessorCoordenador(dados[2])); // Adapte se o formato for diferente
-                listaCursos.add(curso); // Adiciona à lista de cursos
+                curso.setCoordenador(new ProfessorCoordenador(dados[2]));
+                listaCursos.add(curso);
                 modeloTabela.addRow(dados);
             }
         } catch (IOException e) {
