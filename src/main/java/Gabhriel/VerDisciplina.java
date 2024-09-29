@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import faculdade.Disciplina;
@@ -86,5 +87,13 @@ public class VerDisciplina extends JFrame {
 
         // adiciona painel ao frame
         add(painelPrincipal);
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            // Criação de um aluno de exemplo
+            Aluno alunoExemplo = new Aluno("João da Silva"); // Ajuste os parâmetros conforme necessário
+            VerDisciplina verDisciplina = new VerDisciplina(alunoExemplo);
+            verDisciplina.setVisible(true);
+        });
     }
 }
