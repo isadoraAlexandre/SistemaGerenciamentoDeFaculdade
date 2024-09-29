@@ -1,16 +1,17 @@
 package usuarios;
 
 import java.util.Map;
-
 import exceptions.HoraException;
 import exceptions.NomeException;
 import faculdade.Curso;
 import faculdade.Disciplina;
 import persistence.DisciplinaAluno;
+import java.util.List;
 
 public class Aluno extends Usuario {
-
     protected Curso curso;
+    protected String cursoStr;
+    protected List <Disciplina> disciplinasLet;
     protected Map<String, Disciplina> disciplinas;
     protected float ira;
 
@@ -91,6 +92,8 @@ public class Aluno extends Usuario {
     }
 
     public void setCurso(Curso curso) {
-        this.curso = curso; // Agora está correto
+        this.curso = curso;
+        this.cursoStr = curso.getNome();
     }
+   
 }
