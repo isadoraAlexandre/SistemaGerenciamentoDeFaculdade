@@ -1,5 +1,6 @@
 package faculdade;
 
+import auxiliares.Hora;
 import java.util.*;
 import exceptions.*;
 import java.util.regex.Pattern;
@@ -132,7 +133,7 @@ public class Disciplina {
     public void setHorarioAula(String horarioAula) throws HoraException {
         horarioAula = horarioAula.replaceAll("\\s", "");
 
-        if (!isValidHorario(horarioAula)) {
+        if (!Hora.isValidHorario(horarioAula)) {
             throw new HoraException();
         }
 
@@ -233,12 +234,6 @@ public class Disciplina {
         String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ0-9\\s-]{3,100}$";
         Pattern compPattern = Pattern.compile(nomePattern);
         return (nome != null && compPattern.matcher(nome).matches());
-    }
-
-    private boolean isValidHorario(String horario) {
-        String horarioPattern = "(?i)([a-z]{3})\\(\\d{2}:\\d{2}\\)(/[a-z]{3}\\(\\d{2}:\\d{2}\\))*";
-        Pattern compPattern = Pattern.compile(horarioPattern);
-        return (horario != null && compPattern.matcher(horario).matches());
     }
 
     private boolean isValidCargaH(String cargaHoraria) {

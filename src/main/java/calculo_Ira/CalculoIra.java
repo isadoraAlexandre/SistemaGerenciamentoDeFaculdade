@@ -6,9 +6,10 @@ import javax.swing.JOptionPane;
 import usuarios.*;
 
 public class CalculoIra extends javax.swing.JFrame {
+
     private final Aluno aluno;
-    
-    public CalculoIra(/*Aluno a*/) {
+
+    public CalculoIra(/*Aluno a*/) {//recebe o aluno logado
         initComponents();
         this.setLocationRelativeTo(null);
         this.aluno = new Aluno("teste");
@@ -121,14 +122,13 @@ public class CalculoIra extends javax.swing.JFrame {
 
     private void calcularIraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularIraActionPerformed
         float ira = 0;
-        {
-            try {
-                ira = aluno.calculaIra();
-            } catch (HoraException | NomeException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro",JOptionPane.ERROR_MESSAGE);
-            }
-        } 
-        
+
+        try {
+            ira = aluno.calculaIra();
+        } catch (HoraException | NomeException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
         JOptionPane.showMessageDialog(rootPane, "IRA calculado: " + ira);
     }//GEN-LAST:event_calcularIraActionPerformed
 

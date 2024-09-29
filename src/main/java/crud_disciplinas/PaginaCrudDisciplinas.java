@@ -12,9 +12,6 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private Map<String, Disciplina> map;
     private final DisciplinaGeral dados = new DisciplinaGeral();
 
-    /**
-     * Creates new form PaginaCrudDisciplinas
-     */
     public PaginaCrudDisciplinas() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -119,6 +116,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableDisciplinas.getTableHeader().setReorderingAllowed(false);
         tableDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableDisciplinasMouseClicked(evt);
@@ -335,7 +333,6 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(rootPane, "Displina já cadastrada");
                 }
-                limpaCampos();
             } catch (CodigoException | CargaHException | NomeException | HoraException | VagasException | NumberFormatException ex) {
                 JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }

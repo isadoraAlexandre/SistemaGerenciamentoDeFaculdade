@@ -81,6 +81,7 @@ public class TrancaDisciplina extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableDisciplinas.getTableHeader().setReorderingAllowed(false);
         tableDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableDisciplinasdesmatriculaMouse(evt);
@@ -91,6 +92,7 @@ public class TrancaDisciplina extends javax.swing.JFrame {
             tableDisciplinas.getColumnModel().getColumn(0).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(1).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(2).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(2).setPreferredWidth(150);
             tableDisciplinas.getColumnModel().getColumn(3).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(4).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(5).setResizable(false);

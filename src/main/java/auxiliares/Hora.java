@@ -2,6 +2,7 @@ package auxiliares;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Hora {
 
@@ -9,38 +10,31 @@ public class Hora {
     private int hora;
     private int min;
 
-    public Hora(String dia, int horaStr, int minStr) {
+    public Hora(String dia, int hora, int min) {
         this.dia = dia;
-        this.hora = horaStr;
-        this.min = minStr;
-    }
-
-    public String getDia() {
-        return dia;
-    }
-
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
-
-    public int getHora() {
-        return hora;
-    }
-
-    public void setHora(int hora) {
         this.hora = hora;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
         this.min = min;
     }
 
+    public static boolean isValidHorario(String horario) {
+        String horarioPattern = "(?i)([a-z]{3})\\(\\d{2}:\\d{2}\\)(/[a-z]{3}\\(\\d{2}:\\d{2}\\))*";
+        Pattern compPattern = Pattern.compile(horarioPattern);
+
+        if (horario != null && compPattern.matcher(horario).matches()) {
+            Hora h = converterHorario(horario);
+
+            //verica dias da semana e intervalo de hora e minuto
+            if (h.hora < 4 || h.hora > 24 || h.min < 0 || h.min >= 60 || !h.dia.equals("SEG") || !h.dia.equals("TER")
+                    || !h.dia.equals("QUA") || !h.dia.equals("QUI") || !h.dia.equals("SEX")) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static Hora converterHorario(String horario) {
-        try{    
+        try {
             horario = horario.replaceAll("\\)", "");
 
             String[] s = horario.split("\\(");
@@ -51,56 +45,54 @@ public class Hora {
             int minuto = Integer.parseInt(s2[1]);
 
             Hora h = new Hora(dia, hora, minuto);
-            
+
             return h;
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return null;
-        
     }
-    
-    private static List<Hora> computa(String horario){
+
+    private static List<Hora> computa(String horario) {
         List<Hora> lista = new ArrayList<>();
-        
-        if(horario.length() > 10){
-            String[] s = horario.split("\\/");
-            
+
+        if (horario.length() > 10) {
+            String[] s = horario.split("/");
+
             Hora a = converterHorario(s[0]);
             Hora b = converterHorario(s[1]);
-            
+
             lista.add(b);
             lista.add(a);
+        } else {
+            Hora c = converterHorario(horario);
+            lista.add(c);
         }
-        
-        Hora c = converterHorario(horario);
-        lista.add(c);
-        
+
         return lista;
     }
-    
-    private static boolean conflitoIndivi(Hora antigo, Hora novo){
-        if(antigo.dia.equals(novo.dia)){
-            int diferencaHoras = antigo.hora - novo.hora;
-            int diferencaMin = antigo.min - novo.min;
-            
+
+    private static boolean conflitoIndivi(Hora matriculada, Hora nova) {
+        if (matriculada.dia.equals(nova.dia)) {
+            int diferencaHoras = matriculada.hora - nova.hora;
+            int diferencaMin = matriculada.min - nova.min;
+
             return (diferencaHoras == 0 && diferencaMin >= 0) || (diferencaHoras > 0 && diferencaHoras <= 2);
         }
         return false;
     }
-    
-    public static boolean temCinflito(String antigo, String novo){
-        List<Hora> l1 = computa(antigo);
-        List<Hora> l2 = computa(novo);
-        
-        
-        for(Hora h1 : l1){
-            for(Hora h2 : l2){
+
+    public static boolean temConflito(String matriculada, String nova) {
+        List<Hora> l1 = computa(matriculada);
+        List<Hora> l2 = computa(nova);
+
+        for (Hora h1 : l1) {
+            for (Hora h2 : l2) {
                 return conflitoIndivi(h1, h2);
             }
         }
-        
+
         return false;
     }
 }

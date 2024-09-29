@@ -14,19 +14,21 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
 
     private Map<String, Disciplina> mapDisponiveis;
     private Map<String, Disciplina> mapMatriculadas;
-    private final DisciplinaGeral disponivies = new DisciplinaGeral();
-    private final DisciplinaAluno matriculadas;
+    private final DisciplinaGeral disponivies = new DisciplinaGeral();// persistence de todas disciplinas cadastradas pelo coord.
+    private final DisciplinaAluno matriculadas;//persistense das displinas vinculadas ao aluno logado
     private final Aluno aluno;
 
+    //inicializa componentes
     public MatriculaDisciplina(Aluno user) {
         initComponents();
         this.setLocationRelativeTo(null);
         aluno = user;
-        matriculadas = new DisciplinaAluno(user.getUsuario());
+        matriculadas = new DisciplinaAluno(user.getUsuario());//carrega disciplinas do aluno
         mapMatriculadas = user.getDisciplinas();
         carregaDisciplinas();
     }
 
+    //atualiza as tabelas
     public final void carregaDisciplinas() {
         mapDisponiveis = disponivies.findAll();
         mapMatriculadas = matriculadas.findAll();
@@ -126,6 +128,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableDisponiveis.getTableHeader().setReorderingAllowed(false);
         tableDisponiveis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaDisciplinasmouse(evt);
@@ -136,6 +139,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
             tableDisponiveis.getColumnModel().getColumn(0).setResizable(false);
             tableDisponiveis.getColumnModel().getColumn(1).setResizable(false);
             tableDisponiveis.getColumnModel().getColumn(2).setResizable(false);
+            tableDisponiveis.getColumnModel().getColumn(2).setPreferredWidth(150);
             tableDisponiveis.getColumnModel().getColumn(3).setResizable(false);
             tableDisponiveis.getColumnModel().getColumn(4).setResizable(false);
             tableDisponiveis.getColumnModel().getColumn(5).setResizable(false);
@@ -165,6 +169,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableMatriculadas.getTableHeader().setReorderingAllowed(false);
         tableMatriculadas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 matriculadasMouse(evt);
@@ -175,6 +180,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
             tableMatriculadas.getColumnModel().getColumn(0).setResizable(false);
             tableMatriculadas.getColumnModel().getColumn(1).setResizable(false);
             tableMatriculadas.getColumnModel().getColumn(2).setResizable(false);
+            tableMatriculadas.getColumnModel().getColumn(2).setPreferredWidth(150);
             tableMatriculadas.getColumnModel().getColumn(3).setResizable(false);
             tableMatriculadas.getColumnModel().getColumn(4).setResizable(false);
             tableMatriculadas.getColumnModel().getColumn(5).setResizable(false);
@@ -235,7 +241,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //funcao ativa ao clicar o mouse em uma linha da tabela das disciplinas disponiveis
     private void tabelaDisciplinasmouse(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaDisciplinasmouse
         int linhaSelecao = tableDisponiveis.getSelectedRow();
 
@@ -249,26 +255,20 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
 
             int confirma = JOptionPane.showConfirmDialog(this, "Matricular na disciplina: " + linhaTabela[0] + "?", "Confirmar matrícula", JOptionPane.YES_NO_OPTION);
 
-            if (confirma == JOptionPane.YES_OPTION) {
+            if (confirma == JOptionPane.YES_OPTION) {// resposta sim no pra matricula
                 if (!mapMatriculadas.containsKey(linhaTabela[0])) {
-                    if (!mapMatriculadas.isEmpty()) {
-                        JOptionPane.showMessageDialog(rootPane, "nao vazia");
-                        for (Disciplina d : mapMatriculadas.values()) {
-                            boolean x = Hora.temCinflito(mapDisponiveis.get(linhaTabela[0]).getHorarioAula(), d.getHorarioAula());
-                            if (!x) {
-                                JOptionPane.showMessageDialog(rootPane, x);
-                                mapDisponiveis.get(linhaTabela[0]).setStatus("matriculado");
-                                matriculadas.insereDisciplina(mapDisponiveis.get(linhaTabela[0]));
-                                JOptionPane.showMessageDialog(rootPane, "nao conflito");
-                                carregaDisciplinas();
-                            } else {
-                                JOptionPane.showMessageDialog(rootPane, "Conflito de horário");
-                            }
+                    boolean conflito = false;
+                    for (Disciplina d : mapMatriculadas.values()) {//verifica se ha conflito com as ja matriculadas
+                        if (Hora.temConflito(d.getHorarioAula(), mapDisponiveis.get(linhaTabela[0]).getHorarioAula())) {
+                            conflito = true;
+                            break;
                         }
+                    }
+                    if (conflito) {
+                        JOptionPane.showMessageDialog(rootPane, "Conflito de horário");
                     } else {
                         mapDisponiveis.get(linhaTabela[0]).setStatus("matriculado");
                         matriculadas.insereDisciplina(mapDisponiveis.get(linhaTabela[0]));
-                        JOptionPane.showMessageDialog(rootPane, "primeira insersao");
                         carregaDisciplinas();
                     }
                 } else {
@@ -277,11 +277,11 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tabelaDisciplinasmouse
-
+    //botao de sair, pode trocar por this.setVisible(false)
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
-
+    //funcao ativa ao clicar o mouse em uma linha da tabela das disciplinas ja matriculadas
     private void matriculadasMouse(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_matriculadasMouse
         int linhaSelecao = tableMatriculadas.getSelectedRow();
 
