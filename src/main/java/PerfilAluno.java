@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import usuarios.Aluno;
+import usuarios.Usuario;
+
 /**
  *
  * @author letic
@@ -12,8 +15,18 @@ public class PerfilAluno extends javax.swing.JFrame {
     /**
      * Creates new form PerfilAluno
      */
-    public PerfilAluno() {
+    public PerfilAluno(Usuario aluno) {
+        
         initComponents();
+        if(aluno.getTipoUsuario() == 0){
+            jLabel1.setText("Perfil do Aluno");
+        }
+        else if(aluno.getTipoUsuario() == 1){
+            jLabel1.setText("Perfil do Professor");
+        }
+        else if(aluno.getTipoUsuario() == 2){
+            jLabel1.setText("Perfil do Coordenador");
+        }
         this.setLocationRelativeTo(null);
     }
 
@@ -437,7 +450,8 @@ public class PerfilAluno extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PerfilAluno().setVisible(true);
+                Aluno aluno = new Aluno();
+                new PerfilAluno(aluno).setVisible(true);
             }
         });
     }

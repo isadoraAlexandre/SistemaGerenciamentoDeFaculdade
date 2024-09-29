@@ -1,13 +1,11 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import exceptions.CpfException;
 import exceptions.DataException;
 import exceptions.NomeException;
 import usuarios.Aluno;
-
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener; 
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -22,7 +20,11 @@ public class GerenciamentoAlunosGUI {
     private JButton btnEditar;
     private JButton btnExcluir;
     private JButton btnCancelar;
-    private static final String CSV_FILE = "alunos.csv"; 
+    private static final String CSV_FILE = "alunos.csv";
+    private static final Color AZUL_ESCURO = new Color(28, 39, 95);
+    private static final Color AZUL_MEDIO = new Color(2, 122, 160);
+    private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);
+    private static final Color BRANCO = Color.WHITE; 
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -40,7 +42,7 @@ public class GerenciamentoAlunosGUI {
     public GerenciamentoAlunosGUI() {
         initialize();
         setupEvents();
-        carregarDadosDoCSV(); 
+        carregarDadosDoCSV();
     }
 
     private void initialize() {
@@ -49,44 +51,67 @@ public class GerenciamentoAlunosGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Gerenciamento de Alunos");
 
+        frame.getContentPane().setBackground(BRANCO); 
         JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBackground(BRANCO); 
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
+        // Configurar a tabela
         String[] columnNames = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:"};
         Object[][] data = {};
-
-        tableModel = new DefaultTableModel(data, columnNames){
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+        tableModel = new DefaultTableModel(data, columnNames) {
+            Class[] types = new Class[]{
+                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false, false
             };
         };
 
         table = new JTable(tableModel);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);
-        for (int i = 1; i < columnNames.length; i++) {
-            table.getColumnModel().getColumn(i).setPreferredWidth(150);
-        }
-        JScrollPane scrollPane = new JScrollPane(table);
-        panel.add(scrollPane, BorderLayout.CENTER);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); 
+        table.setBackground(BRANCO);  
+        table.setFont(new Font("Arial", Font.PLAIN, 14)); 
+        table.setRowHeight(30);
+        table.setGridColor(AZUL_MEDIO);
+        table.setSelectionBackground(AZUL_QUASE_BRANCO);
+
+        
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.setBackground(BRANCO);
+        tablePanel.setBorder(BorderFactory.createLineBorder(AZUL_ESCURO, 2)); 
+        tablePanel.add(table.getTableHeader(), BorderLayout.NORTH); 
+        tablePanel.add(table, BorderLayout.CENTER);
+
+        tablePanel.setPreferredSize(new Dimension(1200, 500));
+        table.setPreferredScrollableViewportSize(new Dimension(1200, 500)); 
 
         JPanel panelBotoes = new JPanel();
+        panelBotoes.setBackground(BRANCO);
         panel.add(panelBotoes, BorderLayout.SOUTH);
 
         btnAdicionar = new JButton("Adicionar");
+        btnAdicionar.setBackground(AZUL_ESCURO); 
+        btnAdicionar.setForeground(Color.WHITE);
         panelBotoes.add(btnAdicionar);
 
         btnEditar = new JButton("Editar");
+        btnEditar.setBackground(AZUL_ESCURO); 
+        btnEditar.setForeground(Color.WHITE);
         panelBotoes.add(btnEditar);
 
         btnExcluir = new JButton("Excluir");
+        btnExcluir.setBackground(AZUL_ESCURO); 
+        btnExcluir.setForeground(Color.WHITE);
         panelBotoes.add(btnExcluir);
 
         btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(AZUL_ESCURO); 
+        btnCancelar.setForeground(Color.WHITE);
         panelBotoes.add(btnCancelar);
+
+        panel.add(tablePanel, BorderLayout.CENTER);
 
         frame.setVisible(true);
     }
@@ -152,16 +177,17 @@ public class GerenciamentoAlunosGUI {
 
         JPanel modalPanel = new JPanel();
         modalPanel.setLayout(new GridBagLayout());
+        modalPanel.setBackground(BRANCO);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        String[] labels = { "Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:" };
+        String[] labels = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:"};
         JTextField[] fields = new JTextField[labels.length];
 
         for (int i = 0; i < labels.length; i++) {
             JLabel label = new JLabel(labels[i]);
-            fields[i] = new JTextField(20); 
+            fields[i] = new JTextField(20);
 
             gbc.gridx = 0;
             gbc.gridy = i;
@@ -175,100 +201,80 @@ public class GerenciamentoAlunosGUI {
             }
         }
 
-        JScrollPane scrollPane = new JScrollPane(modalPanel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
         JButton btnSalvar = new JButton("Salvar");
+        btnSalvar.setBackground(AZUL_ESCURO);
+        btnSalvar.setForeground(Color.WHITE);
         btnSalvar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (rowIndex == null) {
-                    try{
+                    try {
                         Aluno novoAluno = new Aluno();
                         novoAluno.setMatricula(fields[0].getText());
                         novoAluno.setNome(fields[1].getText());
                         novoAluno.setCpf(fields[2].getText());
                         novoAluno.setDataStr(fields[3].getText());
                         novoAluno.setCurso(fields[4].getText());
-                        
-                        String [] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCurso()};
+
+                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCurso()};
                         tableModel.addRow(aluno);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, ex.getMessage());
                     }
                 } else {
-                    String valorNovo[] = new String[labels.length];
-                    String valorAntigo[] = new String[labels.length];
+                    String[] valorNovo = new String[labels.length];
                     for (int i = 0; i < labels.length; i++) {
                         valorNovo[i] = fields[i].getText();
-                        valorAntigo[i] = (String) tableModel.getValueAt(rowIndex, i);
-                        
-                        if (!valorNovo[i].equals(valorAntigo[i])) {
-                            valorAntigo[i] = valorNovo[i];
-                        }
                     }
-                    try{
-                        Aluno aluno = new Aluno();
-                        aluno.setMatricula(valorAntigo[0]);
-                        aluno.setNome(valorAntigo[1]);
-                        aluno.setCpf(valorAntigo[2]);
-                        aluno.setDataStr(valorAntigo[3]);
-                        aluno.setCurso(valorAntigo[4]);
-                        for(int i=0; i<labels.length; i++){
-                            tableModel.setValueAt(valorNovo[i], rowIndex, i);
-                        } 
-                    } catch (CpfException | NomeException | DataException ex) {
-                        JOptionPane.showMessageDialog(frame, ex.getMessage());
+                    for (int i = 0; i < labels.length; i++) {
+                        tableModel.setValueAt(valorNovo[i], rowIndex, i);
                     }
                 }
-                salvarDadosNoCSV(); 
+                salvarDadosNoCSV();
                 modalFrame.dispose();
             }
         });
-
-        gbc.gridx = 1;
-        gbc.gridy = labels.length;
+        gbc.gridx = 0;
+        gbc.gridy = labels.length; 
+        gbc.gridwidth = 2; 
         modalPanel.add(btnSalvar, gbc);
 
-        modalFrame.add(scrollPane);
+        modalFrame.add(modalPanel);
         modalFrame.setVisible(true);
     }
 
-    private void limparSelecao() {
-        table.clearSelection();
-        selectedRow = -1;
-    }
-
-    private void salvarDadosNoCSV() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE))) {
-            for (int i = 0; i < tableModel.getRowCount(); i++) {
-                for (int j = 0; j < tableModel.getColumnCount(); j++) {
-                    writer.write((String) tableModel.getValueAt(i, j));
-                    if (j < tableModel.getColumnCount() - 1) {
-                        writer.write(",");
-                    }
-                }
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void carregarDadosDoCSV() {
-        File file = new File(CSV_FILE);
-        if (!file.exists()) {
-            return; 
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] dados = line.split(",");
+        try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
                 tableModel.addRow(dados);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void salvarDadosNoCSV() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < tableModel.getColumnCount(); j++) {
+                    sb.append(tableModel.getValueAt(i, j));
+                    if (j < tableModel.getColumnCount() - 1) {
+                        sb.append(",");
+                    }
+                }
+                bw.write(sb.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void limparSelecao() {
+        table.clearSelection();
+        selectedRow = -1;
     }
 }

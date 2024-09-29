@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import usuarios.Aluno;
+import usuarios.Usuario;
+
 /**
  *
  * @author letic
@@ -12,16 +15,16 @@ public class Dashboardd extends javax.swing.JFrame {
     /**
      * Creates new form Dashboardd
      */
-    public Dashboardd(int tipoUsuario) {
+    public Dashboardd(Usuario a) {
         initComponents();
-        if(tipoUsuario==1){
+        if(a.getTipoUsuario()==1){
             matricula.setText("Alteração de Disciplinas");
             horario.setText("Notas e Faltas");
             historico.setText("Lista de Alunos");  
             btnIRA.setVisible(false);
             IRA.setVisible(false);
         }
-        if(tipoUsuario==2){
+        if(a.getTipoUsuario()==2){
             matricula.setText("Alteração de Disciplinas");
             horario.setText("Alteração de Cursos");
             historico.setText("Alteração de Professores");  
@@ -305,7 +308,7 @@ public class Dashboardd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        new PerfilAluno().setVisible(true);
+        new PerfilAluno(aluno).setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
 
     private void btnMatriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatriculaMouseClicked
@@ -358,7 +361,9 @@ public class Dashboardd extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Dashboardd(0).setVisible(true);
+                Usuario usuario = new Usuario();
+                Dashboardd dashboard = new Dashboardd(usuario);
+                dashboard.setVisible(true);
             }
         });
     }

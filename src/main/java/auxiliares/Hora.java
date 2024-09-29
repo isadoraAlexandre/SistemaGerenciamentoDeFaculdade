@@ -19,6 +19,7 @@ public class Hora {
         if()
     }*/
     
+    
     public boolean validaDia(int dia){
         if(dia <= 0 || dia > 5)
             return false;
