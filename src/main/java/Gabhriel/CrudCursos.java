@@ -164,6 +164,7 @@ public class CrudCursos extends JFrame {
         if (confirmacao == JOptionPane.YES_OPTION) {
             listaCursos.remove(linhaSelecionada);
             atualizarTabela();
+            salvarDadosNoCSV();
         }
     }
 
