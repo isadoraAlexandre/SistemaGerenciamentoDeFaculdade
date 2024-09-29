@@ -63,7 +63,7 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
         jButtonCancelar = new javax.swing.JButton();
         jButtonAlterar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alteração de Dados");
         setBackground(new java.awt.Color(242, 247, 251));
         setMinimumSize(new java.awt.Dimension(1000, 700));

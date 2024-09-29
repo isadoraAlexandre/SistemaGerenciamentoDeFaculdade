@@ -61,7 +61,7 @@ public class GerenciamentoProfessoresGUI extends JFrame {
     private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 1200, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setTitle("Gerenciamento de Professores");
 
         frame.getContentPane().setBackground(BRANCO);

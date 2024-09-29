@@ -53,7 +53,7 @@ public class TrancaDisciplina extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Trancamento de disciplina");
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);

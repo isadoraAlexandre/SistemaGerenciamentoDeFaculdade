@@ -24,7 +24,7 @@ public class GerenciamentoAlunosGUI extends JFrame {
     private JButton btnEditar;
     private JButton btnExcluir;
     private JButton btnCancelar;
-    private static final String CSV_FILE = "Usuarios.csv";
+    private static final String CSV_FILE = System.getProperty("user.dir") + "/src/main/java/banco_arquivo/alunos.csv";
     private static final Color AZUL_ESCURO = new Color(28, 39, 95);
     private static final Color AZUL_MEDIO = new Color(2, 122, 160);
     private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);
@@ -38,9 +38,10 @@ public class GerenciamentoAlunosGUI extends JFrame {
     }
 
     private void initialize() {
+        
         frame = new JFrame();
         frame.setBounds(100, 100, 1200, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setTitle("Gerenciamento de Alunos");
 
         frame.getContentPane().setBackground(BRANCO); 
@@ -50,14 +51,14 @@ public class GerenciamentoAlunosGUI extends JFrame {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
         // Configurar a tabela
-        String[] columnNames = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:"};
+        String[] columnNames = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:"};
         Object[][] data = {};
         tableModel = new DefaultTableModel(data, columnNames) {
             Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false
+                    false, false, false, false
             };
         };
 
@@ -174,7 +175,7 @@ public class GerenciamentoAlunosGUI extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        String[] labels = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:", "Curso:"};
+        String[] labels = {"Matrícula:", "Nome:", "CPF:", "Data de Nascimento:"};
         JTextField[] fields = new JTextField[labels.length];
 
         for (int i = 0; i < labels.length; i++) {
@@ -206,9 +207,8 @@ public class GerenciamentoAlunosGUI extends JFrame {
                         novoAluno.setNome(fields[1].getText());
                         novoAluno.setCpf(fields[2].getText());
                         novoAluno.setDataStr(fields[3].getText());
-                        novoAluno.setCursosStr(fields[4].getText());
 
-                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCursoStr()};
+                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr()};
                         tableModel.addRow(aluno);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, ex.getMessage());
@@ -256,6 +256,9 @@ public class GerenciamentoAlunosGUI extends JFrame {
                     if (j < tableModel.getColumnCount() - 1) {
                         sb.append(",");
                     }
+                }
+                for(int k=tableModel.getColumnCount(); k<9; k++){
+                    sb.append(", NULL");
                 }
                 bw.write(sb.toString());
                 bw.newLine();

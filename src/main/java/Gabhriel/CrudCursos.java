@@ -55,7 +55,7 @@ public class CrudCursos extends JFrame {
     private void configurarJanela() {
         setTitle("Gerenciamento de Cursos");
         setSize(800, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // painel principal

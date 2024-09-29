@@ -47,7 +47,7 @@ public class VerDisciplina extends JFrame {
     public VerDisciplina(Aluno aluno) {
         setTitle("Disciplinas Disponíveis para Matrícula");
         setSize(800, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // painel principal

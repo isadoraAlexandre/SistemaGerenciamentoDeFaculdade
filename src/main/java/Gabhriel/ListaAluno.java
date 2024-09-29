@@ -30,7 +30,7 @@ public class ListaAluno extends JFrame {
     public ListaAluno(Funcionarios prof, List<Disciplina> disc) {
         setTitle("Listagem de Alunos");
         setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // painel principal

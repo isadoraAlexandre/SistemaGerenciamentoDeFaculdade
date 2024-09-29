@@ -1,11 +1,20 @@
 package usuarios;
 
 import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import exceptions.HoraException;
 import exceptions.NomeException;
 import faculdade.Curso;
 import faculdade.Disciplina;
 import persistence.DisciplinaAluno;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.List;
 
 public class Aluno extends Usuario {
@@ -15,13 +24,14 @@ public class Aluno extends Usuario {
     protected Map<String, Disciplina> disciplinas;
     protected float ira;
 
-    public void setCursosStr(String cursoStr) {
+    public void setCursoStr(String cursoStr) {
         this.cursoStr = cursoStr;
     }
 
     public String getCursoStr() {
         return cursoStr;
     }
+    
     public Aluno(String user) {
         super();
         this.tipoUsuario = 0;
@@ -66,7 +76,7 @@ public class Aluno extends Usuario {
     }
 
     public float calculaIra() throws HoraException, NomeException {
-        carregaDisciplinas(); //talvez tirar
+        carregaDisciplinas(); 
 
         float somatorioHoras = 0;
         float somatorioNota = 0;
@@ -105,5 +115,52 @@ public class Aluno extends Usuario {
         this.curso = curso;
         this.cursoStr = curso.getNome();
     }
-   
+   public void exibirInformacoesAluno() {
+        
+        JFrame frame = new JFrame("Informações do Aluno");
+        frame.setSize(500, 700);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLayout(new GridLayout(0, 1));
+
+       
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 2, 10, 10));
+
+        
+        panel.add(new JLabel("Nome do Aluno:"));
+        panel.add(new JLabel(this.usuario));
+
+        panel.add(new JLabel("Curso:"));
+        panel.add(new JLabel(this.cursoStr));
+
+        try {
+            float iraCalculado = calculaIra();
+            panel.add(new JLabel("IRA:"));
+            panel.add(new JLabel(String.format("%.2f", iraCalculado)));
+        } catch (Exception e) {
+            panel.add(new JLabel("Erro ao calcular o IRA"));
+        }
+
+        panel.add(new JLabel("Disciplinas:"));
+        if (disciplinas != null && !disciplinas.isEmpty()) {
+            for (Map.Entry<String, Disciplina> entry : disciplinas.entrySet()) {
+                Disciplina disciplina = entry.getValue();
+                String disciplinaNome = disciplina.getNome();
+                String notas = disciplina.getNotas().toString();
+                panel.add(new JLabel(disciplinaNome + ":"));
+                panel.add(new JLabel("Notas: " + notas));
+            }
+        } else {
+            panel.add(new JLabel("Nenhuma disciplina cadastrada."));
+        }
+
+        JButton fecharButton = new JButton("Fechar");
+        fecharButton.addActionListener(e -> frame.dispose());
+
+        frame.add(panel);
+        frame.add(fecharButton, BorderLayout.SOUTH);
+
+        frame.setLocationRelativeTo(null); 
+        frame.setVisible(true);
+    }
 }

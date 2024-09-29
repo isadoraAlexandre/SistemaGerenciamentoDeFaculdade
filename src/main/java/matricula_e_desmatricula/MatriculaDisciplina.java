@@ -80,7 +80,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableMatriculadas = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Matrícula");
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);

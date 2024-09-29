@@ -4,8 +4,11 @@ package com.mycompany.sistemagerenciamentodefaculdade;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import javax.swing.JFrame;
+
 import Gabhriel.CrudCursos;
 import Gabhriel.ListaAluno;
+import Gabhriel.VerDisciplina;
 import Gabhriel.VerHorario;
 import calculo_Ira.CalculoIra;
 import crud_disciplinas.PaginaCrudDisciplinas;
@@ -134,7 +137,9 @@ public class Dashboardd extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        JFrame popup = new JFrame("Pop-up");
+        popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        popup.setVisible(true);
         fundo = new javax.swing.JPanel();
         dashboardBranca = new javax.swing.JPanel();
         btnPerfil = new javax.swing.JPanel();
@@ -417,7 +422,10 @@ public class Dashboardd extends javax.swing.JFrame {
             new ListaAluno(p, p.getDisciplinas()).setVisible(true);
         }
         else if(user.getTipoUsuario()==2){
-            new GerenciamentoAlunosGUI().setVisible(true);
+            new GerenciamentoAlunosGUI();
+        }
+        else if(user.getTipoUsuario()==0){
+            new VerDisciplina(al).setVisible(true);
         }
     }//GEN-LAST:event_btnListaDisciplinasMouseClicked
 
@@ -430,6 +438,9 @@ public class Dashboardd extends javax.swing.JFrame {
     private void btnHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoricoMouseClicked
         if(user.getTipoUsuario()==2){
             new GerenciamentoProfessoresGUI().setVisible(true);
+        }
+        else if(user.getTipoUsuario()==0){
+            al.exibirInformacoesAluno();
         }
         
     }//GEN-LAST:event_btnHistoricoMouseClicked

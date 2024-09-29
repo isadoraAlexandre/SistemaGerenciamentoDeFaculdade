@@ -27,7 +27,7 @@ public class ListaCursos extends JFrame {
         tabela = new JTable();
         jLabel1 = new JLabel();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(245, 245, 245));
 
         jButton1.setBackground(new java.awt.Color(2, 57, 119));
