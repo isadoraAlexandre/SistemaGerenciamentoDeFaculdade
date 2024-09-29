@@ -3,6 +3,9 @@ package Gabhriel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import faculdade.Disciplina;
@@ -29,25 +31,27 @@ public class VerDisciplina extends JFrame {
         return new ArrayList<>(mapaDisciplinas.values());
     }
 
-    // busca disciplinas disponíveis para o aluno
-    private List<Disciplina> buscarDisciplinasDisponiveisParaAluno(Aluno aluno) {
-        DisciplinasPersistence per = new DisciplinaAluno("teste"); // cria persistence para o usuário teste
-        Map<String, Disciplina> todasDisciplinas = per.findAll();
-
-        List<Disciplina> disciplinasDisponiveis = new ArrayList<>();
-
-        for (Disciplina disciplina : todasDisciplinas.values()) {
-            if (disciplina.getQtdVagas() > 0 && !disciplina.getAlunos().contains(aluno)) {
-                disciplinasDisponiveis.add(disciplina);
+        public static List<Disciplina> carregarDisciplinasDoCSV() throws IOException {
+        String filePath = System.getProperty("user.dir") + "/src/main/java/banco_arquivo/alunos.csv";
+        List<Disciplina> disciplinas = new ArrayList<>();
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            // Supondo que o CSV tenha o formato: Código, Nome, Horário, Professor, Qtd Vagas, Coordenador, Carga Horária, Status
+            Disciplina disciplina = new Disciplina(values[0], values[1], values[2], values[3], Integer.parseInt(values[4]), values[5], Integer.parseInt(values[6]), values[7]);
+            disciplinas.add(disciplina);
             }
         }
-        return disciplinasDisponiveis;
-    }
+        
+        return disciplinas;
+        }
 
-    public VerDisciplina(Aluno aluno) {
+        public VerDisciplina(Aluno aluno) {
         setTitle("Disciplinas Disponíveis para Matrícula");
         setSize(800, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         // painel principal
@@ -63,15 +67,25 @@ public class VerDisciplina extends JFrame {
         painelPrincipal.add(tituloLabel, BorderLayout.NORTH);
 
         // dados das disciplinas
-        String[] colunas = {"Código", "Disciplina", "Carga Horária"};
-        List<Disciplina> disciplinas = buscarDisciplinasDisponiveisParaAluno(aluno);
-        Object[][] dados = new Object[disciplinas.size()][3];
+        String[] colunas = {"Código", "Disciplina", "Horário", "Professor", "Qtd Vagas", "Coordenador", "Carga Horária"};
+        List<Disciplina> disciplinas;
+        try {
+            disciplinas = carregarDisciplinasDoCSV();
+        } catch (IOException e) {
+            e.printStackTrace();
+            disciplinas = new ArrayList<>();
+        }
+        Object[][] dados = new Object[disciplinas.size()][7];
 
         for (int i = 0; i < disciplinas.size(); i++) {
             Disciplina disciplina = disciplinas.get(i);
             dados[i][0] = disciplina.getCodigo();
             dados[i][1] = disciplina.getNome();
-            dados[i][2] = disciplina.getCargaHoraria();
+            dados[i][2] = disciplina.getHorarioAula();
+            dados[i][3] = disciplina.getProfessor();
+            dados[i][4] = disciplina.getQtdVagas();
+            dados[i][5] = disciplina.getCoordenador();
+            dados[i][6] = disciplina.getCargaHoraria();
         }
 
         // modelo da tabela
@@ -87,13 +101,5 @@ public class VerDisciplina extends JFrame {
 
         // adiciona painel ao frame
         add(painelPrincipal);
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // Criação de um aluno de exemplo
-            Aluno alunoExemplo = new Aluno("João da Silva"); // Ajuste os parâmetros conforme necessário
-            VerDisciplina verDisciplina = new VerDisciplina(alunoExemplo);
-            verDisciplina.setVisible(true);
-        });
-    }
+        }
 }

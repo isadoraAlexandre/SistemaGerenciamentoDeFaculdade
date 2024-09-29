@@ -1,11 +1,19 @@
 package faculdade;
 
-import auxiliares.Hora;
-import java.util.*;
-import exceptions.*;
-import java.util.regex.Pattern;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import auxiliares.Hora;
+import exceptions.CargaHException;
+import exceptions.CodigoException;
+import exceptions.HoraException;
+import exceptions.NomeException;
+import exceptions.VagasException;
 import usuarios.Aluno;
 
 public class Disciplina {
@@ -28,6 +36,35 @@ public class Disciplina {
         this.notas = new ArrayList<>();
         this.qtdFaltas = new ArrayList<>();
     }
+
+    public static List<Disciplina> carregarDisciplinasDoCSV() throws IOException {
+        List<Disciplina> disciplinas = new ArrayList<>();
+        String caminhoArquivo = "banco_arquivo/DisciplinasGeral.csv";
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(caminhoArquivo))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                if (dados.length == 8) {
+                    Disciplina disciplina = new Disciplina(
+                            dados[0],   // código
+                            dados[1],   // nome
+                            dados[2],   // horário
+                            dados[3],   // professor
+                            Integer.parseInt(dados[4]), // quantidade de vagas
+                            dados[5],   // coordenador
+                            Integer.parseInt(dados[6]), // carga horária
+                            dados[7]    // status
+                    );
+                    disciplinas.add(disciplina);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IOException("Erro ao ler o arquivo CSV: " + caminhoArquivo);
+        }
+        return disciplinas;
+    }
+    
 
     public List<Aluno> getAlunos() {
         return alunos;
