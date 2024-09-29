@@ -9,18 +9,13 @@ import java.util.List;
 import usuarios.Aluno;
 
 public class Disciplina {
-
-public class Disciplina{
     protected String nome;
     protected int qtdVagas;
     protected String codigo;
-    protected String nome;
     protected String horarioAula;
     protected String professor;
-    protected int qtdVagas;
     protected int cargaHoraria;
     protected String coordenador;
-    protected float cargaHoraria;
     
     protected List<Aluno> alunos;
     protected List<Integer> qtdFaltas;
@@ -79,6 +74,13 @@ public class Disciplina{
     public Funcionarios getProfessor(int index) {
         return professores.get(index);
     }*/
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
     public void addAluno(Aluno aluno) {
         alunos.add(aluno);
@@ -216,12 +218,30 @@ public class Disciplina{
         this.cargaHoraria = c;
     }
 
-    public int getQtdFaltas() {
+    public List<Integer> getQtdFaltas() {
         return qtdFaltas;
     }
 
-    public void setQtdFaltas(int qtdFaltas) {
+    public void setQtdFaltas(List<Integer> qtdFaltas) {
         this.qtdFaltas = qtdFaltas;
+    }
+
+    private boolean isValidCodigo(String cod) {
+        String codPattern = "^[A-Z]{3}\\d{3}$";
+        Pattern compPattern = Pattern.compile(codPattern);
+        return (cod != null && compPattern.matcher(cod).matches());
+    }
+
+    private boolean isValidNome(String nome) {
+        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ0-9\\s-]{3,100}$";
+        Pattern compPattern = Pattern.compile(nomePattern);
+        return (nome != null && compPattern.matcher(nome).matches());
+    }
+
+    private boolean isValidCargaH(String cargaHoraria) {
+        String horarioPattern = "\\d{2,3}";
+        Pattern compPattern = Pattern.compile(horarioPattern);
+        return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
     }
 
     @Override

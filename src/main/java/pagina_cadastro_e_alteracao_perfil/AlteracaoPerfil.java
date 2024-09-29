@@ -299,7 +299,7 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                 this.usuario.setCidade(textFieldCidade.getText());
                 this.usuario.setNumero(textFieldNumero.getText());
 
-                if(UsuarioPersistence.modificaUsuario(usuario)){
+                if(UsuarioPersistence.modificaUsuarioBool(usuario)){
                     JOptionPane.showMessageDialog(rootPane, "Alteração realizada");
                     this.dispose();
                 }

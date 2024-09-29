@@ -323,7 +323,7 @@ public class CadastroPerfil extends javax.swing.JFrame {
                 this.user.setCidade(textFieldCidade.getText());
                 this.user.setNumero(textFieldNumero.getText());
 
-                if(UsuarioPersistence.insereUsuario(this.user)){
+                if(UsuarioPersistence.insereUsuarioBool(this.user)){
                     JOptionPane.showMessageDialog(rootPane, "Cadastro realizado");
                 }
 

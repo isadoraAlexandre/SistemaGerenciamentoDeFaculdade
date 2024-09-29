@@ -3,14 +3,21 @@ package com.mycompany.sistemagerenciamentodefaculdade;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.Map;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
+import exceptions.BairroException;
+import exceptions.CelularException;
+import exceptions.CidadeException;
+import exceptions.CpfException;
+import exceptions.DataException;
+import exceptions.EmailException;
+import exceptions.NomeException;
+import exceptions.NumeroException;
+import exceptions.RuaException;
 import persistence.UsuarioPersistence;
 import usuarios.Aluno;
 import usuarios.Professor;
@@ -60,34 +67,43 @@ public class Login extends JFrame {
         add(botaoCancelar);
 
         botaoLogin.addActionListener((ActionEvent e) -> {
-            String usuario = campoUsuario.getText();
+            String cpf = campoUsuario.getText();
             String senha = new String(campoSenha.getPassword());
 
-            Map<String, Usuario> usuarios = UsuarioPersistence.findAll();
-            Usuario user = usuarios.get(usuario);
-            Usuario userPronto;
-
-            switch (user.getTipoUsuario()) {
-                case 0:
-                    userPronto = (Aluno) user;
-                    break;
-                case 1:
-                    userPronto = (Professor) user;
-                    break;
-                case 2:
-                    userPronto = (ProfessorCoordenador) user;
-                    break;
-                default:
-                    throw new IllegalArgumentException("Tipo de usuário inválido");
+            try {
+                Map<String, Usuario> usuarios;
+                usuarios = UsuarioPersistence.findAll();
+                Usuario user = usuarios.get(cpf);
+                Usuario userPronto;
+                switch (user.getTipoUsuario()) {
+                    case 0:
+                        userPronto = (Aluno) user;
+                        break;
+                    case 1:
+                        userPronto = (Professor) user;
+                        break;
+                    case 2:
+                        userPronto = (ProfessorCoordenador) user;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Tipo de usuário inválido");
+                }
+    
+                if (user != null && user.getSenha().equals(senha)) {
+                    JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + user.getTipoUsuario());
+                    sessionString = "Usuário: " + user.getNome() + " - Tipo: " + user.getTipoUsuario();
+                    Dashboardd dashboard = new Dashboardd(userPronto);
+                    dashboard.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (CpfException | NomeException | DataException | EmailException | CelularException | RuaException
+                    | BairroException | CidadeException | NumeroException e1) {
+                e1.printStackTrace();
             }
 
-            if (user != null && user.getSenha().equals(senha)) {
-                JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + user.getTipoUsuario());
-                sessionString = "Usuário: " + user.getNome() + " - Tipo: " + user.getTipoUsuario();
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
+
         });
 
         botaoCancelar.addActionListener((ActionEvent e) -> {

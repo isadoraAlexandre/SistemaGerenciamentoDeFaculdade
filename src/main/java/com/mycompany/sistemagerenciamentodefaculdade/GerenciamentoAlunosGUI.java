@@ -1,3 +1,4 @@
+package com.mycompany.sistemagerenciamentodefaculdade;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
