@@ -71,8 +71,8 @@ public class GerenciamentoProfessoresGUI extends JFrame {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
         // Configurar a tabela
-        String[] columnNames = { "Matrícula", "Nome", "CPF", "Data de Nascimento", "Curso", "Salario",
-                "Carga horária", "Formação", "Disciplinas", "É Coordenador?" };
+        String[] columnNames = { "Matrícula", "Nome", "CPF", "Data de Nascimento", "Salario", "Carga horária",
+                "Formação", "nao sei", "É Coordenador?" };
         Object[][] data = {};
         tableModel = new DefaultTableModel(data, columnNames) {
             Class[] types = new Class[] {
@@ -275,6 +275,20 @@ public class GerenciamentoProfessoresGUI extends JFrame {
                             }
                             novoProfessor.setDisciplinas(disciplinas);
                             salvarNovoProfessorNoCSV(novoProfessor);
+
+                            // Atualizar tabela
+                            tableModel.addRow(new Object[] {
+                                    novoProfessor.getMatricula(),
+                                    novoProfessor.getNome(),
+                                    novoProfessor.getCpf(),
+                                    novoProfessor.getDataStr(),
+                                    novoProfessor.getSalario(),
+                                    novoProfessor.getCargaHoraria(),
+                                    novoProfessor.getNivelFormacao(),
+                                    String.join(";", disciplinasSelecionadas),
+                                    checkBoxCoordenador.isSelected() ? "true" : "false"
+                            });
+
                             modalFrame.dispose();
                         } else {
                             Professor novoProfessor = new Professor();
@@ -305,6 +319,20 @@ public class GerenciamentoProfessoresGUI extends JFrame {
                             }
                             novoProfessor.setDisciplinas(disciplinas);
                             salvarNovoProfessorNoCSV(novoProfessor);
+
+                            // Atualizar tabela
+                            tableModel.addRow(new Object[] {
+                                    novoProfessor.getMatricula(),
+                                    novoProfessor.getNome(),
+                                    novoProfessor.getCpf(),
+                                    novoProfessor.getDataStr(),
+                                    novoProfessor.getSalario(),
+                                    novoProfessor.getCargaHoraria(),
+                                    novoProfessor.getNivelFormacao(),
+                                    String.join(";", disciplinasSelecionadas),
+                                    checkBoxCoordenador.isSelected() ? "true" : "false"
+                            });
+
                             modalFrame.dispose();
                         }
 
