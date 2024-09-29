@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import Gabhriel.VerHorario;
+import matricula_e_desmatricula.MatriculaDisciplina;
 import usuarios.Aluno;
 import usuarios.Usuario;
 
@@ -313,7 +315,8 @@ public class Dashboardd extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilMouseClicked
 
     private void btnMatriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatriculaMouseClicked
-        // TODO add your handling code here:
+        Aluno a = new Aluno("leticia");
+        new MatriculaDisciplina(a).setVisible(true);
     }//GEN-LAST:event_btnMatriculaMouseClicked
 
     private void btnListaDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaDisciplinasMouseClicked
@@ -329,7 +332,8 @@ public class Dashboardd extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHistoricoMouseClicked
 
     private void btnHorarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHorarioMouseClicked
-        // TODO add your handling code here:
+        Aluno a = new Aluno("leticia");
+        new VerHorario(a).setVisible(true);
     }//GEN-LAST:event_btnHorarioMouseClicked
 
     /**

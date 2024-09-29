@@ -1,8 +1,11 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import Gabhriel.CrudCursos;
 import exceptions.CpfException;
 import exceptions.DataException;
 import exceptions.NomeException;
+import faculdade.Curso;
 import usuarios.Aluno;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -25,8 +28,8 @@ public class GerenciamentoAlunosGUI {
     private static final Color AZUL_MEDIO = new Color(2, 122, 160);
     private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);
     private static final Color BRANCO = Color.WHITE; 
-
     public static void main(String[] args) {
+        Curso curso = new Curso("Artes");
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

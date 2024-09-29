@@ -17,7 +17,7 @@ public class PerfilAluno extends javax.swing.JFrame {
      */
     public PerfilAluno(Usuario aluno) {
         
-        initComponents();
+        initComponents(aluno);
         if(aluno.getTipoUsuario() == 0){
             jLabel1.setText("Perfil do Aluno");
         }
@@ -37,7 +37,7 @@ public class PerfilAluno extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents(Usuario aluno) {
 
         jPanel1 = new javax.swing.JPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
@@ -85,6 +85,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField12.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField12.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField12.setSelectionColor(new java.awt.Color(242, 247, 251));
+        
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField12ActionPerformed(evt);
@@ -108,6 +109,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField13.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField13.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField13.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField12.setText("bairro");
 
         jLabel11.setForeground(new java.awt.Color(28, 39, 95));
         jLabel11.setText("Número");
@@ -116,6 +118,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField11.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField11.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField11.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField11.setText("rua");
 
         jLabel10.setForeground(new java.awt.Color(28, 39, 95));
         jLabel10.setText("Rua");
@@ -128,6 +131,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField7.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField7.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField7.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField7.setText("data de nascimento");
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
@@ -141,6 +145,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField6.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField6.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField6.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField6.setText("cpf");
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
@@ -154,6 +159,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField5.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField5.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField5.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField5.setText("email");
 
         jLabel3.setForeground(new java.awt.Color(28, 39, 95));
         jLabel3.setText("Usuário (Email)");
@@ -162,6 +168,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField1.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField1.setText("nome");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -182,6 +189,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField2.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField2.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField2.setText(aluno.getMatricula());
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -192,6 +200,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField3.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField3.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField3.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField3.setText("telefone");
 
         jLabel5.setForeground(new java.awt.Color(28, 39, 95));
         jLabel5.setText("Telefone");
@@ -203,6 +212,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField4.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField4.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField4.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField4.setText("genero");
 
         jLabel13.setForeground(new java.awt.Color(28, 39, 95));
         jLabel13.setText("Cidade");
@@ -211,6 +221,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField8.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField8.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField8.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField8.setText("cidade");
 
         jLabel14.setForeground(new java.awt.Color(28, 39, 95));
         jLabel14.setText("Estado");
@@ -219,6 +230,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField10.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField10.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField10.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField10.setText("estado");
 
         jLabel15.setForeground(new java.awt.Color(28, 39, 95));
         jLabel15.setText("CEP");
@@ -227,6 +239,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         jTextField9.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextField9.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         jTextField9.setSelectionColor(new java.awt.Color(242, 247, 251));
+        jTextField9.setText("cep");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

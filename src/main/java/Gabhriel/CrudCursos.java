@@ -4,6 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,7 @@ import faculdade.Curso;
 import usuarios.ProfessorCoordenador;
 
 public class CrudCursos extends JFrame {
+    private static final String CSV_FILE = "cursos.csv";
     
     private List<Curso> listaCursos;
     private DefaultTableModel modeloTabela;
@@ -28,6 +34,7 @@ public class CrudCursos extends JFrame {
     public CrudCursos() {
         listaCursos = new ArrayList<>();
         configurarJanela();
+        carregarDadosDoCSV();
     }
 
     private void configurarJanela() {
@@ -101,6 +108,7 @@ public class CrudCursos extends JFrame {
 
                 listaCursos.add(novoCurso);
                 atualizarTabela();
+                salvarDadosNoCSV();
             } else {
                 JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios!");
             }
@@ -139,6 +147,7 @@ public class CrudCursos extends JFrame {
                 cursoSelecionado.getCoordenador().setNome(nomeCoordenador);
 
                 atualizarTabela();
+                salvarDadosNoCSV();
             } else {
                 JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios!");
             }
@@ -164,6 +173,37 @@ public class CrudCursos extends JFrame {
         for (Curso curso : listaCursos) {
             Object[] dadosLinha = {curso.getNome(), curso.getDepartamento(), curso.getCoordenador().getNome()};
             modeloTabela.addRow(dadosLinha);
+        }
+    }
+
+    
+    private void carregarDadosDoCSV() {
+        try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(",");
+                modeloTabela.addRow(dados);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void salvarDadosNoCSV() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            for (int i = 0; i < modeloTabela.getRowCount(); i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < modeloTabela.getColumnCount(); j++) {
+                    sb.append(modeloTabela.getValueAt(i, j));
+                    if (j < modeloTabela.getColumnCount() - 1) {
+                        sb.append(",");
+                    }
+                }
+                bw.write(sb.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
