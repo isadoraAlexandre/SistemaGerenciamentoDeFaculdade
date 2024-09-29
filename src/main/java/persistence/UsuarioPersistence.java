@@ -96,7 +96,7 @@ public class UsuarioPersistence{
                         Usuario.setSenha(senha);
                         Usuario.setMatricula(matricula);
 
-                        users.put(user, Usuario);
+                        users.put(cpf, Usuario);
                     }
                 }
             } else{

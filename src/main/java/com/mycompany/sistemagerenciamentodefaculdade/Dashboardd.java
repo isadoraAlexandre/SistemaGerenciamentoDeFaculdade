@@ -4,9 +4,24 @@ package com.mycompany.sistemagerenciamentodefaculdade;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import Gabhriel.CrudCursos;
+import Gabhriel.ListaAluno;
 import Gabhriel.VerHorario;
+import calculo_Ira.CalculoIra;
+import crud_disciplinas.PaginaCrudDisciplinas;
+import exceptions.BairroException;
+import exceptions.CelularException;
+import exceptions.CidadeException;
+import exceptions.CpfException;
+import exceptions.EmailException;
+import exceptions.NomeException;
+import exceptions.NumeroException;
+import exceptions.RuaException;
 import matricula_e_desmatricula.MatriculaDisciplina;
 import usuarios.Aluno;
+import usuarios.Funcionarios.LancaFaltaFuncionarioUI;
+import usuarios.Professor;
+import usuarios.ProfessorCoordenador;
 import usuarios.Usuario;
 
 /**
@@ -14,26 +29,101 @@ import usuarios.Usuario;
  * @author letic
  */
 public class Dashboardd extends javax.swing.JFrame {
-
+    private final Usuario user;
+    private Aluno al;
+    private Professor p;
+    private ProfessorCoordenador pc;
     /**
      * Creates new form Dashboardd
      */
-    public Dashboardd(Usuario a) {
+    public Dashboardd(Usuario u) {
+        user=u;
         initComponents();
-        if(a.getTipoUsuario()==1){
-            matricula.setText("Alteração de Disciplinas");
+        converte(user);
+        if(user.getTipoUsuario()==1){
+            listaDisciplinas.setText("Lista de Alunos");
+            btnMatricula.setVisible(false);
+            matricula.setVisible(false);
             horario.setText("Notas e Faltas");
-            historico.setText("Lista de Alunos");  
+            btnHistorico.setVisible(false);
+            historico.setVisible(false);;  
             btnIRA.setVisible(false);
             IRA.setVisible(false);
         }
-        if(a.getTipoUsuario()==2){
+        if(user.getTipoUsuario()==2){
             matricula.setText("Alteração de Disciplinas");
             horario.setText("Alteração de Cursos");
             historico.setText("Alteração de Professores");  
-            IRA.setText("Alteração de Alunos");
+            btnIRA.setVisible(false);
+            listaDisciplinas.setText("Alteração de Alunos");
         }
         this.setLocationRelativeTo(null);
+    }
+
+    private void converte(Usuario user){
+        if(user.getTipoUsuario()==0){
+            try {
+                
+                al = new Aluno(user.getCpf());
+                al.setBairro(user.getBairro());
+                al.setCelular(user.getCelular());
+                al.setCidade(user.getCidade());
+                al.setCpf(user.getCpf());
+                al.setDataNascimento(user.getDataNascimento());
+                al.setEmail(user.getEmail());
+                al.setMatricula(user.getMatricula());
+                al.setNome(user.getNome());
+                al.setNumero(user.getNumero());
+                al.setRua(user.getRua());
+                al.setSenha(user.getSenha());
+                al.setTipoUsuario(user.getTipoUsuario());
+                al.setUsuario(user.getUsuario());
+            } catch (BairroException | CelularException | CidadeException | CpfException | EmailException
+                    | NomeException | NumeroException | RuaException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(user.getTipoUsuario()==1){
+            try {
+                p = new Professor();
+                p.setBairro(user.getBairro());
+                p.setCelular(user.getCelular());
+                p.setCidade(user.getCidade());
+                p.setCpf(user.getCpf());
+                p.setDataNascimento(user.getDataNascimento());
+                p.setEmail(user.getEmail());
+                p.setNome(user.getNome());
+                p.setNumero(user.getNumero());
+                p.setRua(user.getRua());
+                p.setSenha(user.getSenha());
+                p.setTipoUsuario(user.getTipoUsuario());
+                p.setUsuario(user.getUsuario());
+                
+            } catch (BairroException | CelularException | CidadeException | CpfException | EmailException
+                    | NomeException | NumeroException | RuaException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(user.getTipoUsuario()==2){
+            try {
+                pc = new ProfessorCoordenador();
+                pc.setBairro(user.getBairro());
+                pc.setCelular(user.getCelular());
+                pc.setCidade(user.getCidade());
+                pc.setCpf(user.getCpf());
+                pc.setDataNascimento(user.getDataNascimento());
+                pc.setEmail(user.getEmail());
+                pc.setNome(user.getNome());
+                pc.setNumero(user.getNumero());
+                pc.setRua(user.getRua());
+                pc.setSenha(user.getSenha());
+                pc.setTipoUsuario(user.getTipoUsuario());
+                pc.setUsuario(user.getUsuario());
+            } catch (BairroException | CelularException | CidadeException | CpfException | EmailException
+                    | NumeroException | RuaException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -100,7 +190,7 @@ public class Dashboardd extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(28, 23, 91));
-        jLabel1.setText("Dashboard");
+        jLabel1.setText("Dashboard"+ user.getTipoUsuario());
         jLabel1.setMaximumSize(new java.awt.Dimension(100, 160));
         jLabel1.setMinimumSize(new java.awt.Dimension(100, 160));
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 160));
@@ -311,68 +401,58 @@ public class Dashboardd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        Aluno a = new Aluno("leticia");
-        new PerfilAluno(a).setVisible(true);
+        new PerfilAluno(user).setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
 
     private void btnMatriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatriculaMouseClicked
-        Aluno a = new Aluno("leticia");
-        new MatriculaDisciplina(a).setVisible(true);
+        if(user.getTipoUsuario()==2)
+            new PaginaCrudDisciplinas().setVisible(true);
+        else if(user.getTipoUsuario()==0){
+            new MatriculaDisciplina(al).setVisible(true);
+        }
     }//GEN-LAST:event_btnMatriculaMouseClicked
 
     private void btnListaDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaDisciplinasMouseClicked
-        // TODO add your handling code here:
+        if(user.getTipoUsuario()==1){
+            new ListaAluno(p, p.getDisciplinas()).setVisible(true);
+        }
+        else if(user.getTipoUsuario()==2){
+            new GerenciamentoAlunosGUI().setVisible(true);
+        }
     }//GEN-LAST:event_btnListaDisciplinasMouseClicked
 
     private void btnIRAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIRAMouseClicked
-        // TODO add your handling code here:
+        if(user.getTipoUsuario()==0){
+            new CalculoIra(al).setVisible(true);
+        }
     }//GEN-LAST:event_btnIRAMouseClicked
 
     private void btnHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHistoricoMouseClicked
-        // TODO add your handling code here:
+        if(user.getTipoUsuario()==2){
+            new GerenciamentoProfessoresGUI().setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnHistoricoMouseClicked
 
     private void btnHorarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHorarioMouseClicked
-        Aluno a = new Aluno("leticia");
-        new VerHorario(a).setVisible(true);
+        if(user.getTipoUsuario()==1){
+            LancaFaltaFuncionarioUI lancaFaltaUI = p.new LancaFaltaFuncionarioUI();
+            lancaFaltaUI.setVisible(true);
+        }
+        else if(user.getTipoUsuario()==0){
+            new VerHorario(al).setVisible(true);
+        }
+        else{
+            new CrudCursos().setVisible(true);
+        }
+
     }//GEN-LAST:event_btnHorarioMouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboardd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboardd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboardd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboardd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Usuario usuario = new Usuario();
-                Dashboardd dashboard = new Dashboardd(usuario);
-                dashboard.setVisible(true);
-            }
-        });
-    }
+   
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IRA;

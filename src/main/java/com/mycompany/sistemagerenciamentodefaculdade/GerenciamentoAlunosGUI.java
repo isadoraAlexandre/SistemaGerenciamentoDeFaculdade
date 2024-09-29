@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-public class GerenciamentoAlunosGUI {
+public class GerenciamentoAlunosGUI extends JFrame {
     private JFrame frame;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -29,19 +29,7 @@ public class GerenciamentoAlunosGUI {
     private static final Color AZUL_MEDIO = new Color(2, 122, 160);
     private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);
     private static final Color BRANCO = Color.WHITE; 
-    public static void main(String[] args) {
-        Curso curso = new Curso("Artes");
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    GerenciamentoAlunosGUI window = new GerenciamentoAlunosGUI();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+
 
     public GerenciamentoAlunosGUI() {
         initialize();

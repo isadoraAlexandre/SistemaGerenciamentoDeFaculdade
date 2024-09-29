@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Funcionarios extends Usuario {
@@ -13,8 +14,11 @@ public abstract class Funcionarios extends Usuario {
     protected float cargaHoraria;
     protected String nivelFormacao;
     protected int tempoServico;
-    protected List<Disciplina> disciplinas;
+    protected List<Disciplina> disciplinas = new ArrayList<>();
 
+    public Funcionarios(){
+        super();
+    }
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }

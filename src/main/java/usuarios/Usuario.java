@@ -36,7 +36,6 @@ public class Usuario {
         geraMatricula();
     }
 
-
     private void geraMatricula() {
         cont++;
         

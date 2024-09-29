@@ -74,25 +74,13 @@ public class Login extends JFrame {
                 Map<String, Usuario> usuarios;
                 usuarios = UsuarioPersistence.findAll();
                 Usuario user = usuarios.get(cpf);
-                Usuario userPronto;
-                switch (user.getTipoUsuario()) {
-                    case 0:
-                        userPronto = (Aluno) user;
-                        break;
-                    case 1:
-                        userPronto = (Professor) user;
-                        break;
-                    case 2:
-                        userPronto = (ProfessorCoordenador) user;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Tipo de usuário inválido");
-                }
+
+                
     
                 if (user != null && user.getSenha().equals(senha)) {
                     JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + user.getTipoUsuario());
                     sessionString = "Usuário: " + user.getNome() + " - Tipo: " + user.getTipoUsuario();
-                    Dashboardd dashboard = new Dashboardd(userPronto);
+                    Dashboardd dashboard = new Dashboardd(user);
                     dashboard.setVisible(true);
                     dispose();
                 } else {
