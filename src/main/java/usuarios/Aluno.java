@@ -1,28 +1,102 @@
 package usuarios;
 
+import java.util.Map;
+import exceptions.HoraException;
+import exceptions.NomeException;
 import faculdade.Curso;
 import faculdade.Disciplina;
-import java.util.ArrayList;
+import persistence.DisciplinaAluno;
 import java.util.List;
 
 public class Aluno extends Usuario {
     protected Curso curso;
-    protected List<Disciplina> disciplinas;
+    protected String cursoStr;
+    protected List <Disciplina> disciplinasLet;
+    protected Map<String, Disciplina> disciplinas;
+    protected float ira;
 
-    public Aluno() {
+    public Aluno(String user) {
+        super();
         this.tipoUsuario = 0;
-        this.disciplinas = new ArrayList<>();
+        this.usuario = user;
+        DisciplinaAluno per = new DisciplinaAluno(this.usuario);
+        this.disciplinas = per.findAll();
     }
 
-    public List<Disciplina> getDisciplinas() {
+    public Map<String, Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(List<Disciplina> disciplinas) {
+    public void setDisciplinas(Map<String, Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
     public Disciplina getDisciplina(int index) {
         return disciplinas.get(index);
     }
+    private void carregaDisciplinas() {
+        DisciplinaAluno per = new DisciplinaAluno(this.usuario);
+        this.disciplinas = per.findAll();
+    }
+
+    private double calculaNotas(String codigo) {
+        Disciplina d = this.disciplinas.get(codigo);
+        double notaFinal = 0;
+
+        if (d != null) {
+            if (d.getNotas() != null && !d.getNotas().isEmpty()) {
+                for (double nota : d.getNotas()) {
+                    notaFinal += nota;
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(null, "Nenhuma nota encontrada para a disciplina: " + codigo);
+            }
+            return notaFinal;
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(null, "Disciplina não encontrada na matrícula do aluno.");
+        return notaFinal;
+    }
+
+    public float calculaIra() throws HoraException, NomeException {
+        carregaDisciplinas(); //talvez tirar
+
+        float somatorioHoras = 0;
+        float somatorioNota = 0;
+
+        try {
+            for (Disciplina disciplina : this.disciplinas.values()) {
+                double notaDisciplina = calculaNotas(disciplina.getCodigo()); //mudar aqui tbm
+                float cargaHoraria = disciplina.getCargaHoraria();
+
+                somatorioNota += notaDisciplina * cargaHoraria;
+                somatorioHoras += cargaHoraria;
+            }
+
+            if (somatorioHoras > 0) {
+                this.ira = somatorioNota / somatorioHoras;
+            } else {
+                this.ira = 0;
+            }
+
+            if (Double.isNaN(this.ira)) {
+                this.ira = 0;
+            }
+
+        } catch (java.lang.NullPointerException e) {
+            //javax.swing.JOptionPane.showMessageDialog(null, "Erro ao calcular o IRA: " + e.getMessage());
+        }
+
+        return this.ira;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+        this.cursoStr = curso.getNome();
+    }
+   
 }

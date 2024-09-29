@@ -9,7 +9,7 @@ import usuarios.Funcionarios;
 import usuarios.Funcionarios.LancaFaltaFuncionarioUI;
 
 public class SistemaGerenciamentoDeFaculdade {
-
+    
     public static void main(String[] args) {
         System.out.println("Hello World!");
         Disciplina disciplina1 = new Disciplina();

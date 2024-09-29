@@ -1,21 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package faculdade;
 
-import usuarios.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- *
- * @author isinha
- */
+import usuarios.Aluno;
+import usuarios.Funcionarios;
+import usuarios.Professor;
+import usuarios.ProfessorCoordenador;
+
 public class Curso {
     protected String nome;
     protected String departamento;
     protected ProfessorCoordenador coordenador;
-    protected List<Disciplina> grade;
+    protected Map<String, Disciplina> grade;
     protected List<Funcionarios> professores;
     private List<Aluno> alunos;
 
@@ -23,7 +22,7 @@ public class Curso {
         this.nome = nome;
         this.alunos = new ArrayList<>();
         this.professores = new ArrayList<>();
-        this.grade = new ArrayList<>();
+        this.grade = new HashMap<>();
     }
     public void adicionarAluno(Aluno aluno) {
         this.alunos.add(aluno);
@@ -83,11 +82,11 @@ public class Curso {
         this.coordenador = coordenador;
     }
 
-    public List<Disciplina> getGrade() {
+    public Map<String, Disciplina> getGrade() {
         return grade;
     }
 
-    public void setGrade(List<Disciplina> grade) {
+    public void setGrade(Map<String, Disciplina> grade) {
         this.grade = grade;
     }
 
