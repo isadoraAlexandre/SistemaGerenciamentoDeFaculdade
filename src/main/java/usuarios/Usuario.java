@@ -27,7 +27,7 @@ public class Usuario {
         geraMatricula();
     }
     
-    private void geraMatricula() {
+    private void geraMatricula(){
         cont++;
         
         String matricula;
@@ -82,9 +82,9 @@ public class Usuario {
     }
 
     public void setCpf(String cpf) throws CpfException{
-        cpf = cpf.trim();
+        cpf = cpf.replaceAll("\\D", "");
         
-        if (isValidCPF(cpf)) {
+        if (isValidCpf(cpf)) {
             this.cpf = cpf;
         } else {
             throw new CpfException();
@@ -200,7 +200,7 @@ public class Usuario {
     }
 
     public void setDataStr(String dataStr) throws DataException{
-        dataStr = dataStr.replaceAll("\s", "");
+        dataStr = dataStr.replaceAll("\\s", "");
         
         if(!isValidDataNascimento(dataStr))
             throw new DataException();
@@ -246,8 +246,37 @@ public class Usuario {
         return (nome != null && compPattern.matcher(nome).matches());
     }
     
-    private boolean isValidCPF(String cpf) {
-        return cpf != null && cpf.matches("\\d{11}");
+    private boolean isValidCpf(String cpf){
+        if (cpf.length() != 11){
+            return false;
+        }
+
+        if (cpf.matches("(\\d)\\1{10}")){
+            return false;
+        }
+
+        // Calcula o primeiro dígito verificador
+        int primeiroDigitoVerificador = calcularDigitoVerificador(cpf.substring(0, 9));
+
+        // Calcula o segundo dígito verificador
+        int segundoDigitoVerificador = calcularDigitoVerificador(cpf.substring(0, 9) + primeiroDigitoVerificador);
+        
+        return cpf.equals(cpf.substring(0, 9) + primeiroDigitoVerificador + segundoDigitoVerificador);
+    }
+
+    private int calcularDigitoVerificador(String base){
+        int soma = 0;
+        int peso = base.length() + 1;
+
+        for (int i = 0; i < base.length(); i++){
+            soma += (base.charAt(i) - '0') * peso--;
+        }
+        int resto = 11 - (soma % 11);
+        
+        if(resto > 9)
+            return 0;
+        else
+            return resto;
     }
 
     private boolean isValidEmail(String email) {
@@ -261,7 +290,7 @@ public class Usuario {
     }
     
     private boolean isValidDataNascimento(String data){
-        String dataPattern = "\\d{2}\\/\\d{2}\\/\\d{4}";
+        String dataPattern = "\\d{2}\\/\\d{1,2}\\/\\d{4}";
         Pattern compPattern = Pattern.compile(dataPattern);
         return (data != null && compPattern.matcher(data).matches());
     }

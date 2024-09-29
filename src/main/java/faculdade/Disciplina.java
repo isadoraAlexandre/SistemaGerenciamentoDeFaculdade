@@ -1,26 +1,44 @@
 package faculdade;
 
-import java.util.*;
-
 import auxiliares.Hora;
+import java.util.*;
+import exceptions.*;
+import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 import usuarios.Aluno;
-import usuarios.Funcionarios;
-import usuarios.ProfessorCoordenador;
 
-public class Disciplina{
-    protected String nome;
-    protected int qtdVagas;
+public class Disciplina {
+
     protected String codigo;
-    protected float horarioAula;
+    protected String nome;
+    protected String horarioAula;
     protected String professor;
+    protected int qtdVagas;
+    protected int cargaHoraria;
     protected String coordenador;
-    protected float cargaHoraria;
-    
+
     protected List<Aluno> alunos;
     protected int qtdFaltas;
     protected List<Double> notas;
+    protected Double nota;
+    protected String status;
 
     public Disciplina() {
+        this.alunos = new ArrayList<>();
+        this.notas = new ArrayList<>();
+    }
+
+    public Disciplina(String codigo, String nome, String horarioAula, String professor,
+            int qtdVagas, String coordenador, int cargaHoraria, String status) {
+        this.nome = nome;
+        this.qtdVagas = qtdVagas;
+        this.codigo = codigo;
+        this.horarioAula = horarioAula;
+        this.professor = professor;
+        this.coordenador = coordenador;
+        this.cargaHoraria = cargaHoraria;
+        this.status = status;
         this.alunos = new ArrayList<>();
         this.notas = new ArrayList<>();
     }
@@ -36,7 +54,6 @@ public class Disciplina{
     public Funcionarios getProfessor(int index) {
         return professores.get(index);
     }*/
-
     public void addAluno(Aluno aluno) {
         alunos.add(aluno);
     }
@@ -60,7 +77,7 @@ public class Disciplina{
     public Double getNota(int index) {
         return notas.get(index);
     }
-    
+
     /*public void addTurma(String turma) {
         turmas.add(turma);
     }
@@ -72,13 +89,15 @@ public class Disciplina{
     public String getTurma(int index) {
         return turmas.get(index);
     }*/
-
-    
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) throws NomeException {
+        nome = nome.trim();
+        if (!isValidNome(nome)) {
+            throw new NomeException();
+        }
         this.nome = nome;
     }
 
@@ -86,7 +105,10 @@ public class Disciplina{
         return qtdVagas;
     }
 
-    public void setQtdVagas(int qtdVagas) {
+    public void setQtdVagas(int qtdVagas) throws VagasException {
+        if (qtdVagas <= 0) {
+            throw new VagasException();
+        }
         this.qtdVagas = qtdVagas;
     }
 
@@ -94,15 +116,27 @@ public class Disciplina{
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(String codigo) throws CodigoException {
+        codigo = codigo.trim();
+
+        if (!isValidCodigo(codigo)) {
+            throw new CodigoException();
+        }
+
         this.codigo = codigo;
     }
 
-    public float getHorarioAula() {
+    public String getHorarioAula() {
         return horarioAula;
     }
 
-    public void setHorarioAula(float horarioAula) {
+    public void setHorarioAula(String horarioAula) throws HoraException {
+        horarioAula = horarioAula.replaceAll("\\s", "");
+
+        if (!Hora.isValidHorario(horarioAula)) {
+            throw new HoraException();
+        }
+
         this.horarioAula = horarioAula;
     }
 
@@ -110,7 +144,13 @@ public class Disciplina{
         return professor;
     }
 
-    public void setProfessor(String professor) {
+    public void setProfessor(String professor) throws NomeException {
+        professor = professor.trim();
+
+        if (!isValidNome(professor)) {
+            throw new NomeException();
+        }
+
         this.professor = professor;
     }
 
@@ -118,28 +158,91 @@ public class Disciplina{
         return coordenador;
     }
 
-    public void setCoordenador(String coordenador) {
+    public void setCoordenador(String coordenador) throws NomeException {
+        coordenador = coordenador.trim();
+
+        if (!isValidNome(coordenador)) {
+            throw new NomeException();
+        }
+
         this.coordenador = coordenador;
     }
 
-    public float getCargaHoraria() {
+    public int getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(float cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
+    public void setCargaHoraria(String cargaHoraria) throws CargaHException {
+        cargaHoraria = cargaHoraria.replaceAll("\\s", "");
+
+        if (!isValidCargaH(cargaHoraria)) {
+            throw new CargaHException();
+        }
+
+        int c = Integer.parseInt(cargaHoraria);
+
+        if (c <= 0 || c >= 200) {
+            throw new CargaHException();
+        }
+
+        this.cargaHoraria = c;
     }
 
     public int getQtdFaltas() {
         return qtdFaltas;
     }
 
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
     public void setQtdFaltas(int qtdFaltas) {
         this.qtdFaltas = qtdFaltas;
     }
 
-    @Override
-    public String toString() {
-        return "Disciplina{" + "nome=" + nome + ", qtdVagas=" + qtdVagas + ", codigo=" + codigo + ", horarioAula=" + horarioAula + ", professor=" + professor + ", coordenador=" + coordenador + ", cargaHoraria=" + cargaHoraria + '}';
+    public List<Double> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Double> notas) {
+        this.notas = notas;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getNota() {
+        return nota;
+    }
+
+    public void setNota(Double nota) {
+        this.nota = nota;
+    }
+
+    private boolean isValidCodigo(String cod) {
+        String codPattern = "^[A-Z]{3}\\d{3}$";
+        Pattern compPattern = Pattern.compile(codPattern);
+        return (cod != null && compPattern.matcher(cod).matches());
+    }
+
+    private boolean isValidNome(String nome) {
+        String nomePattern = "^[A-Za-zÀ-ÖØ-öø-ÿ0-9\\s-]{3,100}$";
+        Pattern compPattern = Pattern.compile(nomePattern);
+        return (nome != null && compPattern.matcher(nome).matches());
+    }
+
+    private boolean isValidCargaH(String cargaHoraria) {
+        String horarioPattern = "\\d{2,3}";
+        Pattern compPattern = Pattern.compile(horarioPattern);
+        return (cargaHoraria != null && compPattern.matcher(cargaHoraria).matches());
+    }
+
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 }
