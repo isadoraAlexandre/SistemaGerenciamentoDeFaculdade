@@ -308,7 +308,8 @@ public class Dashboardd extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        new PerfilAluno(aluno).setVisible(true);
+        Aluno a = new Aluno("leticia");
+        new PerfilAluno(a).setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
 
     private void btnMatriculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMatriculaMouseClicked

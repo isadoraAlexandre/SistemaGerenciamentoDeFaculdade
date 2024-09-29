@@ -209,14 +209,14 @@ public class GerenciamentoAlunosGUI {
             public void actionPerformed(ActionEvent e) {
                 if (rowIndex == null) {
                     try {
-                        Aluno novoAluno = new Aluno();
+                        Aluno novoAluno = new Aluno(fields[0].getText());
                         novoAluno.setMatricula(fields[0].getText());
                         novoAluno.setNome(fields[1].getText());
                         novoAluno.setCpf(fields[2].getText());
                         novoAluno.setDataStr(fields[3].getText());
-                        novoAluno.setCurso(fields[4].getText());
+                        novoAluno.getCurso().setNome(fields[4].getText());
 
-                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCurso()};
+                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCurso().getNome()};
                         tableModel.addRow(aluno);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, ex.getMessage());

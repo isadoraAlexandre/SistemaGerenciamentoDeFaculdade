@@ -450,7 +450,7 @@ public class PerfilAluno extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Aluno aluno = new Aluno();
+                Aluno aluno = new Aluno("le");
                 new PerfilAluno(aluno).setVisible(true);
             }
         });

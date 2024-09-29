@@ -3,13 +3,14 @@ package usuarios;
 import java.util.Map;
 import exceptions.HoraException;
 import exceptions.NomeException;
+import faculdade.Curso;
 import faculdade.Disciplina;
 import persistence.DisciplinaAluno;
 import java.util.List;
 
 public class Aluno extends Usuario {
-
-    protected String curso;
+    protected Curso curso;
+    protected String cursoStr;
     protected List <Disciplina> disciplinasLet;
     protected Map<String, Disciplina> disciplinas;
     protected float ira;
@@ -86,11 +87,13 @@ public class Aluno extends Usuario {
         return this.ira;
     }
 
-    public String getCurso() {
+    public Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(String curso) {
-        this.curso = curso; // Agora está correto
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+        this.cursoStr = curso.getNome();
     }
+   
 }
