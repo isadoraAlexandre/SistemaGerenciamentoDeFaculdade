@@ -12,6 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import persistence.UsuarioPersistence;
+import usuarios.Aluno;
+import usuarios.Professor;
+import usuarios.ProfessorCoordenador;
 import usuarios.Usuario;
 
 public class Login extends JFrame {
@@ -62,6 +65,21 @@ public class Login extends JFrame {
 
             Map<String, Usuario> usuarios = UsuarioPersistence.findAll();
             Usuario user = usuarios.get(usuario);
+            Usuario userPronto;
+
+            switch (user.getTipoUsuario()) {
+                case 0:
+                    userPronto = (Aluno) user;
+                    break;
+                case 1:
+                    userPronto = (Professor) user;
+                    break;
+                case 2:
+                    userPronto = (ProfessorCoordenador) user;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Tipo de usuário inválido");
+            }
 
             if (user != null && user.getSenha().equals(senha)) {
                 JOptionPane.showMessageDialog(null, "Login bem-sucedido! Tipo de usuário: " + user.getTipoUsuario());
