@@ -4,6 +4,7 @@ package com.mycompany.sistemagerenciamentodefaculdade;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import pagina_cadastro_e_alteracao_perfil.AlteracaoPerfil;
 import usuarios.Aluno;
 import usuarios.Usuario;
 
@@ -12,12 +13,12 @@ import usuarios.Usuario;
  * @author letic
  */
 public class PerfilAluno extends javax.swing.JFrame {
-
+    private final Usuario user;
     /**
      * Creates new form PerfilAluno
      */
     public PerfilAluno(Usuario aluno) {
-        
+        user = aluno;
         initComponents(aluno);
         this.setLocationRelativeTo(null);
     }
@@ -364,7 +365,7 @@ public class PerfilAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        new AlteracaoPerfil(user).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed

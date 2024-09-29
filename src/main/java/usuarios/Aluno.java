@@ -15,6 +15,13 @@ public class Aluno extends Usuario {
     protected Map<String, Disciplina> disciplinas;
     protected float ira;
 
+    public void setCursosStr(String cursoStr) {
+        this.cursoStr = cursoStr;
+    }
+
+    public String getCursoStr() {
+        return cursoStr;
+    }
     public Aluno(String user) {
         super();
         this.tipoUsuario = 0;

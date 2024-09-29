@@ -10,7 +10,7 @@ import java.util.Map;
 import usuarios.Aluno;
 
 public class AlunoPersistence{
-    private static final File PATH = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Alunos.csv");
+    private static final File PATH = new File(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/Usuarios.csv");
     
     public static void save(Map<String, Aluno> itens) {
 

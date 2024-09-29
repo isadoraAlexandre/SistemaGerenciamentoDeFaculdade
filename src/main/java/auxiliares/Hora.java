@@ -20,17 +20,7 @@ public class Hora {
         String horarioPattern = "(?i)([a-z]{3})\\(\\d{2}:\\d{2}\\)(/[a-z]{3}\\(\\d{2}:\\d{2}\\))*";
         Pattern compPattern = Pattern.compile(horarioPattern);
 
-        if (horario != null && compPattern.matcher(horario).matches()) {
-            Hora h = converterHorario(horario);
-
-            //verica dias da semana e intervalo de hora e minuto
-            if (h.hora < 4 || h.hora > 24 || h.min < 0 || h.min >= 60 || !h.dia.equals("SEG") || !h.dia.equals("TER")
-                    || !h.dia.equals("QUA") || !h.dia.equals("QUI") || !h.dia.equals("SEX")) {
-                return false;
-            }
-            return true;
-        }
-        return false;
+        return (horario != null && compPattern.matcher(horario).matches()); 
     }
 
     public static Hora converterHorario(String horario) {

@@ -24,7 +24,7 @@ public class GerenciamentoAlunosGUI extends JFrame {
     private JButton btnEditar;
     private JButton btnExcluir;
     private JButton btnCancelar;
-    private static final String CSV_FILE = "alunos.csv";
+    private static final String CSV_FILE = "Usuarios.csv";
     private static final Color AZUL_ESCURO = new Color(28, 39, 95);
     private static final Color AZUL_MEDIO = new Color(2, 122, 160);
     private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);
@@ -206,9 +206,9 @@ public class GerenciamentoAlunosGUI extends JFrame {
                         novoAluno.setNome(fields[1].getText());
                         novoAluno.setCpf(fields[2].getText());
                         novoAluno.setDataStr(fields[3].getText());
-                        novoAluno.getCurso().setNome(fields[4].getText());
+                        novoAluno.setCursosStr(fields[4].getText());
 
-                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCurso().getNome()};
+                        String[] aluno = {novoAluno.getMatricula(), novoAluno.getNome(), novoAluno.getCpf(), novoAluno.getDataStr(), novoAluno.getCursoStr()};
                         tableModel.addRow(aluno);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(frame, ex.getMessage());
