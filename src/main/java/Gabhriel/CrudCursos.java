@@ -3,15 +3,21 @@ package Gabhriel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import faculdade.Curso;
+import faculdade.Disciplina;
 import usuarios.ProfessorCoordenador;
 
 public class CrudCursos extends JFrame {
@@ -30,6 +37,9 @@ public class CrudCursos extends JFrame {
     
     private List<Curso> listaCursos;
     private DefaultTableModel modeloTabela;
+
+    private static final Color AZUL_ESCURO = new Color(28, 39, 95);
+    private static final Color BRANCO = Color.WHITE; 
 
     public CrudCursos() {
         listaCursos = new ArrayList<>();
@@ -46,10 +56,11 @@ public class CrudCursos extends JFrame {
         // painel principal
         JPanel painel = new JPanel(new BorderLayout());
         painel.setBackground(Color.decode("#F2F7FB"));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
 
         // título
         JLabel tituloLabel = new JLabel("Gerenciamento de Cursos", JLabel.CENTER);
-        tituloLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 22)); // Fonte maior
         painel.add(tituloLabel, BorderLayout.NORTH);
 
         // tabela de cursos
@@ -60,12 +71,20 @@ public class CrudCursos extends JFrame {
         painel.add(painelScroll, BorderLayout.CENTER);
 
         // botões de ação
-        JPanel painelBotoes = new JPanel();
+        JPanel painelBotoes = new JPanel(new GridLayout(1, 3, 10, 0)); // Grid com espaçamento
         painelBotoes.setBackground(Color.decode("#F2F7FB"));
 
         JButton botaoAdicionar = new JButton("Adicionar Curso");
         JButton botaoEditar = new JButton("Editar Curso");
         JButton botaoExcluir = new JButton("Excluir Curso");
+
+        // Estilizando botões
+        botaoAdicionar.setBackground(AZUL_ESCURO);
+        botaoAdicionar.setForeground(BRANCO);
+        botaoEditar.setBackground(AZUL_ESCURO);
+        botaoEditar.setForeground(BRANCO);
+        botaoExcluir.setBackground(AZUL_ESCURO);
+        botaoExcluir.setForeground(BRANCO);
 
         painelBotoes.add(botaoAdicionar);
         painelBotoes.add(botaoEditar);
@@ -73,103 +92,122 @@ public class CrudCursos extends JFrame {
         painel.add(painelBotoes, BorderLayout.SOUTH);
 
         // ações dos botões
-        botaoAdicionar.addActionListener(e -> adicionarCurso());
-        botaoEditar.addActionListener(e -> editarCurso(tabelaCursos.getSelectedRow()));
-        botaoExcluir.addActionListener(e -> excluirCurso(tabelaCursos.getSelectedRow()));
+        botaoAdicionar.addActionListener(e -> abrirModalAdicionarCurso());
+        botaoEditar.addActionListener(e -> abrirModalEditarCurso(tabelaCursos.getSelectedRow()));
+        botaoExcluir.addActionListener(e -> {
+            int selectedRow = tabelaCursos.getSelectedRow();
+            excluirCurso(selectedRow);
+        });
 
         // adiciona painel à janela
         add(painel);
     }
 
-    private void adicionarCurso() {
-        JTextField campoNome = new JTextField(10);
-        JTextField campoDepartamento = new JTextField(10);
-        JTextField campoCoordenador = new JTextField(10);
-
-        JPanel painel = new JPanel(new GridLayout(3, 2));
-        painel.add(new JLabel("Nome do Curso:"));
-        painel.add(campoNome);
-        painel.add(new JLabel("Departamento:"));
-        painel.add(campoDepartamento);
-        painel.add(new JLabel("Coordenador:"));
-        painel.add(campoCoordenador);
-
-        int resultado = JOptionPane.showConfirmDialog(null, painel, "Adicionar Curso", JOptionPane.OK_CANCEL_OPTION);
-        if (resultado == JOptionPane.OK_OPTION) {
-            String nome = campoNome.getText();
-            String departamento = campoDepartamento.getText();
-            String nomeCoordenador = campoCoordenador.getText();
-
-            if (!nome.isEmpty() && !departamento.isEmpty() && !nomeCoordenador.isEmpty()) {
-                ProfessorCoordenador coordenador = new ProfessorCoordenador(nomeCoordenador); // Simulação de coordenador
-                Curso novoCurso = new Curso(nome);
-                novoCurso.setDepartamento(departamento);
-                novoCurso.setCoordenador(coordenador);
-
-                listaCursos.add(novoCurso);
-                atualizarTabela();
-                salvarDadosNoCSV();
-            } else {
-                JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios!");
-            }
-        }
+    private void abrirModalAdicionarCurso() {
+        abrirModalCurso("Adicionar Curso", null);
     }
 
-    private void editarCurso(int linhaSelecionada) {
-        if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um curso para editar.");
-            return;
-        }
-
-        Curso cursoSelecionado = listaCursos.get(linhaSelecionada);
-
-        JTextField campoNome = new JTextField(cursoSelecionado.getNome(), 10);
-        JTextField campoDepartamento = new JTextField(cursoSelecionado.getDepartamento(), 10);
-        JTextField campoCoordenador = new JTextField(cursoSelecionado.getCoordenador().getNome(), 10);
-
-        JPanel painel = new JPanel(new GridLayout(3, 2));
-        painel.add(new JLabel("Nome do Curso:"));
-        painel.add(campoNome);
-        painel.add(new JLabel("Departamento:"));
-        painel.add(campoDepartamento);
-        painel.add(new JLabel("Coordenador:"));
-        painel.add(campoCoordenador);
-
-        int resultado = JOptionPane.showConfirmDialog(null, painel, "Editar Curso", JOptionPane.OK_CANCEL_OPTION);
-        if (resultado == JOptionPane.OK_OPTION) {
-            String nome = campoNome.getText();
-            String departamento = campoDepartamento.getText();
-            String nomeCoordenador = campoCoordenador.getText();
-
-            if (!nome.isEmpty() && !departamento.isEmpty() && !nomeCoordenador.isEmpty()) {
-                cursoSelecionado.setNome(nome);
-                cursoSelecionado.setDepartamento(departamento);
-                cursoSelecionado.getCoordenador().setNome(nomeCoordenador);
-
-                atualizarTabela();
-                salvarDadosNoCSV();
-            } else {
-                JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios!");
-            }
-        }
+    private void abrirModalEditarCurso(int rowIndex) {
+        abrirModalCurso("Editar Curso", rowIndex);
     }
 
-    private void excluirCurso(int linhaSelecionada) {
-        if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione um curso para excluir.");
-            return;
+    private void abrirModalCurso(String titulo, Integer rowIndex) {
+        JFrame modalFrame = new JFrame(titulo);
+        modalFrame.setSize(600, 400);
+        modalFrame.setLocationRelativeTo(this);
+        modalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel modalPanel = new JPanel();
+        modalPanel.setLayout(new GridBagLayout());
+        modalPanel.setBackground(BRANCO);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        String[] labels = {"Nome:", "Departamento:", "Coordenador:"};
+        JTextField[] fields = new JTextField[labels.length];
+
+        for (int i = 0; i < labels.length; i++) {
+            JLabel label = new JLabel(labels[i]);
+            fields[i] = new JTextField(20);
+
+            gbc.gridx = 0;
+            gbc.gridy = i;
+            modalPanel.add(label, gbc);
+
+            gbc.gridx = 1;
+            modalPanel.add(fields[i], gbc);
+            if (rowIndex != null) {
+                fields[i].setText((String) modeloTabela.getValueAt(rowIndex, i));
+            }
         }
 
-        int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o curso?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        if (confirmacao == JOptionPane.YES_OPTION) {
-            listaCursos.remove(linhaSelecionada);
+        // Botão "Salvar"
+        JButton btnSalvar = new JButton("Salvar");
+        btnSalvar.setBackground(AZUL_ESCURO);
+        btnSalvar.setForeground(Color.WHITE);
+        btnSalvar.addActionListener(e -> {
+            if (rowIndex == null) {
+                adicionarCurso(fields);
+            } else {
+                editarCurso(fields, rowIndex);
+            }
+            modalFrame.dispose();
+        });
+        gbc.gridx = 0;
+        gbc.gridy = labels.length;
+        gbc.gridwidth = 2;
+        modalPanel.add(btnSalvar, gbc);
+
+        modalFrame.add(modalPanel);
+        modalFrame.setVisible(true);
+    }
+
+    private void adicionarCurso(JTextField[] fields) {
+        try {
+            Curso novoCurso = new Curso(fields[0].getText());
+            novoCurso.setDepartamento(fields[1].getText());
+            novoCurso.setCoordenador(new ProfessorCoordenador(fields[2].getText()));
+            Map<String, Disciplina> grade = new HashMap<>();
+            novoCurso.setGrade(grade);
+
+            listaCursos.add(novoCurso);
             atualizarTabela();
             salvarDadosNoCSV();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+
+    private void editarCurso(JTextField[] fields, int rowIndex) {
+        Curso curso = listaCursos.get(rowIndex);
+        curso.setNome(fields[0].getText());
+        curso.setDepartamento(fields[1].getText());
+        curso.setCoordenador(new ProfessorCoordenador(fields[2].getText())); // Atualiza o coordenador
+
+        atualizarTabela();
+        salvarDadosNoCSV();
+    }
+
+    private void excluirCurso(int rowIndex) {
+        if (rowIndex >= 0) {
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                "Tem certeza que deseja excluir este curso?", 
+                "Confirmar Exclusão", 
+                JOptionPane.YES_NO_OPTION);
+            
+            if (confirm == JOptionPane.YES_OPTION) {
+                listaCursos.remove(rowIndex);
+                modeloTabela.removeRow(rowIndex);
+                salvarDadosNoCSV();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um curso para excluir.");
         }
     }
 
     private void atualizarTabela() {
-        modeloTabela.setRowCount(0);  // limpa a tabela
+        modeloTabela.setRowCount(0);  // Limpa a tabela
 
         for (Curso curso : listaCursos) {
             Object[] dadosLinha = {curso.getNome(), curso.getDepartamento(), curso.getCoordenador().getNome()};
@@ -177,12 +215,15 @@ public class CrudCursos extends JFrame {
         }
     }
 
-    
     private void carregarDadosDoCSV() {
         try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(",");
+                Curso curso = new Curso(dados[0]);
+                curso.setDepartamento(dados[1]);
+                curso.setCoordenador(new ProfessorCoordenador(dados[2])); // Adapte se o formato for diferente
+                listaCursos.add(curso); // Adiciona à lista de cursos
                 modeloTabela.addRow(dados);
             }
         } catch (IOException e) {
@@ -192,19 +233,21 @@ public class CrudCursos extends JFrame {
 
     private void salvarDadosNoCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
-            for (int i = 0; i < modeloTabela.getRowCount(); i++) {
+            for (Curso curso : listaCursos) {
                 StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < modeloTabela.getColumnCount(); j++) {
-                    sb.append(modeloTabela.getValueAt(i, j));
-                    if (j < modeloTabela.getColumnCount() - 1) {
-                        sb.append(",");
-                    }
-                }
+                sb.append(curso.getNome()).append(",").append(curso.getDepartamento()).append(",").append(curso.getCoordenador().getNome());
                 bw.write(sb.toString());
                 bw.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            CrudCursos crudCursos = new CrudCursos();
+            crudCursos.setVisible(true);
+        });
     }
 }
