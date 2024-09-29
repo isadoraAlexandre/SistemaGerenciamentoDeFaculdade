@@ -14,6 +14,7 @@ public class DisciplinasPersistence{
         this.PATH = new File(System.getProperty("user.dir") + PATH);
     }
     
+    
     //salva no arquivo um map de disciplinas, se o aruivo nao existir cria um novo
     public void save(Map<String, Disciplina> itens) {
         
@@ -152,5 +153,15 @@ public class DisciplinasPersistence{
         }
         
         return false;
+    }
+
+    public Disciplina findByName(String nome) {
+        Map<String, Disciplina> disciplinas = findAll();
+        for (Disciplina disciplina : disciplinas.values()) {
+            if (disciplina.getNome().equalsIgnoreCase(nome)) {
+                return disciplina;
+            }
+        }
+        return null; 
     }
 }
