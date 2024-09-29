@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 
 import faculdade.Curso;
 import faculdade.Disciplina;
+import usuarios.Aluno;
 import usuarios.ProfessorCoordenador;
 
 public class CrudCursos extends JFrame {
@@ -44,7 +45,11 @@ public class CrudCursos extends JFrame {
     public CrudCursos() {
         listaCursos = new ArrayList<>();
         configurarJanela();
-        carregarDadosDoCSV();
+        try {
+            carregarDadosDoCSV();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar dados do CSV: " + e.getMessage());
+        }
     }
 
     private void configurarJanela() {
@@ -56,11 +61,11 @@ public class CrudCursos extends JFrame {
         // painel principal
         JPanel painel = new JPanel(new BorderLayout());
         painel.setBackground(Color.decode("#F2F7FB"));
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margem
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // título
         JLabel tituloLabel = new JLabel("Gerenciamento de Cursos", JLabel.CENTER);
-        tituloLabel.setFont(new Font("Arial", Font.BOLD, 22)); // Fonte maior
+        tituloLabel.setFont(new Font("Arial", Font.BOLD, 22));
         painel.add(tituloLabel, BorderLayout.NORTH);
 
         // tabela de cursos
@@ -71,12 +76,13 @@ public class CrudCursos extends JFrame {
         painel.add(painelScroll, BorderLayout.CENTER);
 
         // botões de ação
-        JPanel painelBotoes = new JPanel(new GridLayout(1, 3, 10, 0)); // Grid com espaçamento
+        JPanel painelBotoes = new JPanel(new GridLayout(1, 4, 10, 0));
         painelBotoes.setBackground(Color.decode("#F2F7FB"));
 
         JButton botaoAdicionar = new JButton("Adicionar Curso");
         JButton botaoEditar = new JButton("Editar Curso");
         JButton botaoExcluir = new JButton("Excluir Curso");
+        JButton botaoVerDisciplinas = new JButton("Ver Disciplinas");
 
         // Estilizando botões
         botaoAdicionar.setBackground(AZUL_ESCURO);
@@ -85,10 +91,14 @@ public class CrudCursos extends JFrame {
         botaoEditar.setForeground(BRANCO);
         botaoExcluir.setBackground(AZUL_ESCURO);
         botaoExcluir.setForeground(BRANCO);
+        botaoVerDisciplinas.setBackground(AZUL_ESCURO);
+        botaoVerDisciplinas.setForeground(BRANCO);
 
         painelBotoes.add(botaoAdicionar);
         painelBotoes.add(botaoEditar);
         painelBotoes.add(botaoExcluir);
+        painelBotoes.add(botaoVerDisciplinas);
+
         painel.add(painelBotoes, BorderLayout.SOUTH);
 
         // ações dos botões
@@ -98,9 +108,16 @@ public class CrudCursos extends JFrame {
             int selectedRow = tabelaCursos.getSelectedRow();
             excluirCurso(selectedRow);
         });
+        botaoVerDisciplinas.addActionListener(e -> abrirJanelaDisciplinas());
 
         // adiciona painel à janela
         add(painel);
+    }
+
+    private void abrirJanelaDisciplinas() {
+        Aluno alunoExemplo = new Aluno("João da Silva");
+        VerDisciplina verDisciplina = new VerDisciplina(alunoExemplo);
+        verDisciplina.setVisible(true);
     }
 
     private void abrirModalAdicionarCurso() {
@@ -204,6 +221,17 @@ public class CrudCursos extends JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um curso para excluir.");
         }
     }
+    
+    private void salvarDadosNoCSV() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            for (Curso curso : listaCursos) {
+                String linha = String.format("%s,%s,%s\n", curso.getNome(), curso.getDepartamento(), curso.getCoordenador().getNome());
+                bw.write(linha);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar dados no CSV: " + e.getMessage());
+        }
+    }
 
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
@@ -214,7 +242,7 @@ public class CrudCursos extends JFrame {
         }
     }
 
-    private void carregarDadosDoCSV() {
+    private void carregarDadosDoCSV() throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -225,28 +253,6 @@ public class CrudCursos extends JFrame {
                 listaCursos.add(curso);
                 modeloTabela.addRow(dados);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
-
-    private void salvarDadosNoCSV() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
-            for (Curso curso : listaCursos) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(curso.getNome()).append(",").append(curso.getDepartamento()).append(",").append(curso.getCoordenador().getNome());
-                bw.write(sb.toString());
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            CrudCursos crudCursos = new CrudCursos();
-            crudCursos.setVisible(true);
-        });
     }
 }

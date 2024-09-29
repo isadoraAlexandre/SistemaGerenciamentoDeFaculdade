@@ -25,7 +25,7 @@ public class ListaAluno extends JFrame {
     private DefaultTableModel tableModel;
 
     private List<Disciplina> discprof;
-    private List<Aluno> alunos; // Lista de alunos
+    private List<Aluno> alunos;
 
     public ListaAluno(Funcionarios prof, List<Disciplina> disc) {
         setTitle("Listagem de Alunos");
@@ -45,7 +45,7 @@ public class ListaAluno extends JFrame {
             }
         }
 
-        // Carregar alunos do arquivo CSV
+
         alunos = carregarAlunosDoCSV("banco_arquivos/Usuarios.csv");
 
         // cb seleciona disciplina
@@ -73,23 +73,22 @@ public class ListaAluno extends JFrame {
         atualizarTabelaAlunos();
     }
 
-    // Método para carregar alunos do arquivo CSV
     private List<Aluno> carregarAlunosDoCSV(String caminho) {
         List<Aluno> listaAlunos = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(","); // Supondo que os dados estão separados por vírgula
+                String[] dados = linha.split(",");
                 if (dados.length >= 3) {
                     String nome = dados[0].trim();
                     String matricula = dados[1].trim();
                     String cpf = dados[2].trim();
-                    Aluno aluno = new Aluno(nome); // Assumindo que Aluno tem esse construtor
+                    Aluno aluno = new Aluno(nome);
                     listaAlunos.add(aluno);
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Para depuração
+            e.printStackTrace();
         }
         return listaAlunos;
     }
