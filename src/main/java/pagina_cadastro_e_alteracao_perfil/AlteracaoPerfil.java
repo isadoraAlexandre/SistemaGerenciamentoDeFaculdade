@@ -6,25 +6,29 @@ import persistence.UsuarioPersistence;
 import usuarios.Usuario;
 
 public class AlteracaoPerfil extends javax.swing.JFrame {
-    private final Usuario usuario;
+    private static Usuario usuario;
     
     public AlteracaoPerfil(Usuario user) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.usuario = new Usuario();//user;
-        this.usuario.setTipoUsuario(0);
-        peencheFields();
+        usuario = user;
+        preencheFields();
         this.setVisible(true);
     }
     
-    private void peencheFields(){
-                
+    public static Usuario retornaUsuario(){
+        return usuario;
+    }
+    
+    private void preencheFields(){
+        
         textFieldEmail.setText(usuario.getEmail());
         textFieldCelular.setText(usuario.getCelular());
         textFieldRua.setText(usuario.getRua());
         textFieldBairro.setText(usuario.getBairro());
         textFieldCidade.setText(usuario.getCidade());
         textFieldNumero.setText(usuario.getNumero());
+        System.out.println(usuario.getUsuario());
     }
     
     /**
@@ -292,12 +296,12 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
             
             try{
                 //consertar quando marge pra pegar o usuaro q esta logado
-                this.usuario.setEmail(textFieldEmail.getText());
-                this.usuario.setCelular(textFieldCelular.getText());
-                this.usuario.setBairro(textFieldBairro.getText());
-                this.usuario.setRua(textFieldRua.getText());
-                this.usuario.setCidade(textFieldCidade.getText());
-                this.usuario.setNumero(textFieldNumero.getText());
+                usuario.setEmail(textFieldEmail.getText());
+                usuario.setCelular(textFieldCelular.getText());
+                usuario.setBairro(textFieldBairro.getText());
+                usuario.setRua(textFieldRua.getText());
+                usuario.setCidade(textFieldCidade.getText());
+                usuario.setNumero(textFieldNumero.getText());
 
                 if(UsuarioPersistence.modificaUsuarioBool(usuario)){
                     JOptionPane.showMessageDialog(rootPane, "Alteração realizada");
@@ -315,7 +319,7 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void showUserAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_showUserAncestorAdded
-        // mostra o usuario logado
+        showUser.setText(usuario.getUsuario());
     }//GEN-LAST:event_showUserAncestorAdded
 
     /**

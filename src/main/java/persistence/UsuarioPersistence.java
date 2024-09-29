@@ -45,7 +45,9 @@ public class UsuarioPersistence{
                     .append(",")
                     .append(user.getSenha())
                     .append(",")
-                    .append(user.getMatricula());
+                    .append(user.getMatricula())
+                    .append(System.lineSeparator());
+        
         }
 
         Arquivo.escreve(PATH, csvBuilder.toString());
@@ -178,7 +180,8 @@ public class UsuarioPersistence{
         
         try{
            
-           map.replace(modificada.getUsuario(), modificada);
+           map.replace(modificada.getCpf(), modificada);
+           save(map);
            return true;
         }catch(NullPointerException e){
             javax.swing.JOptionPane.showMessageDialog(null, "Chave ou Usuário nulos");
@@ -186,7 +189,6 @@ public class UsuarioPersistence{
             javax.swing.JOptionPane.showMessageDialog(null, "Não foi posivel modificar");
         }
         
-        save(map);
         return false;
     }
 

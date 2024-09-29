@@ -13,16 +13,16 @@ import usuarios.Usuario;
  * @author letic
  */
 public class PerfilAluno extends javax.swing.JFrame {
-    private final Usuario user;
+    private final Usuario usuario;
     /**
      * Creates new form PerfilAluno
      */
-    public PerfilAluno(Usuario aluno) {
-        user = aluno;
-        initComponents(aluno);
+    public PerfilAluno(Usuario user) {
+        usuario = user;
+        initComponents(user);
         this.setLocationRelativeTo(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -365,7 +365,7 @@ public class PerfilAluno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new AlteracaoPerfil(user).setVisible(true);
+        new AlteracaoPerfil(usuario).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
