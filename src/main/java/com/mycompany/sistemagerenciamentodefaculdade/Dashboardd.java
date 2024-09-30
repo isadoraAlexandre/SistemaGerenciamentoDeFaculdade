@@ -279,6 +279,7 @@ public class Dashboardd extends javax.swing.JFrame {
         historico.setForeground(new java.awt.Color(255, 255, 255));
         historico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         historico.setText("Histórico");
+        
 
         javax.swing.GroupLayout btnHistoricoLayout = new javax.swing.GroupLayout(btnHistorico);
         btnHistorico.setLayout(btnHistoricoLayout);

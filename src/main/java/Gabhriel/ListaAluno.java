@@ -18,9 +18,9 @@ import usuarios.Aluno;
 
 public class ListaAluno extends JFrame {
 
-    private JTable tabelaAlunos;
-    private DefaultTableModel tableModel;
-    private List<Aluno> alunos;
+    private JTable tabelaAlunos; // Tabela para exibir alunos
+    private DefaultTableModel tableModel; // Modelo da tabela
+    private List<Aluno> alunos; // Lista de alunos
 
     public ListaAluno() {
         setTitle("Listagem de Alunos");
@@ -28,15 +28,14 @@ public class ListaAluno extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // painel principal
+        // Painel principal
         JPanel panel = new JPanel(new BorderLayout());
         add(panel);
 
-        // Carregar alunos do CSV
+       
         alunos = carregarAlunosDoCSV(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/alunos.csv");
 
-        // tabela para listar os alunos
-        String[] colunas = {"Nome", "Matrícula", "CPF"};
+        String[] colunas = {"Lista de Alunos", "Aluno", "CPF"};
         tableModel = new DefaultTableModel(colunas, 0);
         tabelaAlunos = new JTable(tableModel);
 
@@ -51,44 +50,40 @@ public class ListaAluno extends JFrame {
         try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(",");
+                String[] dados = linha.split(","); 
                 if (dados.length >= 3) {
-                    String nome = dados[0].trim();
-                    String matricula = dados[1].trim();
-                    String cpf = dados[2].trim();
+                    String nome = dados[0].trim(); 
+                    String matricula = dados[1].trim(); 
+                    String cpf = dados[2].trim(); 
 
-                    // Adicione os demais dados necessários no construtor da classe Aluno
-                    Aluno aluno = new Aluno(cpf); // Usando CPF para inicializar o Aluno
+                    Aluno aluno = new Aluno(cpf); 
                     try {
                         aluno.setNome(nome);
                     } catch (NomeException e) {
-                        e.printStackTrace();
+                        System.err.println("Erro no nome: " + e.getMessage());
                     }
-                    aluno.setMatricula(matricula);
+                    aluno.setMatricula(matricula); 
                     try {
-                        aluno.setCpf(cpf);
+                        aluno.setCpf(cpf); 
                     } catch (CpfException e) {
-                        e.printStackTrace();
+                        System.err.println("Erro no CPF: " + e.getMessage());
                     }
-                    listaAlunos.add(aluno);
+                    listaAlunos.add(aluno); 
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return listaAlunos;
+        return listaAlunos; 
     }
 
-    // método para atualizar a tabela de alunos
     private void atualizarTabelaAlunos() {
-        tableModel.setRowCount(0); // Limpa a tabela antes de adicionar novos dados
+        tableModel.setRowCount(0); 
 
         for (Aluno aluno : alunos) {
-            // adicionar dados do aluno na tabela
             Object[] row = {aluno.getNome(), aluno.getMatricula(), aluno.getCpf()};
-            tableModel.addRow(row);
+            tableModel.addRow(row); 
         }
     }
 
-   
 }
