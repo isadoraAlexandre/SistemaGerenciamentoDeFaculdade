@@ -82,8 +82,7 @@ public class CrudCursos extends JFrame {
         JButton botaoAdicionar = new JButton("Adicionar Curso");
         JButton botaoEditar = new JButton("Editar Curso");
         JButton botaoExcluir = new JButton("Excluir Curso");
-        JButton botaoVerDisciplinas = new JButton("Ver Disciplinas");
-
+        
         // Estilizando botões
         botaoAdicionar.setBackground(AZUL_ESCURO);
         botaoAdicionar.setForeground(BRANCO);
@@ -91,14 +90,11 @@ public class CrudCursos extends JFrame {
         botaoEditar.setForeground(BRANCO);
         botaoExcluir.setBackground(AZUL_ESCURO);
         botaoExcluir.setForeground(BRANCO);
-        botaoVerDisciplinas.setBackground(AZUL_ESCURO);
-        botaoVerDisciplinas.setForeground(BRANCO);
-
+        
         painelBotoes.add(botaoAdicionar);
         painelBotoes.add(botaoEditar);
         painelBotoes.add(botaoExcluir);
-        painelBotoes.add(botaoVerDisciplinas);
-
+        
         painel.add(painelBotoes, BorderLayout.SOUTH);
 
         // ações dos botões
@@ -108,15 +104,13 @@ public class CrudCursos extends JFrame {
             int selectedRow = tabelaCursos.getSelectedRow();
             excluirCurso(selectedRow);
         });
-        botaoVerDisciplinas.addActionListener(e -> abrirJanelaDisciplinas());
-
+        
         // adiciona painel à janela
         add(painel);
     }
 
     private void abrirJanelaDisciplinas() {
-        Aluno alunoExemplo = new Aluno("João da Silva");
-        VerDisciplina verDisciplina = new VerDisciplina(alunoExemplo);
+        VerDisciplina verDisciplina = new VerDisciplina();
         verDisciplina.setVisible(true);
     }
 
