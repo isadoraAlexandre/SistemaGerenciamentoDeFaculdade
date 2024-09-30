@@ -33,7 +33,8 @@ public class GerenciamentoProfessoresGUI extends JFrame {
     private JButton btnEditar;
     private JButton btnExcluir;
     private JButton btnCancelar;
-    private static final String CSV_FILE =  System.getProperty("user.dir") + "/src/main/java/banco_arquivo/professores.csv";
+    private static final String CSV_FILE = System.getProperty("user.dir")
+            + "/src/main/java/banco_arquivo/professores.csv";
     private static final Color AZUL_ESCURO = new Color(28, 39, 95);
     private static final Color AZUL_MEDIO = new Color(2, 122, 160);
     private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);
@@ -72,7 +73,7 @@ public class GerenciamentoProfessoresGUI extends JFrame {
 
         // Configurar a tabela
         String[] columnNames = { "Matrícula", "Nome", "CPF", "Data de Nascimento", "Salario", "Carga horária",
-                "Formação", "nao sei", "É Coordenador?" };
+                "Formação", "É Coordenador?" }; // Removida a coluna "não sei"
         Object[][] data = {};
         tableModel = new DefaultTableModel(data, columnNames) {
             Class[] types = new Class[] {
@@ -80,7 +81,7 @@ public class GerenciamentoProfessoresGUI extends JFrame {
                     java.lang.String.class
             };
             boolean[] canEdit = new boolean[] {
-                    false, false, false, false, false, false, false, false, false
+                    false, false, false, false, false, false, false, false
             };
         };
 
@@ -186,7 +187,7 @@ public class GerenciamentoProfessoresGUI extends JFrame {
 
     private void abrirModalAdicionarEditar(String titulo, Integer rowIndex) {
         JFrame modalFrame = new JFrame(titulo);
-        modalFrame.setSize(600, 500);
+        modalFrame.setSize(600, 700); // Ajuste a altura, pois não haverá mais campo de disciplinas
         modalFrame.setLocationRelativeTo(frame);
         modalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -199,15 +200,17 @@ public class GerenciamentoProfessoresGUI extends JFrame {
 
         // Labels e campos
         String[] labels = { "Matrícula", "Nome", "CPF", "Data de Nascimento", "Salario",
-                "Carga horária", "Formação", "Disciplinas", "É Coordenador?" };
+                "Carga horária", "Formação", "É Coordenador?" };
         JTextField[] fields = new JTextField[labels.length - 1]; // Um campo a menos para o checkbox
         JCheckBox checkBoxCoordenador = new JCheckBox(); // Checkbox para coordenador
 
         for (int i = 0; i < labels.length; i++) {
             JLabel label = new JLabel(labels[i]);
 
-            if (i < 8) { // Campo de texto para os primeiros 8 itens
+            if (i < 7) { // Campo de texto para os primeiros 7 itens
                 fields[i] = new JTextField(20);
+                fields[i].setMinimumSize(new Dimension(400, 30)); // Define um tamanho mínimo
+                fields[i].setPreferredSize(new Dimension(800, 30)); // Aumentar o tamanho do campo
                 gbc.gridx = 0;
                 gbc.gridy = i;
                 modalPanel.add(label, gbc);
@@ -230,14 +233,6 @@ public class GerenciamentoProfessoresGUI extends JFrame {
             }
         }
 
-        // Painel para as disciplinas
-        JPanel disciplinasPanel = new JPanel();
-        preencherDisciplinas(disciplinasPanel);
-        gbc.gridx = 0;
-        gbc.gridy = 8; // Posição das disciplinas
-        gbc.gridwidth = 2; // Ocupa duas colunas
-        modalPanel.add(disciplinasPanel, gbc);
-
         JButton btnSalvar = new JButton("Salvar");
         btnSalvar.setBackground(AZUL_ESCURO);
         btnSalvar.setForeground(Color.WHITE);
@@ -246,114 +241,36 @@ public class GerenciamentoProfessoresGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (rowIndex == null) {
                     try {
-                        if (checkBoxCoordenador.isSelected()) {
-                            ProfessorCoordenador novoProfessor = new ProfessorCoordenador();
-                            novoProfessor.setMatricula(fields[0].getText());
-                            novoProfessor.setNome(fields[1].getText());
-                            novoProfessor.setCpf(fields[2].getText());
-                            novoProfessor.setDataStr(fields[3].getText());
-                            novoProfessor.setSalario(Double.parseDouble(fields[4].getText()));
-                            novoProfessor.setCargaHoraria(Float.parseFloat(fields[5].getText()));
-                            novoProfessor.setNivelFormacao(fields[6].getText());
-                            List<String> disciplinasSelecionadas = new ArrayList<>();
-                            for (Component comp : disciplinasPanel.getComponents()) {
-                                if (comp instanceof JCheckBox) {
-                                    JCheckBox checkBox = (JCheckBox) comp;
-                                    if (checkBox.isSelected()) {
-                                        disciplinasSelecionadas.add(checkBox.getText());
-                                    }
-                                }
-                            }
-
-                            List<Disciplina> disciplinas = new ArrayList<>();
-                            DisciplinasPersistence disciplinaDAO = new DisciplinasProfessor();
-                            for (String nome : disciplinasSelecionadas) {
-                                Disciplina disciplina = disciplinaDAO.findByName(nome);
-                                if (disciplina != null) {
-                                    disciplinas.add(disciplina);
-                                }
-                            }
-                            novoProfessor.setDisciplinas(disciplinas);
-                            salvarNovoProfessorNoCSV(novoProfessor);
-
-                            // Atualizar tabela
-                            tableModel.addRow(new Object[] {
-                                    novoProfessor.getMatricula(),
-                                    novoProfessor.getNome(),
-                                    novoProfessor.getCpf(),
-                                    novoProfessor.getDataStr(),
-                                    novoProfessor.getSalario(),
-                                    novoProfessor.getCargaHoraria(),
-                                    novoProfessor.getNivelFormacao(),
-                                    String.join(";", disciplinasSelecionadas),
-                                    checkBoxCoordenador.isSelected() ? "true" : "false"
-                            });
-
-                            modalFrame.dispose();
-                        } else {
-                            Professor novoProfessor = new Professor();
-                            novoProfessor.setMatricula(fields[0].getText());
-                            novoProfessor.setNome(fields[1].getText());
-                            novoProfessor.setCpf(fields[2].getText());
-                            novoProfessor.setDataStr(fields[3].getText());
-                            novoProfessor.setSalario(Double.parseDouble(fields[4].getText()));
-                            novoProfessor.setCargaHoraria(Float.parseFloat(fields[5].getText()));
-                            novoProfessor.setNivelFormacao(fields[6].getText());
-                            List<String> disciplinasSelecionadas = new ArrayList<>();
-                            for (Component comp : disciplinasPanel.getComponents()) {
-                                if (comp instanceof JCheckBox) {
-                                    JCheckBox checkBox = (JCheckBox) comp;
-                                    if (checkBox.isSelected()) {
-                                        disciplinasSelecionadas.add(checkBox.getText());
-                                    }
-                                }
-                            }
-
-                            List<Disciplina> disciplinas = new ArrayList<>();
-                            DisciplinasPersistence disciplinaDAO = new DisciplinasProfessor();
-                            for (String nome : disciplinasSelecionadas) {
-                                Disciplina disciplina = disciplinaDAO.findByName(nome);
-                                if (disciplina != null) {
-                                    disciplinas.add(disciplina);
-                                }
-                            }
-                            novoProfessor.setDisciplinas(disciplinas);
-                            salvarNovoProfessorNoCSV(novoProfessor);
-
-                            // Atualizar tabela
-                            tableModel.addRow(new Object[] {
-                                    novoProfessor.getMatricula(),
-                                    novoProfessor.getNome(),
-                                    novoProfessor.getCpf(),
-                                    novoProfessor.getDataStr(),
-                                    novoProfessor.getSalario(),
-                                    novoProfessor.getCargaHoraria(),
-                                    novoProfessor.getNivelFormacao(),
-                                    String.join(";", disciplinasSelecionadas),
-                                    checkBoxCoordenador.isSelected() ? "true" : "false"
-                            });
-
-                            modalFrame.dispose();
+                        // Adiciona um novo professor
+                        String[] novoProfessor = new String[labels.length - 1];
+                        for (int i = 0; i < labels.length - 1; i++) {
+                            novoProfessor[i] = fields[i].getText();
                         }
-
-                    } catch (NomeException | CpfException | DataException ex) {
-                        JOptionPane.showMessageDialog(modalFrame, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                        novoProfessor[7] = String.valueOf(checkBoxCoordenador.isSelected()); // para "É Coordenador?"
+                        tableModel.addRow(novoProfessor);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(modalFrame, "Erro ao adicionar professor: " + ex.getMessage());
                     }
                 } else {
-                    for (int i = 0; i < labels.length - 1; i++) {
-                        tableModel.setValueAt(fields[i].getText(), rowIndex, i);
+                    try {
+                        // Edita o professor existente
+                        for (int i = 0; i < labels.length - 1; i++) {
+                            tableModel.setValueAt(fields[i].getText(), rowIndex, i);
+                        }
+                        tableModel.setValueAt(String.valueOf(checkBoxCoordenador.isSelected()), rowIndex, 7); // para "É
+                                                                                                              // Coordenador?"
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(modalFrame, "Erro ao editar professor: " + ex.getMessage());
                     }
-                    // Atualiza o status de coordenador
-                    tableModel.setValueAt(checkBoxCoordenador.isSelected() ? "true" : "false", rowIndex,
-                            labels.length - 1);
-                    salvarDadosNoCSV();
-                    modalFrame.dispose();
                 }
+
+                salvarDadosNoCSV();
+                modalFrame.dispose();
             }
         });
 
         gbc.gridx = 0;
-        gbc.gridy = labels.length; // Adiciona o botão de salvar na última linha
+        gbc.gridy = labels.length;
         gbc.gridwidth = 2;
         modalPanel.add(btnSalvar, gbc);
 
@@ -361,78 +278,36 @@ public class GerenciamentoProfessoresGUI extends JFrame {
         modalFrame.setVisible(true);
     }
 
-    private void preencherDisciplinas(JPanel panelDisciplinas) {
-        DisciplinasPersistence disciplinaDAO = new DisciplinasProfessor();
-        Map<String, Disciplina> disciplinas = disciplinaDAO.findAll();
-        panelDisciplinas.setLayout(new BoxLayout(panelDisciplinas, BoxLayout.Y_AXIS));
-
-        for (Disciplina disciplina : disciplinas.values()) {
-            JCheckBox checkbox = new JCheckBox(disciplina.getNome());
-            panelDisciplinas.add(checkbox);
-        }
-    }
-
     private void carregarDadosDoCSV() {
-        File file = new File(CSV_FILE);
-        if (!file.exists()) {
-            return; // O arquivo não existe, não há nada para carregar
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(","); // Assumindo que os campos são separados por vírgulas
+                String[] dados = linha.split(",");
                 tableModel.addRow(dados);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "Erro ao carregar dados do arquivo CSV.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void salvarNovoProfessorNoCSV(Funcionarios professor) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE, true))) {
-            String novaLinha = String.join(",",
-                    professor.getMatricula(),
-                    professor.getNome(),
-                    professor.getCpf(),
-                    professor.getDataStr(),
-                    String.valueOf(professor.getSalario()),
-                    String.valueOf(professor.getCargaHoraria()),
-                    professor.getNivelFormacao(),
-                    String.join(";",
-                            professor.getDisciplinas().stream().map(Disciplina::getNome).toArray(String[]::new)));
-            bw.write(novaLinha);
-            bw.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "Erro ao salvar novo professor no arquivo CSV.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void salvarDadosNoCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             for (int i = 0; i < tableModel.getRowCount(); i++) {
-                StringBuilder linha = new StringBuilder();
                 for (int j = 0; j < tableModel.getColumnCount(); j++) {
-                    linha.append(tableModel.getValueAt(i, j)).append(",");
+                    bw.write(tableModel.getValueAt(i, j).toString());
+                    if (j < tableModel.getColumnCount() - 1) {
+                        bw.write(",");
+                    }
                 }
-                // Remove a última vírgula e adiciona uma nova linha
-                linha.deleteCharAt(linha.length() - 1);
-                bw.write(linha.toString());
                 bw.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "Erro ao salvar dados no arquivo CSV.", "Erro",
-                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void limparSelecao() {
-        selectedRow = -1;
         table.clearSelection();
+        selectedRow = -1;
     }
 }
