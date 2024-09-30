@@ -66,6 +66,8 @@ public class Dashboardd extends javax.swing.JFrame {
             IRA.setVisible(false);
             btnHistorico.setVisible(false);
             historico.setVisible(false);
+            horario.setVisible(false);
+            btnHorario.setVisible(false);
         }
         this.setLocationRelativeTo(null);
     }
