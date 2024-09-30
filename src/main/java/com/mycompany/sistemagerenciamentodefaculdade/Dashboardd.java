@@ -8,9 +8,7 @@ import javax.swing.JFrame;
 
 import Gabhriel.CrudCursos;
 import Gabhriel.ListaAluno;
-import Gabhriel.VerDisciplina;
 import Gabhriel.VerHorario;
-import calculo_Ira.CalculoIra;
 import crud_disciplinas.PaginaCrudDisciplinas;
 import exceptions.BairroException;
 import exceptions.CelularException;
@@ -21,6 +19,7 @@ import exceptions.NomeException;
 import exceptions.NumeroException;
 import exceptions.RuaException;
 import matricula_e_desmatricula.MatriculaDisciplina;
+import matricula_e_desmatricula.TrancaDisciplina;
 import usuarios.Aluno;
 import usuarios.Professor;
 import usuarios.ProfessorCoordenador;
@@ -47,10 +46,10 @@ public class Dashboardd extends javax.swing.JFrame {
             listaDisciplinas.setText("Lista de Alunos");
             btnMatricula.setVisible(false);
             matricula.setVisible(false);
-            horario.setText("Notas e Faltas");
+            btnHorario.setVisible(false);
+            horario.setVisible(false);
             btnHistorico.setVisible(false);
             historico.setVisible(false);
-            ;
             btnIRA.setVisible(false);
             IRA.setVisible(false);
         }
@@ -58,9 +57,15 @@ public class Dashboardd extends javax.swing.JFrame {
             matricula.setText("Alteração de Disciplinas");
             horario.setText("Alteração de Cursos");
             historico.setText("Alteração de Professores");
-            IRA.setText("Faltas e Notas");
-            ;
+            btnIRA.setVisible(false);
             listaDisciplinas.setText("Alteração de Alunos");
+            IRA.setVisible(false);
+        }
+        else if (user.getTipoUsuario() == 0) {
+            btnIRA.setVisible(false);
+            IRA.setVisible(false);
+            btnHistorico.setVisible(false);
+            historico.setVisible(false);
         }
         this.setLocationRelativeTo(null);
     }
@@ -195,7 +200,7 @@ public class Dashboardd extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(28, 23, 91));
-        jLabel1.setText("Dashboard" + user.getTipoUsuario());
+        jLabel1.setText("Dashboard");
         jLabel1.setMaximumSize(new java.awt.Dimension(100, 160));
         jLabel1.setMinimumSize(new java.awt.Dimension(100, 160));
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 160));
@@ -236,7 +241,7 @@ public class Dashboardd extends javax.swing.JFrame {
         listaDisciplinas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         listaDisciplinas.setForeground(new java.awt.Color(255, 255, 255));
         listaDisciplinas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        listaDisciplinas.setText("Lista de Disciplinas");
+        listaDisciplinas.setText("Trancar Matérias");
 
         javax.swing.GroupLayout btnListaDisciplinasLayout = new javax.swing.GroupLayout(btnListaDisciplinas);
         btnListaDisciplinas.setLayout(btnListaDisciplinasLayout);
@@ -252,31 +257,14 @@ public class Dashboardd extends javax.swing.JFrame {
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(25, 25, 25)));
 
-        btnIRA.setBackground(new java.awt.Color(28, 39, 95));
-        btnIRA.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnIRAMouseClicked(evt);
-            }
-        });
+        btnIRA.setVisible(false);;
+       
 
         IRA.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         IRA.setForeground(new java.awt.Color(255, 255, 255));
         IRA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         IRA.setText("Cálculo do IRA");
 
-        javax.swing.GroupLayout btnIRALayout = new javax.swing.GroupLayout(btnIRA);
-        btnIRA.setLayout(btnIRALayout);
-        btnIRALayout.setHorizontalGroup(
-                btnIRALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(IRA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                Short.MAX_VALUE));
-        btnIRALayout.setVerticalGroup(
-                btnIRALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(btnIRALayout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(IRA, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(27, Short.MAX_VALUE)));
 
         btnHistorico.setBackground(new java.awt.Color(28, 39, 95));
         btnHistorico.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -461,28 +449,20 @@ public class Dashboardd extends javax.swing.JFrame {
         } else if (user.getTipoUsuario() == 2) {
             new GerenciamentoAlunosGUI();
         } else if (user.getTipoUsuario() == 0) {
-            new VerDisciplina().setVisible(true);
+            new TrancaDisciplina(al).setVisible(true);
         }
     }// GEN-LAST:event_btnListaDisciplinasMouseClicked
 
-    private void btnIRAMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnIRAMouseClicked
-        if (user.getTipoUsuario() == 0) {
-            new CalculoIra(al).setVisible(true);
-        }
-    }// GEN-LAST:event_btnIRAMouseClicked
 
     private void btnHistoricoMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnHistoricoMouseClicked
         if (user.getTipoUsuario() == 2) {
             new GerenciamentoProfessoresGUI().setVisible(true);
-        } else if (user.getTipoUsuario() == 0) {
-            al.exibirInformacoesAluno();
-        }
+        } 
 
     }// GEN-LAST:event_btnHistoricoMouseClicked
 
     private void btnHorarioMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnHorarioMouseClicked
-        if (user.getTipoUsuario() == 1) {
-        } else if (user.getTipoUsuario() == 0) {
+        if (user.getTipoUsuario() == 0) {
             new VerHorario(al).setVisible(true);
         } else {
             new CrudCursos().setVisible(true);

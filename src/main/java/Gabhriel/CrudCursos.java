@@ -30,11 +30,10 @@ import javax.swing.table.DefaultTableModel;
 
 import faculdade.Curso;
 import faculdade.Disciplina;
-import usuarios.Aluno;
 import usuarios.ProfessorCoordenador;
 
 public class CrudCursos extends JFrame {
-    private static final String CSV_FILE = "cursos.csv";
+    private static final String CSV_FILE = System.getProperty("user.dir") + "/src/main/java/banco_arquivo/cursos.csv";
     
     private List<Curso> listaCursos;
     private DefaultTableModel modeloTabela;
