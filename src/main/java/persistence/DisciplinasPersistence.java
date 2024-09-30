@@ -40,6 +40,8 @@ public class DisciplinasPersistence{
                     .append(disciplina.getQtdVagas())
                     .append(",")
                     .append(disciplina.getStatus())
+                    .append(",")
+                    .append(disciplina.getCurso())
                     .append(System.lineSeparator());
         }
         Arquivo.escreve(PATH, csvBuilder.toString());
@@ -59,7 +61,7 @@ public class DisciplinasPersistence{
                 for(String linha : linhas){
                     String[] campos = linha.split("\\,");
 
-                    if(campos.length >= 8){
+                    if(campos.length >= 9){
                         String codigo = campos[0].trim();
                         String nome = campos[1].trim();
                         String professor = campos[2].trim();
@@ -68,8 +70,10 @@ public class DisciplinasPersistence{
                         String cargaH = campos[5].trim();
                         String vagas = campos[6].trim();
                         String status = campos[7].trim();
+                        String curso = campos[8].trim();
 
-                        Disciplina disciplina = new Disciplina(codigo, nome, horario, professor, parser2(vagas), coordenador, parser2(cargaH), status);
+                        Disciplina disciplina = new Disciplina(codigo, nome, horario, 
+                                professor, parser2(vagas), coordenador, parser2(cargaH), status, curso);
 
                         map.put(disciplina.getCodigo(), disciplina);
                     }
@@ -106,7 +110,8 @@ public class DisciplinasPersistence{
             }    
             try (BufferedWriter buffer = new BufferedWriter(new FileWriter(PATH, true))){
                 String novaLinha = nova.getCodigo() + "," + nova.getNome()+ "," + nova.getProfessor()+ "," + nova.getCoordenador() + "," 
-                        + nova.getHorarioAula() + "," + nova.getCargaHoraria() + "," + nova.getQtdVagas() + "," + nova.getStatus();
+                        + nova.getHorarioAula() + "," + nova.getCargaHoraria() + "," + nova.getQtdVagas() + "," + nova.getStatus() + "," +
+                        nova.getCurso();
                 buffer.write(novaLinha);
                 buffer.newLine();
                 return true;

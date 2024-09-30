@@ -31,7 +31,7 @@ public class VerDisciplina extends JFrame {
                 String[] values = line.split(",");
                 // Supondo que o CSV tenha o formato: Código, Nome, Horário, Professor, Qtd Vagas, Coordenador, Carga Horária, Status
                 Disciplina disciplina = new Disciplina(values[0], values[1], values[2], values[3], 
-                    Integer.parseInt(values[4]), values[5], Integer.parseInt(values[6]), values[7]);
+                    Integer.parseInt(values[4]), values[5], Integer.parseInt(values[6]), values[7], values[8]);
                 disciplinas.add(disciplina);
             }
         }

@@ -106,8 +106,6 @@ public class UsuarioPersistence{
             }
         } catch(NullPointerException e){
             javax.swing.JOptionPane.showMessageDialog(null, "Erro findAll: " + e.getMessage());
-        } catch(DataException | NomeException | EmailException | CpfException | CelularException | RuaException | BairroException | CidadeException e){
-            javax.swing.JOptionPane.showMessageDialog(null, "Erro findAll: " + e.getMessage());
         }
 
         return users;

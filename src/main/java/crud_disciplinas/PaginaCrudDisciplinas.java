@@ -31,7 +31,9 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 d.getProfessor(),
                 d.getQtdVagas(),
                 d.getCargaHoraria(),
-                d.getCoordenador(),};
+                d.getCoordenador(),
+                d.getCurso() // Adicione esta linha
+            };
 
             modelDisciplinas.addRow(rowData);
         }
@@ -45,6 +47,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         fieldVagas.setText("");
         fieldCargaH.setText("");
         fieldCoord.setText("");
+        fieldCurso.setText("");
     }
 
     /**
@@ -78,8 +81,10 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        fieldCurso = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestão de Disciplinas");
         setBackground(new java.awt.Color(242, 247, 251));
         setMinimumSize(new java.awt.Dimension(1000, 700));
@@ -98,14 +103,14 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador"
+                "Código", "Nome", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador", "Curso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -131,6 +136,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             tableDisciplinas.getColumnModel().getColumn(4).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(5).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(6).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(7).setResizable(false);
         }
 
         jLabel2.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
@@ -146,7 +152,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
-        jLabel4.setText("Carga Hor.");
+        jLabel4.setText("Curso");
 
         jLabel5.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
         jLabel5.setText("Nome");
@@ -188,6 +194,9 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel9.setText("Carga Hor.");
+
         javax.swing.GroupLayout externoLayout = new javax.swing.GroupLayout(externo);
         externo.setLayout(externoLayout);
         externoLayout.setHorizontalGroup(
@@ -195,45 +204,47 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             .addGroup(externoLayout.createSequentialGroup()
                 .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(externoLayout.createSequentialGroup()
-                        .addGap(348, 348, 348)
-                        .addComponent(jLabel1))
-                    .addGroup(externoLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, externoLayout.createSequentialGroup()
-                                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(externoLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(btnAdd)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnRemove)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnEditar)
-                                        .addGap(45, 45, 45)
-                                        .addComponent(btnLimpar))
-                                    .addGroup(externoLayout.createSequentialGroup()
-                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel2)
-                                                .addComponent(jLabel3)
-                                                .addComponent(jLabel4)
-                                                .addComponent(fieldCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                                .addComponent(fieldCargaH))
-                                            .addComponent(fieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(123, 123, 123)
-                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)
-                                            .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldVagas, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jLabel8)
-                                            .addComponent(fieldProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                                            .addComponent(fieldCoord))))
-                                .addGap(10, 10, 10)))))
+                        .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(externoLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnAdd)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRemove)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEditar)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnLimpar))
+                            .addGroup(externoLayout.createSequentialGroup()
+                                .addComponent(fieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(123, 123, 123)
+                                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldVagas, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(fieldProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                                    .addComponent(fieldCoord)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, externoLayout.createSequentialGroup()
+                                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel3)
+                                        .addComponent(fieldCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                        .addComponent(fieldCargaH))
+                                    .addComponent(jLabel9))
+                                .addGap(139, 139, 139)
+                                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(fieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(externoLayout.createSequentialGroup()
+                        .addGap(348, 348, 348)
+                        .addComponent(jLabel1)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         externoLayout.setVerticalGroup(
@@ -241,9 +252,9 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             .addGroup(externoLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel5)
@@ -264,9 +275,13 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                     .addComponent(fieldCoord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldVagas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldCargaH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldCargaH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(externoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
@@ -309,6 +324,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             fieldVagas.setText(linhaTabela[4]);
             fieldCargaH.setText(linhaTabela[5]);
             fieldCoord.setText(linhaTabela[6]);
+            fieldCurso.setText(linhaTabela[7]);
         }
     }//GEN-LAST:event_tableDisciplinasMouseClicked
 
@@ -326,6 +342,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
                 d.setCargaHoraria(fieldCargaH.getText());
                 d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
                 d.setStatus("0");
+                d.setCurso(fieldCurso.getText());
 
                 if (!map.containsKey(d.getCodigo())) {
                     dados.insereDisciplina(d);
@@ -369,6 +386,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
             d.setHorarioAula(fieldHorario.getText());
             d.setCargaHoraria(fieldCargaH.getText());
             d.setQtdVagas(Integer.parseInt(fieldVagas.getText()));
+            d.setCurso(fieldCurso.getText());
 
             if (dados.modificaDisciplina(d)) {
                 map.replace(fieldCodigo.getText(), d);
@@ -456,6 +474,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private javax.swing.JTextField fieldCargaH;
     private javax.swing.JTextField fieldCodigo;
     private javax.swing.JTextField fieldCoord;
+    private javax.swing.JTextField fieldCurso;
     private javax.swing.JTextField fieldHorario;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldProfessor;
@@ -468,6 +487,7 @@ public class PaginaCrudDisciplinas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableDisciplinas;
     // End of variables declaration//GEN-END:variables

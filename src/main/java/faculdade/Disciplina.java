@@ -30,6 +30,7 @@ public class Disciplina {
     protected List<Double> notas;
     protected Double nota;
     protected String status;
+    protected String curso;
 
     public Disciplina() {
         this.alunos = new ArrayList<>();
@@ -44,7 +45,7 @@ public class Disciplina {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(",");
-                if (dados.length == 8) {
+                if (dados.length == 9) {
                     Disciplina disciplina = new Disciplina(
                             dados[0],   // código
                             dados[1],   // nome
@@ -53,7 +54,8 @@ public class Disciplina {
                             Integer.parseInt(dados[4]), // quantidade de vagas
                             dados[5],   // coordenador
                             Integer.parseInt(dados[6]), // carga horária
-                            dados[7]    // status
+                            dados[7],    // status
+                            dados[8]    //curso
                     );
                     disciplinas.add(disciplina);
                 }
@@ -87,7 +89,7 @@ public class Disciplina {
     }
 
     public Disciplina(String codigo, String nome, String horarioAula, String professor,
-            int qtdVagas, String coordenador, int cargaHoraria, String status) {
+            int qtdVagas, String coordenador, int cargaHoraria, String status, String curso) {
         this.nome = nome;
         this.qtdVagas = qtdVagas;
         this.codigo = codigo;
@@ -96,6 +98,7 @@ public class Disciplina {
         this.coordenador = coordenador;
         this.cargaHoraria = cargaHoraria;
         this.status = status;
+        this.curso = curso;
         this.alunos = new ArrayList<>();
         this.notas = new ArrayList<>();
     }
@@ -262,6 +265,16 @@ public class Disciplina {
     public void setQtdFaltas(List<Integer> qtdFaltas) {
         this.qtdFaltas = qtdFaltas;
     }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+    
+    
 
     private boolean isValidCodigo(String cod) {
         String codPattern = "^[A-Z]{3}\\d{3}$";

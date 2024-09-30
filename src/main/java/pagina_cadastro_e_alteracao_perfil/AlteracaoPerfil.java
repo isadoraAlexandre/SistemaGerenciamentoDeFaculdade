@@ -1,5 +1,6 @@
 package pagina_cadastro_e_alteracao_perfil;
 
+import com.mycompany.sistemagerenciamentodefaculdade.PerfilAluno;
 import exceptions.*;
 import javax.swing.JOptionPane;
 import persistence.UsuarioPersistence;
@@ -306,6 +307,8 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                 if(UsuarioPersistence.modificaUsuarioBool(usuario)){
                     JOptionPane.showMessageDialog(rootPane, "Alteração realizada");
                     this.dispose();
+                    PerfilAluno a = new PerfilAluno(usuario);
+                    a.setVisible(true);
                 }
 
             } catch(java.lang.NullPointerException e){
