@@ -45,7 +45,8 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
                 d.getProfessor(),
                 d.getQtdVagas(),
                 d.getCargaHoraria(),
-                d.getCoordenador()
+                d.getCoordenador(),
+                d.getCurso()
             };
             model1.addRow(rowData);
         }
@@ -59,7 +60,8 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
                 d.getProfessor(),
                 d.getQtdVagas(),
                 d.getCargaHoraria(),
-                d.getCoordenador()
+                d.getCoordenador(),
+                d.getCurso()
             };
             model2.addRow(rowData);
         }
@@ -80,7 +82,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableMatriculadas = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Matrícula");
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
@@ -110,14 +112,14 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador"
+                "Código", "Nome", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador", "Curso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -144,6 +146,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
             tableDisponiveis.getColumnModel().getColumn(4).setResizable(false);
             tableDisponiveis.getColumnModel().getColumn(5).setResizable(false);
             tableDisponiveis.getColumnModel().getColumn(6).setResizable(false);
+            tableDisponiveis.getColumnModel().getColumn(7).setResizable(false);
         }
 
         tableMatriculadas.setModel(new javax.swing.table.DefaultTableModel(
@@ -151,14 +154,14 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Disciplina", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador"
+                "Codigo", "Disciplina", "Horario", "Professor", "Vagas", "Carga Hor.", "Coordenador", "Curso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -185,6 +188,7 @@ public class MatriculaDisciplina extends javax.swing.JFrame {
             tableMatriculadas.getColumnModel().getColumn(4).setResizable(false);
             tableMatriculadas.getColumnModel().getColumn(5).setResizable(false);
             tableMatriculadas.getColumnModel().getColumn(6).setResizable(false);
+            tableMatriculadas.getColumnModel().getColumn(7).setResizable(false);
         }
 
         javax.swing.GroupLayout jpMatriculaLayout = new javax.swing.GroupLayout(jpMatricula);

@@ -17,10 +17,6 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public static Usuario retornaUsuario(){
-        return usuario;
-    }
-    
     private void preencheFields(){
         
         textFieldEmail.setText(usuario.getEmail());
@@ -29,7 +25,8 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
         textFieldBairro.setText(usuario.getBairro());
         textFieldCidade.setText(usuario.getCidade());
         textFieldNumero.setText(usuario.getNumero());
-        System.out.println(usuario.getUsuario());
+        textFieldNome.setText(usuario.getNome());
+        textFieldData.setText(usuario.getDataStr());
     }
     
     /**
@@ -48,6 +45,10 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
         textFieldCelular = new javax.swing.JTextField();
         labelCelular = new javax.swing.JLabel();
         textFieldEmail = new javax.swing.JTextField();
+        textFieldNome = new javax.swing.JTextField();
+        labelCelular2 = new javax.swing.JLabel();
+        labelCelular3 = new javax.swing.JLabel();
+        textFieldData = new javax.swing.JTextField();
         labelCadastroPerfil = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         showUser = new javax.swing.JLabel();
@@ -64,7 +65,7 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
         jButtonCancelar = new javax.swing.JButton();
         jButtonAlterar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Alteração de Dados");
         setBackground(new java.awt.Color(242, 247, 251));
         setMinimumSize(new java.awt.Dimension(1000, 700));
@@ -90,22 +91,39 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
         labelCelular.setForeground(new java.awt.Color(28, 39, 95));
         labelCelular.setText("Celular:");
 
+        labelCelular2.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
+        labelCelular2.setForeground(new java.awt.Color(28, 39, 95));
+        labelCelular2.setText("Nome:");
+
+        labelCelular3.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 16)); // NOI18N
+        labelCelular3.setForeground(new java.awt.Color(28, 39, 95));
+        labelCelular3.setText("Data de Nascimento:");
+
         javax.swing.GroupLayout panelContatoLayout = new javax.swing.GroupLayout(panelContato);
         panelContato.setLayout(panelContatoLayout);
         panelContatoLayout.setHorizontalGroup(
             panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContatoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelContato, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelContatoLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addContainerGap()
                         .addGroup(panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelEmail)
-                            .addComponent(textFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelCelular)
-                            .addComponent(textFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(476, Short.MAX_VALUE))
+                            .addComponent(labelContato, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelContatoLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelEmail)
+                                    .addComponent(textFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelCelular)
+                                    .addComponent(textFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelCelular2)))))
+                    .addGroup(panelContatoLayout.createSequentialGroup()
+                        .addGap(632, 632, 632)
+                        .addGroup(panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCelular3))))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         panelContatoLayout.setVerticalGroup(
             panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,9 +136,20 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                 .addComponent(textFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelCelular)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGroup(panelContatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContatoLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(labelCelular3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelContatoLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(labelCelular2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         labelCadastroPerfil.setFont(new java.awt.Font("DejaVu Sans Condensed", 1, 24)); // NOI18N
@@ -211,7 +240,7 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                 .addComponent(labelNumero)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jButtonCancelar.setText("Cancelar");
@@ -240,15 +269,14 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                 .addGap(46, 46, 46))
             .addGroup(panelExternoLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(panelExternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelExternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panelContato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelExternoLayout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(showUser))
-                        .addComponent(labelCadastroPerfil)))
+                .addGroup(panelExternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelContato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelExternoLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(showUser))
+                    .addComponent(labelCadastroPerfil)
+                    .addComponent(panelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         panelExternoLayout.setVerticalGroup(
@@ -261,10 +289,10 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(showUser))
                 .addGap(18, 18, 18)
-                .addComponent(panelContato, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelContato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelExternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
                     .addComponent(jButtonAlterar))
@@ -303,6 +331,8 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
                 usuario.setRua(textFieldRua.getText());
                 usuario.setCidade(textFieldCidade.getText());
                 usuario.setNumero(textFieldNumero.getText());
+                usuario.setNome(textFieldNome.getText());
+                usuario.setDataStr(textFieldData.getText());
 
                 if(UsuarioPersistence.modificaUsuarioBool(usuario)){
                     JOptionPane.showMessageDialog(rootPane, "Alteração realizada");
@@ -337,6 +367,8 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel labelBairro;
     private javax.swing.JLabel labelCadastroPerfil;
     private javax.swing.JLabel labelCelular;
+    private javax.swing.JLabel labelCelular2;
+    private javax.swing.JLabel labelCelular3;
     private javax.swing.JLabel labelCidade;
     private javax.swing.JLabel labelContato;
     private javax.swing.JLabel labelEmail;
@@ -350,7 +382,9 @@ public class AlteracaoPerfil extends javax.swing.JFrame {
     private javax.swing.JTextField textFieldBairro;
     private javax.swing.JTextField textFieldCelular;
     private javax.swing.JTextField textFieldCidade;
+    private javax.swing.JTextField textFieldData;
     private javax.swing.JTextField textFieldEmail;
+    private javax.swing.JTextField textFieldNome;
     private javax.swing.JTextField textFieldNumero;
     private javax.swing.JTextField textFieldRua;
     // End of variables declaration//GEN-END:variables

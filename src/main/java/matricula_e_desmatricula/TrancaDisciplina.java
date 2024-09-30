@@ -32,7 +32,8 @@ public class TrancaDisciplina extends javax.swing.JFrame {
                 d.getHorarioAula(),
                 d.getProfessor(),
                 d.getCargaHoraria(),
-                d.getStatus()
+                d.getStatus(),
+                d.getCurso()
             };
 
             modelDisciplinas.addRow(rowData);
@@ -53,7 +54,7 @@ public class TrancaDisciplina extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Trancamento de disciplina");
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
@@ -63,14 +64,14 @@ public class TrancaDisciplina extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Horário", "Professor", "Carga Hor.", "Estado"
+                "Código", "Nome", "Horário", "Professor", "Carga Hor.", "Estado", "Curso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -96,6 +97,7 @@ public class TrancaDisciplina extends javax.swing.JFrame {
             tableDisciplinas.getColumnModel().getColumn(3).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(4).setResizable(false);
             tableDisciplinas.getColumnModel().getColumn(5).setResizable(false);
+            tableDisciplinas.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
