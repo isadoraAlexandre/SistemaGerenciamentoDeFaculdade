@@ -8,8 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,37 +16,30 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import faculdade.Disciplina;
-import persistence.DisciplinaAluno;
-import persistence.DisciplinasPersistence;
 import usuarios.Aluno;
 
 public class VerDisciplina extends JFrame {
 
-    // obtém todas as disciplinas
-    private List<Disciplina> buscarDisciplinas() {
-        DisciplinasPersistence per = new DisciplinaAluno("teste"); // cria persistence para o usuário teste
-        Map<String, Disciplina> mapaDisciplinas = per.findAll();
-        return new ArrayList<>(mapaDisciplinas.values());
-    }
-
-        public static List<Disciplina> carregarDisciplinasDoCSV() throws IOException {
-        String filePath = System.getProperty("user.dir") + "/src/main/java/banco_arquivo/alunos.csv";
+    // Método para carregar disciplinas do CSV
+    public static List<Disciplina> carregarDisciplinasDoCSV() throws IOException {
+        String filePath = System.getProperty("user.dir") + "/src/main/java/banco_arquivo/DisciplinasGeral.csv";
         List<Disciplina> disciplinas = new ArrayList<>();
         
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            // Supondo que o CSV tenha o formato: Código, Nome, Horário, Professor, Qtd Vagas, Coordenador, Carga Horária, Status
-            Disciplina disciplina = new Disciplina(values[0], values[1], values[2], values[3], Integer.parseInt(values[4]), values[5], Integer.parseInt(values[6]), values[7]);
-            disciplinas.add(disciplina);
+                String[] values = line.split(",");
+                // Supondo que o CSV tenha o formato: Código, Nome, Horário, Professor, Qtd Vagas, Coordenador, Carga Horária, Status
+                Disciplina disciplina = new Disciplina(values[0], values[1], values[2], values[3], 
+                    Integer.parseInt(values[4]), values[5], Integer.parseInt(values[6]), values[7]);
+                disciplinas.add(disciplina);
             }
         }
         
         return disciplinas;
-        }
+    }
 
-        public VerDisciplina(Aluno aluno) {
+    public VerDisciplina() {
         setTitle("Disciplinas Disponíveis para Matrícula");
         setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,5 +92,6 @@ public class VerDisciplina extends JFrame {
 
         // adiciona painel ao frame
         add(painelPrincipal);
-        }
+    }
+
 }

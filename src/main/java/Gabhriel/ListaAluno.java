@@ -1,33 +1,28 @@
 package Gabhriel;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import faculdade.Disciplina;
+
+import exceptions.CpfException;
+import exceptions.NomeException;
 import usuarios.Aluno;
-import usuarios.Funcionarios;
 
 public class ListaAluno extends JFrame {
 
-    private JComboBox<String> cb;
     private JTable tabelaAlunos;
     private DefaultTableModel tableModel;
-
-    private List<Disciplina> discprof;
     private List<Aluno> alunos;
 
-    public ListaAluno(Funcionarios prof, List<Disciplina> disc) {
+    public ListaAluno() {
         setTitle("Listagem de Alunos");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,30 +32,8 @@ public class ListaAluno extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         add(panel);
 
-        // obtem as disciplinas do professor
-        discprof = new ArrayList<>();
-        for (Disciplina d : disc) {
-            if (d.getProfessor().equals(prof.getNome())) {
-                discprof.add(d);
-            }
-        }
-
-
-        alunos = carregarAlunosDoCSV("banco_arquivos/Usuarios.csv");
-
-        // cb seleciona disciplina
-        cb = new JComboBox<>();
-        for (Disciplina d : discprof) {
-            cb.addItem(d.getNome());
-        }
-        cb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                atualizarTabelaAlunos();
-            }
-        });
-
-        panel.add(cb, BorderLayout.NORTH);
+        // Carregar alunos do CSV
+        alunos = carregarAlunosDoCSV(System.getProperty("user.dir") + "/src/main/java/banco_arquivo/alunos.csv");
 
         // tabela para listar os alunos
         String[] colunas = {"Nome", "Matrícula", "CPF"};
@@ -83,7 +56,20 @@ public class ListaAluno extends JFrame {
                     String nome = dados[0].trim();
                     String matricula = dados[1].trim();
                     String cpf = dados[2].trim();
-                    Aluno aluno = new Aluno(nome);
+
+                    // Adicione os demais dados necessários no construtor da classe Aluno
+                    Aluno aluno = new Aluno(cpf); // Usando CPF para inicializar o Aluno
+                    try {
+                        aluno.setNome(nome);
+                    } catch (NomeException e) {
+                        e.printStackTrace();
+                    }
+                    aluno.setMatricula(matricula);
+                    try {
+                        aluno.setCpf(cpf);
+                    } catch (CpfException e) {
+                        e.printStackTrace();
+                    }
                     listaAlunos.add(aluno);
                 }
             }
@@ -95,20 +81,14 @@ public class ListaAluno extends JFrame {
 
     // método para atualizar a tabela de alunos
     private void atualizarTabelaAlunos() {
-        tableModel.setRowCount(0);
+        tableModel.setRowCount(0); // Limpa a tabela antes de adicionar novos dados
 
-        String disciplinaSelecionada = (String) cb.getSelectedItem();
-
-        for (Disciplina d : discprof) {
-            if (d.getNome().equals(disciplinaSelecionada)) {
-                for (Aluno aluno : d.getAlunos()) {
-                    // adicionar dados do aluno na tabela
-                    Object[] row = {aluno.getNome(), aluno.getMatricula(), aluno.getCpf()};
-                    tableModel.addRow(row);
-                }
-                break;
-            }
+        for (Aluno aluno : alunos) {
+            // adicionar dados do aluno na tabela
+            Object[] row = {aluno.getNome(), aluno.getMatricula(), aluno.getCpf()};
+            tableModel.addRow(row);
         }
     }
-    
+
+   
 }

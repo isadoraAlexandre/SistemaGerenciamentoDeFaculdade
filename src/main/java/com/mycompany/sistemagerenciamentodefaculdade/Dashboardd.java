@@ -57,7 +57,7 @@ public class Dashboardd extends javax.swing.JFrame {
             matricula.setText("Alteração de Disciplinas");
             horario.setText("Alteração de Cursos");
             historico.setText("Alteração de Professores");  
-            btnIRA.setVisible(false);
+            IRA.setText("Faltas e Notas");;
             listaDisciplinas.setText("Alteração de Alunos");
         }
         this.setLocationRelativeTo(null);
@@ -419,19 +419,23 @@ public class Dashboardd extends javax.swing.JFrame {
 
     private void btnListaDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnListaDisciplinasMouseClicked
         if(user.getTipoUsuario()==1){
-            new ListaAluno(p, p.getDisciplinas()).setVisible(true);
+            new ListaAluno().setVisible(true);
         }
         else if(user.getTipoUsuario()==2){
             new GerenciamentoAlunosGUI();
         }
         else if(user.getTipoUsuario()==0){
-            new VerDisciplina(al).setVisible(true);
+            new VerDisciplina().setVisible(true);
         }
     }//GEN-LAST:event_btnListaDisciplinasMouseClicked
 
     private void btnIRAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIRAMouseClicked
         if(user.getTipoUsuario()==0){
             new CalculoIra(al).setVisible(true);
+        }
+        else if (user.getTipoUsuario()==2){
+            LancaFaltaFuncionarioUI lancaFaltaUI = pc.new LancaFaltaFuncionarioUI();
+            lancaFaltaUI.setVisible(true);
         }
     }//GEN-LAST:event_btnIRAMouseClicked
 

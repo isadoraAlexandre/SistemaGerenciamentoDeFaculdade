@@ -33,7 +33,7 @@ public class GerenciamentoProfessoresGUI extends JFrame {
     private JButton btnEditar;
     private JButton btnExcluir;
     private JButton btnCancelar;
-    private static final String CSV_FILE = "professores.csv";
+    private static final String CSV_FILE =  System.getProperty("user.dir") + "/src/main/java/banco_arquivo/professores.csv";
     private static final Color AZUL_ESCURO = new Color(28, 39, 95);
     private static final Color AZUL_MEDIO = new Color(2, 122, 160);
     private static final Color AZUL_QUASE_BRANCO = new Color(242, 247, 251);

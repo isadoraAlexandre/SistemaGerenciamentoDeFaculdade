@@ -26,7 +26,7 @@ public class CalculoIra extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         calcularIra = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Calular IRA");
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setResizable(false);
